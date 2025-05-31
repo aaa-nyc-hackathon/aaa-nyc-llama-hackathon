@@ -220,8 +220,8 @@ if __name__ == "__main__":
     input_video_path = os.path.join(os.getcwd(), f"videos/{args.filename}")
     result = classifier.analyze_video(
         video_path=input_video_path,
-        actions=["goal", "pass", "shot", "save"],
-        sport="hockey"
+        actions=["score", "pass", "shot", "rebound"],
+        sport="basketball"
     )
 
     print("Analysis Results:")
