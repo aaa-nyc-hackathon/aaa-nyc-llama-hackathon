@@ -1,13 +1,14 @@
 import numpy as np
 import cv2 as cv
 import argparse
+import os
 # open cv optical flow code
-parser = argparse.ArgumentParser(description='This sample demonstrates Lucas-Kanade Optical Flow calculation. \
-                                              The example file can be downloaded from: \
-                                              https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4')
-parser.add_argument('image', type=str, help='path to image file')
-args = parser.parse_args()
-cap = cv.VideoCapture(args.image)
+#parser = argparse.ArgumentParser(description='This sample demonstrates Lucas-Kanade Optical Flow calculation. \
+#                                              The example file can be downloaded from: \
+#                                              https://www.bogotobogo.com/python/OpenCV_Python/images/mean_shift_tracking/slow_traffic_small.mp4')
+#parser.add_argument('image', type=str, help='path to image file')
+#args = parser.parse_args()
+cap = cv.VideoCapture(os.path.join(os.getcwd(), "alabama_clemson_30s_clip.mp4"))
 # params for ShiTomasi corner detection
 feature_params = dict( maxCorners = 100,
                        qualityLevel = 0.3,
@@ -19,8 +20,18 @@ lk_params = dict( winSize  = (15, 15),
                   criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03))
 # Create some random colors
 color = np.random.randint(0, 255, (100, 3))
+# Check if video is opened successfully
+if not cap.isOpened():
+    print("Error: Could not open video file. Check the path:", 
+          os.path.join(os.getcwd(), "alabama_clemson_30s_clip.mp4"))
+    exit()
+
 # Take first frame and find corners in it
 ret, old_frame = cap.read()
+if not ret:
+    print("Error: Could not read the first frame.")
+    exit()
+
 old_gray = cv.cvtColor(old_frame, cv.COLOR_BGR2GRAY)
 p0 = cv.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
 # Create a mask image for drawing purposes
