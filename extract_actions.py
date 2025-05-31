@@ -221,7 +221,7 @@ if __name__ == "__main__":
     )
     
     # Analyze soccer video
-    input_video_path = os.path.join(os.getcwd(), "videos", "oilers_hilights.mp4")
+    input_video_path = os.path.join(os.getcwd(), "alabama_clemson.mp4")
     result = classifier.analyze_video(
         video_path=input_video_path,
         actions=["goal", "pass", "shot", "save"],
