@@ -10,9 +10,17 @@ cd aaa-nyc-llama-hackathon
 pip install -r /path/to/requirements.txt.
 ```
 
-## WIP:
 ## then run the cli tool
 
 ```bash
 python extract_actions.py
+```
+
+##
+```bash
+curl -X POST "http://localhost:8000/api/analyze-video"  \
+     -H "accept: application/json"  \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@aaa-nyc-llama-hackathon/alabama_clemson_30s_clip.mp4;type=video/mp4" \
+     --verbose
 ```
