@@ -1,7 +1,7 @@
 import numpy as np
 import cv2 as cv
-import argparse
 import os
+
 # open cv optical flow code
 #parser = argparse.ArgumentParser(description='This sample demonstrates Lucas-Kanade Optical Flow calculation. \
 #                                              The example file can be downloaded from: \
