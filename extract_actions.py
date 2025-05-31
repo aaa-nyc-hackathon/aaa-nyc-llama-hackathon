@@ -12,6 +12,13 @@ from PIL import Image
 from llama_api_client import LlamaAPIClient
 from dotenv import load_dotenv
 from scipy.signal import find_peaks
+from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+
+parser = ArgumentParser(
+                    prog='Video processing',
+                    description='This program processes the video from local fs and pipes stuff to stdout',
+                    epilog='')
+parser.add_argument('--filename', type=str, default="alabama_clemson_30s_clip.mp4", help='filename locally')
 
 load_dotenv()
 
@@ -68,33 +75,27 @@ class VideoActionClassifier:
                 motion_scores.append(motion)
             else:
                 motion_scores.append(0)
-            
+        
             prev_gray = gray
             if len(motion_scores) >= 1000:  # Limit processing for long videos
                 print(f"Reached 1000 frames limit. Stopping first pass.")
                 break
-                
         cap.release()
         print(f"First pass complete. Processed {frame_count} frames.")
-        
         # Identify high-motion segments
         peaks, _ = find_peaks(motion_scores, distance=10, prominence=np.std(motion_scores))
         print(f"Found {len(peaks)} potential high-motion segments.")
-        
         # Second pass: Capture keyframes from high-motion segments
         print(f"Starting second pass: Capturing keyframes from high-motion segments")
         cap = cv2.VideoCapture(video_path)
         selected_frames = []
         frame_idx = 0
-        
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
                 break
-            
             if frame_idx % 100 == 0:
                 print(f"Second pass: Processing frame {frame_idx}...")
-                
             if frame_idx in peaks[:target_frames*2]:
                 selected_frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
                 print(f"Selected frame {frame_idx} as a keyframe. Total selected: {len(selected_frames)}")
@@ -166,19 +167,16 @@ Format response as JSON with:
         print(f"\n======== Starting video analysis for {video_path} ========")
         print(f"Target actions to detect: {', '.join(actions)}")
         print(f"Sport context: {sport}")
-        
         # Frame extraction
         print(f"Starting frame extraction with target of {self.max_frames} frames...")
         start_time = time.time()
         frames = self.adaptive_frame_sampling(video_path, self.max_frames)
         extraction_time = time.time() - start_time
         print(f"Frame extraction complete. Extracted {len(frames)} frames in {extraction_time:.2f} seconds.")
-        
         # Prepare multimodal payload
         print("Preparing multimodal payload...")
         print(f"Creating analysis prompt for {sport} with {len(actions)} target actions")
         content = [{"type": "text", "text": self.create_analysis_prompt(actions, sport)}]
-        
         print("Converting frames to base64 format...")
         start_time = time.time()
         for i, frame in enumerate(frames):
@@ -188,15 +186,12 @@ Format response as JSON with:
                 "image_url": {"url": f"data:image/jpeg;base64,{b64_image}"}
             })
             print(f"  Processed frame {i+1}/{len(frames)}")
-        
         conversion_time = time.time() - start_time
         print(f"Frame conversion complete in {conversion_time:.2f} seconds.")
-        
         # API request using Llama API client
         print(f"Sending request to Llama API using model: {self.model}")
         print("This may take some time depending on model load and queue...")
         start_time = time.time()
-        
         try:
             response = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": content}],
@@ -215,19 +210,20 @@ Format response as JSON with:
 # Example usage
 if __name__ == "__main__":
     # Initialize with Llama API client
+    args = parser.parse_args()
     classifier = VideoActionClassifier(
         model="Llama-4-Maverick-17B-128E-Instruct-FP8",
         max_frames=8
     )
-    
+    print(args)
     # Analyze soccer video
-    input_video_path = os.path.join(os.getcwd(), "alabama_clemson.mp4")
+    input_video_path = os.path.join(os.getcwd(), f"videos/{args.filename}")
     result = classifier.analyze_video(
         video_path=input_video_path,
-        actions=["goal", "pass", "shot", "save"],
-        sport="hockey"
+        actions=["score", "pass", "shot", "rebound"],
+        sport="basketball"
     )
-    
+
     print("Analysis Results:")
     if isinstance(result, dict) and "error" in result:
         print(f"Error: {result['error']}")

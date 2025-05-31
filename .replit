@@ -1,0 +1,21 @@
+modules = ["python-3.12"]
+run = "python extract_actions.py"
+
+[nix]
+channel = "stable-24_05"
+packages = ["cacert", "cargo", "freetype", "glibcLocales", "lcms2", "libGL", "libGLU", "libiconv", "libimagequant", "libjpeg", "libtiff", "libwebp", "libxcrypt", "openjpeg", "pkg-config", "rustc", "tcl", "tk", "xsimd", "zlib"]
+
+[workflows]
+runButton = "Run Video Classifier"
+
+[[workflows.workflow]]
+name = "Run Video Classifier"
+author = 31581151
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python extract_actions.py"
+
+[deployment]
+run = ["sh", "-c", "python extract_actions.py"]
