@@ -10,6 +10,9 @@ import cv2
 import base64
 import jsonlines
 import subprocess
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # check for access
@@ -36,10 +39,19 @@ def image_to_base64(image_path):
 
 if __name__ == "__main__":
     args = argparser.parse_args()
-    client = LlamaAPIClient(
-        api_key=os.environ.get("LLAMA_API_KEY"), # This is the default and can be omitted
-    )
-    ffmpeg_cmd_retry = ['ffmpeg', '-i', args.inputvideo, '-vf', 'fps=fps=1', "images/frame%d.jpg"]
+    try:
+      client = LlamaAPIClient(
+          api_key=os.environ.get("LLAMA_API_KEY"), # This is the default and can be omitted
+      )
+    except:
+      client = LlamaAPIClient()
+
+    #check if images directory exists, if not create it
+    if not os.path.exists("images"):
+        os.makedirs("images")
+    ffmpeg_cmd_retry = ['ffmpeg', '-i', args.inputvideo, '-vf', 'fps=fps=1', str(os.path.join(os.getcwd(), "images", "frame%d.jpg"))]
+
+
     subprocess.run(ffmpeg_cmd_retry, check=True)
     # Execute a command and wait for it to finish
     return_code = subprocess.call(ffmpeg_cmd_retry)
