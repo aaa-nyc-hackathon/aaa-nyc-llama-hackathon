@@ -9,6 +9,7 @@ from pydantic import BaseModel
 import cv2 # Added for video duration
 import time
 import shutil # Added for file copying
+from workflow import start_workflow
 
 app = FastAPI(title="Video Analysis API")
 
@@ -123,15 +124,18 @@ async def analyze(body: LoadBody):
         os.makedirs(frontend_target_dir, exist_ok=True)
         print(f"Ensured frontend video directory exists: {frontend_target_dir}")
 
-        json_path = os.path.join(project_root, "src", "backend", "final_output.json")
-        print(f"Looking for JSON file at: {json_path}")
-        
-        if not os.path.exists(json_path):
-            print(f"JSON file not found at {json_path}")
-            return {"status": "error", "message": "Analysis results file (final_output.json) not found"}
-            
-        with open(json_path, 'r') as f:
-            analysis_results = json.load(f)
+        #starting real workflow 
+        analysis_results = start_workflow(body.file_path)
+
+        #json_path = os.path.join(project_root, "src", "backend", "final_output.json")
+        #print(f"Looking for JSON file at: {json_path}")
+        #
+        #if not os.path.exists(json_path):
+        #    print(f"JSON file not found at {json_path}")
+        #    return {"status": "error", "message": "Analysis results file (final_output.json) not found"}
+        #    
+        #with open(json_path, 'r') as f:
+        #    analysis_results = json.load(f)
         
         output_arr = []
         

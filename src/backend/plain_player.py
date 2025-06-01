@@ -52,6 +52,10 @@ def get_player_positions(inputvideo, plot=False):
     # TODO modify this to order by %d
     files.sort()
 
+    # sample each third file we have a list of
+    SAMPLE_INTERVAL = 3
+    
+
     results_output = []
 
     for frame_id, file in enumerate(files):

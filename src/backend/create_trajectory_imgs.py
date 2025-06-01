@@ -31,8 +31,7 @@ def track_and_draw_on_first_frame(
         print(f"ERROR: Cannot open video: {video_path}")
         return
 
-    # Frames per second (fallback to 30 if grab fails)
-    fps = cap.get(cv.CAP_PROP_FPS) or 30.0
+
 
     # Convert seconds → milliseconds
     start_ms = start_time * 1000.0
