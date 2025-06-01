@@ -15,23 +15,23 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-## check for access
-#if not os.environ.get("LLAMA_API_KEY"):
-#    raise ValueError(f"you need to obtain a LLAMA api key first")
-#
-#from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-#
-#HERD = {"mav": "Llama-4-Maverick-17B-128E-Instruct-FP8",
-#        "scout": "Llama-4-Scout-17B-16E-Instruct-FP8"
-#        }
-#
-#argparser = ArgumentParser(
-#           prog='Video processing',
-#           description='This program processes a video from local fs and pipes stuff to a .jsonl',
-#           epilog='')
-#
-#argparser.add_argument("--inputvideo", type=str, default="images/alabama_clemson_30s_clip.mp4", help='filename locally')
-#argparser.add_argument("--plot", action='store_true', help='make a plot')
+# check for access
+if not os.environ.get("LLAMA_API_KEY"):
+    raise ValueError(f"you need to obtain a LLAMA api key first")
+
+from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+
+HERD = {"mav": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+        "scout": "Llama-4-Scout-17B-16E-Instruct-FP8"
+        }
+
+argparser = ArgumentParser(
+           prog='Video processing',
+           description='This program processes a video from local fs and pipes stuff to a .jsonl',
+           epilog='')
+
+argparser.add_argument("--inputvideo", type=str, default="videos/alabama_clemson_30s_clip.mp4", help='filename locally')
+argparser.add_argument("--plot", action='store_true', help='make a plot')
 
 def image_to_base64(image_path):
     with open(image_path, "rb") as img:
@@ -92,44 +92,75 @@ def get_player_positions(inputvideo, plot=False):
                 },
             ],
             response_format = {
-              "type": "json_schema",
-              "json_schema": {
-                "schema": {
-                  "title": "Llama4 Game Data",
-                  "type": "array",
-                  "items": {
+                "type": "json_schema",
+                "json_schema": {
+                    "schema": {
+                    "title": "Llama4 Game Data",
                     "type": "object",
-                    "properties": {
-                      "jerseyNumber": {
-                        "type": "integer",
-                        "description": "An integer representing the Jersey number on the player's jersey"
-                      },
-                      "coordinates": {
-                        "type": "object",
-                        "description": "The current X/Y coordinates of the player.",
                         "properties": {
-                          "x_coordinate": {
-                            "type": "number",
-                            "description": "The percentage inside the image in the X coordinate to the player"
-                          },
-                          "y_coordinate": {
-                            "type": "number",
-                            "description": "The percentage inside the image in the Y coordinate to the player"
-                          }
-                        },
-                        "required": ["x_coordinate", "y_coordinate"]
-                      },
-                      "team": {
-                        "type": "string",
-                        "description": "One of the teams names as a string"
-                      }
+              "players": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "jerseyNumber": {
+                      "type": "integer",
+                      "description": "An integer representing the Jersey number on the player's jersey"
                     },
-                    "required": ["jerseyNumber", "coordinates", "team"],
-                  }
+                    "coordinates": {
+                      "type": "object",
+                      "description": "The current X/Y coordinates of the player.",
+                      "properties": {
+                        "x_coordinate": {
+                          "type": "number",
+                          "description": "The percentage inside the image in the X coordinate to the player"
+                        },
+                        "y_coordinate": {
+                          "type": "number",
+                          "description": "The percentage inside the image in the Y coordinate to the player"
+                        }
+                      },
+                      "required": ["x_coordinate", "y_coordinate"]
+                    },
+                    "team": {
+                      "type": "string",
+                      "description": "One of the teams names as a string",
+                      "enum": ["Clemson", "Alabama"]
+                    }
+                  },
+                  "required": ["jerseyNumber", "coordinates", "team"]
                 }
-            }
-        })
-        #print(response.completion_message.content.text)
+              },
+              "scores": {
+                "type": "object",
+                "properties": {
+                  "team1": {
+                    "type": "string",
+                    "description": "Name of the first team",
+                    "enum": ["Clemson"], 
+                  },
+                  "team1_score": {
+                    "type": "integer",
+                    "description": "Score of the first team"
+                  },
+                  "team2": {
+                    "type": "string",
+                    "description": "Name of the second team",
+                    "enum": ["Alabama"],
+                  },
+                  "team2_score": {
+                    "type": "integer",
+                    "description": "Score of the second team"
+                  }
+                },
+                "required": ["team1", "team1_score", "team2", "team2_score"]
+              }
+            },
+         "required": ["players", "scores"]
+        }
+    }
+})
+        print(response.completion_message.content.text)
         image_llama_data = json.loads(response.completion_message.content.text)
         
         # Create a result dictionary that includes timestamps and the player data
