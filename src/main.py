@@ -125,76 +125,74 @@ if __name__ == "__main__":
             return 0.0
         return frame_number / fps
 
-    # run the plain player.py file using subprocess
-    new_json = []
-    clip_number = 0
-    for segment in segments:
-        position_json = get_player_positions(segment)
-        player_numbers = unique_jersey_number(position_json) #unique jersey numbers
-        temp_json = {
-            "video_segment_path": segment,
-            "frame_list": position_json,   #frame list stores a list of player positions for frame range
-        }
+    def start_workflow(source_video_path):
+        new_json = []
+        clip_number = 0
+        for segment in segments:
+            position_json = get_player_positions(segment)
+            player_numbers = unique_jersey_number(position_json) #unique jersey numbers
+            temp_json = {
+                "video_segment_path": segment,
+                "frame_list": position_json,   #frame list stores a list of player positions for frame range
+            }
 
-        json_team_player_timeframe = extract_team_data(temp_json["frame_list"])
+            json_team_player_timeframe = extract_team_data(temp_json["frame_list"])
 
  
-        for team in json_team_player_timeframe:
-            team_name = team["team"]
-            for player in team["obj"]:
-                jersey_number = player["jersey_number"]
-                frames = player["frames"]
-                for frame in frames:
-                    s = frame["start_frame"]
-                    e = frame["end_frame"]
-                    x, y = convert_percent_to_coordinates(frame["x"], frame["y"], segment)
-                    print("Processing player:", jersey_number, "at coordinates:", x, y)
-                    marked_up_img_path = track_and_draw_on_first_frame(
-                        video_path=segment,
-                        start_time=s, 
-                        end_time=e + 2 if e+2 < get_video_seconds(segment) else get_video_seconds(segment),
-                        cx=x, 
-                        cy=y,
-                        output_filename=os.path.join(os.getcwd(), "trajectory_images", f"{jersey_number}_{team_name}_start_{s}_end_{e}.png")
-                    )
-                    # add the marked up image path to the json
-                    frame["marked_up_image_path"] = marked_up_img_path
+            for team in json_team_player_timeframe:
+                team_name = team["team"]
+                for player in team["obj"]:
+                    jersey_number = player["jersey_number"]
+                    frames = player["frames"]
+                    for frame in frames:
+                        s = frame["start_frame"]
+                        e = frame["end_frame"]
+                        x, y = convert_percent_to_coordinates(frame["x"], frame["y"], segment)
+                        print("Processing player:", jersey_number, "at coordinates:", x, y)
+                        marked_up_img_path = track_and_draw_on_first_frame(
+                            video_path=segment,
+                            start_time=s, 
+                            end_time=e + 2 if e+2 < get_video_seconds(segment) else get_video_seconds(segment),
+                            cx=x, 
+                            cy=y,
+                            output_filename=os.path.join(os.getcwd(), "trajectory_images", f"{jersey_number}_{team_name}_start_{s}_end_{e}.png")
+                        )
+                        # add the marked up image path to the json
+                        frame["marked_up_image_path"] = marked_up_img_path
 
-        print("###")
-        print("###")
-        print("###")
+
         
    
-        for team in json_team_player_timeframe:
-            for player in team["obj"]:
-                jersey_number = player["jersey_number"]
-                #########big edit to distill data
-                frame_list = player["frames"] if len(player["frames"]) <3 else player["frames"][:2]  # Limit to first 2 frames for feedback
-                for frame in player["frames"]:
-                    if frame["marked_up_image_path"] is None:
-                        print(f"Marked up image path is None for player {jersey_number} in team {team['team']}")
-                        continue
-                    if not os.path.exists(frame["marked_up_image_path"]):
-                        print(f"Marked up image path does not exist: {frame['marked_up_image_path']}")
-                        continue
-                    feedback = get_player_feedback(frame["marked_up_image_path"])
-                    frame["feedback"] = feedback
+            for team in json_team_player_timeframe:
+                for player in team["obj"]:
+                    jersey_number = player["jersey_number"]
+                    #########big edit to distill data
+                    frame_list = player["frames"] if len(player["frames"]) <3 else player["frames"][:2]  # Limit to first 2 frames for feedback
+                    for frame in player["frames"]:
+                        if frame["marked_up_image_path"] is None:
+                            print(f"Marked up image path is None for player {jersey_number} in team {team['team']}")
+                            continue
+                        if not os.path.exists(frame["marked_up_image_path"]):
+                            print(f"Marked up image path does not exist: {frame['marked_up_image_path']}")
+                            continue
+                        feedback = get_player_feedback(frame["marked_up_image_path"])
+                        frame["feedback"] = feedback
 
 
-        output = {
-            "video_segment_path": segment,
-            "list_of_info": json_team_player_timeframe
-        }
-        print(json.dumps(output, indent=2))
+            output = {
+                "video_segment_path": segment,
+                "list_of_info": json_team_player_timeframe
+            }
+            print(json.dumps(output, indent=2))
 
-        # save to final_output.json
-        with open(os.path.join(os.getcwd(), "final_output.json"), "a") as f:
-            json.dump(output, f)
-            f.write("\n")
+      
                 
-        clip_number += 1
-        break
+            clip_number += 1
         
+            new_json.append(output)
+    
+        outFinal = {"video_segments", new_json}
+        return outFinal
 
 
 
