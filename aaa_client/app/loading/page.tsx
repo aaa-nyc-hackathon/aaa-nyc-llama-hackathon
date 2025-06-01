@@ -84,7 +84,9 @@ export default function Component() {
               }}
             />
           </label>
-          <span className="text-white">Profile</span>
+          <Link href="/gallery" className="text-white text-lg">
+            Gallery
+          </Link>
         </div>
       </header>
 
