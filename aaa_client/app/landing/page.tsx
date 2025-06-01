@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Component() {
   const [apiStatus, setApiStatus] = useState<{ status: string; message: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [analysisData, setAnalysisData] = useState<any>(null);
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const router = useRouter();
   
   useEffect(() => {
     async function checkApiHealth() {
@@ -48,24 +49,23 @@ export default function Component() {
     checkApiHealth();
   }, []);
   
-  // Function to test the /api/analyze/ endpoint
-  async function testAnalyzeEndpoint() {
+  async function handleFileUploadAndProceedToLoading() {
     try {
-      console.log('Sending request to analyze endpoint...');
-      // First check if we can get the API status before sending the actual request
+      setError(null);
+      console.log('Starting file upload process...');
+      
       if (!apiStatus || apiStatus.status !== 'online') {
-        setError('API must be online to test the analyze endpoint');
+        setError('API must be online to upload and analyze the video.');
         return;
       }
       
       if (!videoFile) {
-        setError('Please select a video file first');
+        setError('Please select a video file first.');
         return;
       }
 
       console.log('Uploading file:', videoFile.name);
       
-      // Frontend upload code
       const formData = new FormData();
       formData.append("file", videoFile);
 
@@ -76,56 +76,31 @@ export default function Component() {
 
       if (!uploadRes.ok) {
         const errorText = await uploadRes.text();
-        console.error('Upload Error:', errorText);
+        console.error('Upload Error Text:', errorText);
         try {
           const errorData = JSON.parse(errorText);
-          setError(`Upload Error: ${errorData.detail || 'Failed to upload file'}`);
+          setError(`Upload Error: ${errorData.detail || 'Failed to upload file. Check console for details.'}`);
         } catch (e) {
-          setError(`Upload Error: ${uploadRes.status} ${uploadRes.statusText}`);
+          setError(`Upload Error: ${uploadRes.status} ${uploadRes.statusText}. Response: ${errorText}`);
         }
         return;
       }
       
       const uploadData = await uploadRes.json();
-      console.log('Upload successful:', uploadData);
+      console.log('Response from /api/load endpoint:', uploadData);
       
-      if (!uploadData.filepath) {
-        setError('Upload response missing filepath');
+      if (!uploadData.filepath || !uploadData.progress_steps || typeof uploadData.total_estimated_time_seconds === 'undefined') {
+        setError('Upload response missing critical data (filepath, progress_steps, or total_estimated_time_seconds).');
         return;
       }
 
-      // Analysis request
-      const analysisRes = await fetch("http://localhost:8000/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ file_path: uploadData.filepath })
-      });
+      sessionStorage.setItem('loadingData', JSON.stringify(uploadData));
       
-      if (!analysisRes.ok) {
-        try {
-          const errorData = await analysisRes.json();
-          console.error('API Error:', errorData);
-          
-          // Provide more helpful error message based on the error
-          if (errorData.detail === "Analysis results not found") {
-            setError(`API Error: The file was not found by the backend. 
-                     Make sure it's in the current working directory of the backend server.`);
-          } else {
-            setError(`Analysis Error: ${errorData.detail || JSON.stringify(errorData)}`);
-          }
-        } catch (e) {
-          setError(`Analysis Error: ${analysisRes.status} ${analysisRes.statusText}`);
-        }
-        return;
-      }
-      
-      const data = await analysisRes.json();
-      console.log('API Analyze Endpoint Response:', data);
-      setAnalysisData(data);
-      alert('Analysis data fetched successfully! Check console for details.');
+      router.push('/loading');
+
     } catch (err: any) {
-      console.error('Error fetching from analyze endpoint:', err);
-      setError(`Failed to fetch analysis data: ${err.message || 'Unknown error'}`);
+      console.error('Error during file upload or redirection:', err);
+      setError(`An unexpected error occurred: ${err.message || 'Unknown error'}`);
     }
   }
   
@@ -149,7 +124,7 @@ export default function Component() {
             </div>
           )}
           {error && (
-            <div className="text-sm text-red-400">{error}</div>
+            <div className="text-sm text-red-400 p-2 bg-red-900 bg-opacity-50 rounded">{error}</div>
           )}
           <Link href="/gallery" className="text-white text-lg">
             Login
@@ -177,28 +152,18 @@ export default function Component() {
               onChange={(e) => {
                 if (e.target.files?.length) {
                   setVideoFile(e.target.files[0]);
-                  // Uncomment this line if you want to navigate to loading page immediately
-                  // window.location.href = '/loading';
                 }
               }}
             />
           </label>
           
-          {/* Test button for the /api/analyze/ endpoint */}
-          <button 
-            onClick={testAnalyzeEndpoint}
-            className="mt-4 bg-blue-600 hover:bg-blue-700 transition-colors px-8 py-3 rounded-lg text-white font-medium"
-          >
-            Test Analyze API Endpoint
-          </button>
-          
-          {analysisData && (
-            <div className="mt-4 p-4 bg-gray-900 rounded-md max-w-lg mx-auto overflow-auto">
-              <p className="text-green-400 mb-2">Analysis data received! Check console for full details.</p>
-              <p className="text-gray-400 text-sm">
-                {analysisData.data ? `Found ${analysisData.data.length} feedback items` : 'No data found'}
-              </p>
-            </div>
+          {videoFile && (
+            <button 
+              onClick={handleFileUploadAndProceedToLoading}
+              className="mt-4 bg-blue-600 hover:bg-blue-700 transition-colors px-8 py-3 rounded-lg text-white font-medium"
+            >
+              Start Analysis
+            </button>
           )}
         </div>
       </div>
