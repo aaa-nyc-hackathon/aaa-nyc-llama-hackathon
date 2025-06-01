@@ -26,4 +26,4 @@ typing-extensions==4.13.2
 typing-inspection==0.4.1
 urllib3==2.4.0
 uvicorn==0.27.1
-jsonlines>=4.0.0 
+jsonlines>=4.0.0
