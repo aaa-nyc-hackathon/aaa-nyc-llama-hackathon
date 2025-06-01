@@ -5,6 +5,7 @@ import os
 import json
 from collections import defaultdict
 from create_trajectory_imgs import track_and_draw_on_first_frame
+from player_feedback import get_player_feedback
 # Parse command line arguments
 if __name__ == "__main__":
     import argparse
@@ -137,27 +138,7 @@ if __name__ == "__main__":
 
         json_team_player_timeframe = extract_team_data(temp_json["frame_list"])
 
-        ### this is the sample json
-    #    [
-    #{
-    #  "team": "Clemson",
-    #  "obj": [
-    #    {
-    #      "jersey_number": 0,
-    #      "frames": [
-    #        { "start_frame": 0, "end_frame": 1, "x": 0.245, "y": 0.453 },
-    #        { "start_frame": 10, "end_frame": 11, "x": 0.49, "y": 0.47 },
-    #        { "start_frame": 1, "end_frame": 2, "x": 0.266, "y": 0.447 },
-    #        { "start_frame": 1, "end_frame": 2, "x": 0.266, "y": 0.447 },
-    #        { "start_frame": 4, "end_frame": 5, "x": 0.716, "y": 0.548 },
-    #        { "start_frame": 7, "end_frame": 8, "x": 0.336, "y": 0.437 }
-    #      ]
-    #    },
-    #    {
-    #      "jersey_number": 12,
-    #      "frames": [
-    #        { "start_frame"
-
+ 
         for team in json_team_player_timeframe:
             team_name = team["team"]
             for player in team["obj"]:
@@ -182,36 +163,34 @@ if __name__ == "__main__":
         print("###")
         print("###")
         print("###")
+        
+   
+        for team in json_team_player_timeframe:
+            for player in team["obj"]:
+                jersey_number = player["jersey_number"]
+                #########big edit to distill data
+                frame_list = player["frames"] if len(player["frames"]) <3 else player["frames"][:2]  # Limit to first 2 frames for feedback
+                for frame in player["frames"]:
+                    if frame["marked_up_image_path"] is None:
+                        print(f"Marked up image path is None for player {jersey_number} in team {team['team']}")
+                        continue
+                    if not os.path.exists(frame["marked_up_image_path"]):
+                        print(f"Marked up image path does not exist: {frame['marked_up_image_path']}")
+                        continue
+                    feedback = get_player_feedback(frame["marked_up_image_path"])
+                    frame["feedback"] = feedback
 
 
-        #prints with double quotes
         output = {
+            "video_segment_path": segment,
             "list_of_info": json_team_player_timeframe
         }
         print(json.dumps(output, indent=2))
-                
 
-
-                    
-        
-        #for frame_range in temp_json["frame_list"]:
-        #    s = convert_frame_to_seconds(frame_range["start"])
-        #    e = convert_frame_to_seconds(frame_range["end"])
-        #    for img in frame_range["image_data"]["players"]:
-        #        x, y = convert_percent_to_coordinates(
-        #            img["coordinates"]["x_coordinate"],
-        #            img["coordinates"]["y_coordinate"],
-        #            segment
-        #        )
-        #        print("Processing player:", img["jerseyNumber"], "at coordinates:", x, y)
-        #        marked_up_img_path = track_and_draw_on_first_frame(
-        #            video_path=segment,
-        #            start_time=s, 
-        #            end_time=e + 2 if e+2 < get_video_seconds(segment) else get_video_seconds(segment),
-        #            cx=x, 
-        #            cy=y,
-        #            output_filename=os.path.join(os.getcwd(), "trajectory_images", f"{img['jerseyNumber']}_{img['team']}.png")
-        #            )
+        # save to final_output.json
+        with open(os.path.join(os.getcwd(), "final_output.json"), "a") as f:
+            json.dump(output, f)
+            f.write("\n")
                 
         clip_number += 1
         break

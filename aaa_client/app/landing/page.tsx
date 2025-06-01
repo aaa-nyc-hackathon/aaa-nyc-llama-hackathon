@@ -1,8 +1,51 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Component() {
+  const [apiStatus, setApiStatus] = useState<{ status: string; message: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    async function checkApiHealth() {
+      try {
+        // First attempt with default fetch
+        try {
+          const response = await fetch('http://localhost:8000/', {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+            },
+            mode: 'cors'
+          });
+          
+          const data = await response.json();
+          console.log('API Health Check Response:', data);
+          setApiStatus(data);
+          return;
+        } catch (initialErr) {
+          console.warn('Initial fetch attempt failed, trying with no-cors:', initialErr);
+        }
+        
+        // Second attempt with no-cors mode (will not be able to read the response)
+        const fallbackResponse = await fetch('http://localhost:8000/', { 
+          mode: 'no-cors' 
+        });
+        
+        // If we get here, at least we know the API is running
+        console.log('API is reachable but CORS is blocking proper access');
+        setApiStatus({ status: 'online', message: 'API is running but CORS issues detected' });
+        
+      } catch (err) {
+        console.error('Error checking API health:', err);
+        setError('Failed to connect to API - Make sure backend is running');
+      }
+    }
+    
+    checkApiHealth();
+  }, []);
+  
   return (
     <div className="min-h-screen bg-[#000000] text-white">
       {/* Navigation */}
@@ -15,9 +58,20 @@ export default function Component() {
           />
           <span className="text-white text-xl font-bold">AthletIQ</span>
         </Link>
-        <Link href="/gallery" className="text-white text-lg">
-          Login
-        </Link>
+        <div className="flex items-center gap-4">
+          {apiStatus && (
+            <div className="flex items-center gap-2 text-sm">
+              <span className={`w-2 h-2 rounded-full ${apiStatus.status === 'online' ? 'bg-green-500' : 'bg-red-500'}`}></span>
+              <span className="text-gray-300">API: {apiStatus.status}</span>
+            </div>
+          )}
+          {error && (
+            <div className="text-sm text-red-400">{error}</div>
+          )}
+          <Link href="/gallery" className="text-white text-lg">
+            Login
+          </Link>
+        </div>
       </nav>
 
       {/* Main Content */}

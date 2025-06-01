@@ -157,35 +157,3 @@ def split_camera_moves(input_video_path, output_dir="video_segments", threshold=
 
 
 
-# Parse command line arguments
-if __name__ == "__main__":
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Split video into segments based on camera movements')
-    parser.add_argument('--video', '-v', type=str, required=False, 
-                        default=os.path.join(os.getcwd(), "videos", "alabama_clemson.mp4"),
-                        help='Path to the input video file')
-
-
-                        
-    args = parser.parse_args()
-    
-    print(f"Input video: {args.video}")
-
-    
-    
-    # Run the processing function
-    segments = split_camera_moves(
-        args.video, 
-        output_dir=os.path.join(os.getcwd(), "video_segments")
-    )
-    
-    # Print the results
-    print(f"\nProcessing complete! Created {len(segments)} video segments.")
-    for segment in segments:
-        print(f" - {os.path.basename(segment)}")
-
-
-
-
-

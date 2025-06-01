@@ -212,4 +212,5 @@ def track_and_draw_on_first_frame(
     os.makedirs(os.path.dirname(output_filename) or ".", exist_ok=True)
     cv.imwrite(output_filename, canvas)
     print(f"✅ Done. Trajectory image saved as: {output_filename}")
+    return output_filename
 

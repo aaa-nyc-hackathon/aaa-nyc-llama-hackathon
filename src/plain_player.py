@@ -11,27 +11,9 @@ import base64
 import jsonlines
 import subprocess
 from dotenv import load_dotenv
-
+import shutil
 load_dotenv()
 
-
-# check for access
-if not os.environ.get("LLAMA_API_KEY"):
-    raise ValueError(f"you need to obtain a LLAMA api key first")
-
-from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-
-HERD = {"mav": "Llama-4-Maverick-17B-128E-Instruct-FP8",
-        "scout": "Llama-4-Scout-17B-16E-Instruct-FP8"
-        }
-
-argparser = ArgumentParser(
-           prog='Video processing',
-           description='This program processes a video from local fs and pipes stuff to a .jsonl',
-           epilog='')
-
-argparser.add_argument("--inputvideo", type=str, default="videos/alabama_clemson_30s_clip.mp4", help='filename locally')
-argparser.add_argument("--plot", action='store_true', help='make a plot')
 
 def image_to_base64(image_path):
     with open(image_path, "rb") as img:
@@ -45,8 +27,11 @@ def get_player_positions(inputvideo, plot=False):
     except:
       client = LlamaAPIClient()
 
+    
+
     #check if images directory exists, if not create it
     if not os.path.exists("images"):
+        shutil.rmtree("images")
         os.makedirs("images")
     ffmpeg_cmd_retry = ['ffmpeg', '-i', inputvideo, '-vf', 'fps=fps=1', str(os.path.join(os.getcwd(), "images", "frame%d.jpg"))]
 
@@ -160,7 +145,6 @@ def get_player_positions(inputvideo, plot=False):
         }
     }
 })
-        print(response.completion_message.content.text)
         image_llama_data = json.loads(response.completion_message.content.text)
         
         # Create a result dictionary that includes timestamps and the player data
@@ -173,25 +157,3 @@ def get_player_positions(inputvideo, plot=False):
         results_output.append(result)
 
     return results_output
-
-
-
-    ##image = cv2.imread(image_filepath)
-    #if args.plot:
-    #    height, width, channels = image.shape
-    #    # Write this data to a .jsonl file...
-    #    for llama_data in image_llama_data:
-    #        x_perc, y_perc = llama_data['coordinates']['x_coordinate'], llama_data['coordinates']['y_coordinate']
-    #        if llama_data['team'].lower() == "clemson":
-    #            color = (0, 0, 255)
-    #        else:
-    #            color = (0, 255, 0)
-    #        # Calculate the pixel coordinates
-    #        x_coordinate = int(width * x_perc)
-    #        y_coordinate = int(height * y_perc)
-    #        center_coordinates = (x_coordinate, y_coordinate)
-    #        radius = 10  # Example radius
-    #        thickness = -1  # Filled circle (negative value)
-    #        # Draw the circular point
-    #        image = cv2.circle(image, center_coordinates, radius, color, thickness)
-    #        cv2.imwrite("image_with_points.jpg", image)
