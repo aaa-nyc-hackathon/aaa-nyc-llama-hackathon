@@ -10,15 +10,26 @@ load_dotenv()
 
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from benchmark import benchmark
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Update this with specific origins in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define the request body using Pydantic
 class LoadBody(BaseModel):
     file_path: str
 
 # Define the POST route
+
 @app.post("/load/")
 async def load(body: LoadBody):
     print(body.file_path)
