@@ -2,10 +2,12 @@ from scene_detect import *
 from plain_player import *
 import subprocess
 import os   
+import time
 import json
 from collections import defaultdict
 from create_trajectory_imgs import track_and_draw_on_first_frame
 from player_feedback import get_player_feedback
+import shutil
 # Parse command line arguments
 
 
@@ -110,7 +112,13 @@ def start_workflow(source_video_path):
     new_json = []
     clip_number = 0
     for segment in segments:
-        position_json = get_player_positions(segment)
+        time.sleep(30)
+        print("sleeping for 30 seconds")
+        try:
+            position_json = get_player_positions(segment)
+        except Exception as e:
+            print(f"Error getting player positions: {e} retrying since probably a structured output error")
+            position_json = get_player_positions(segment)
         player_numbers = unique_jersey_number(position_json) #unique jersey numbers
         temp_json = {
             "video_segment_path": segment,
@@ -178,9 +186,15 @@ def start_workflow(source_video_path):
         clip_number += 1
         
         new_json.append(output)
-    
-    outFinal = {"video_segments", new_json}
-    return outFinal
+        break
+    outFinal = {"video_segments": new_json}
+    try:
+        with open(os.path.join(os.getcwd(), "final_output.json"), "w") as f:
+            json.dump(outFinal, f, indent=2)
+        return outFinal
+    except Exception as e:
+        print(f"Error writing final output: {e}")
+        return None
 
 
 

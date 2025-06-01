@@ -1,0 +1,1551 @@
+{
+  "video_segments": [
+    {
+      "video_segment_path": "video_segments\\trimmed_01ae5e47b58f4855a1c26cd0880534fb-Scene-001.mp4",
+      "list_of_info": [
+        {
+          "team": "Clemson",
+          "obj": [
+            {
+              "jersey_number": 0,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.172,
+                  "y": 0.499,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Clemson_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is dribbling the ball.",
+                      "The player is being closely guarded by a defender."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by a defender, which may limit their ability to make a play."
+                    ],
+                    "positives": [
+                      "The player is dribbling the ball effectively, suggesting they have good ball control."
+                    ],
+                    "final_conclusion": "The player is doing a good job of dribbling the ball, but is being closely guarded by a defender, which may limit their ability to make a play."
+                  }
+                },
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.157,
+                  "y": 0.504,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Clemson_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a red uniform, indicating they are on the Clemson team.",
+                      "The player is in mid-air, jumping towards the left side of the image, suggesting they are attempting to block a shot or make a defensive play. This is indicated by the red arrow pointing to the player's left leg and the blue arrow pointing to their right leg, which is bent at the knee, indicating movement and action."
+                    ],
+                    "potential_issues": [
+                      "The player is not in a stable position, as they are airborne and have their legs bent. This could make it difficult for them to control their body or react to the ball's trajectory.",
+                      "The player's body language suggests they are stretching to reach the ball, which may indicate they are not in the optimal position to make a play."
+                    ],
+                    "positives": [
+                      "The player is showing athleticism and effort by jumping to make a defensive play.",
+                      "Their positioning on the court suggests they are anticipating the opponent's next move and are prepared to react."
+                    ],
+                    "final_conclusion": "The player in the yellow box is making a good defensive play by jumping to block a shot or make a defensive play, demonstrating their athleticism and effort. However, their unstable position in mid-air may make it challenging to control their body or react to the ball's trajectory."
+                  }
+                },
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.28,
+                  "y": 0.33,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Clemson_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing on the sidelines, not actively participating in the game.",
+                      "The player is wearing a white jersey with the number 35 on it, indicating they are part of the Alabama team."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be distracted or not paying attention to the game, as they are looking away from the court and seem to be engaged in conversation with someone else."
+                    ],
+                    "positives": [
+                      "The player is wearing a white jersey with the number 35 on it, indicating they are part of the Alabama team and are likely a substitute or reserve player."
+                    ],
+                    "final_conclusion": "The player is not actively participating in the game and appears to be distracted or not paying attention to the game."
+                  }
+                },
+                {
+                  "start_frame": 7,
+                  "end_frame": 8,
+                  "x": 0.33,
+                  "y": 0.432,
+                  "player_team_score": 2,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Clemson_start_7_end_8.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is a member of the Auburn Tigers basketball team, as indicated by their red uniform.",
+                      "The player is standing near the sideline, close to the bench, and appears to be out of bounds or possibly on the bench, as they are not on the court with the other players."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively participating in the game, as they are not on the court with the other players.",
+                      "The player is not in a position to directly influence the game, as they are standing near the sideline."
+                    ],
+                    "positives": [
+                      "The player is likely providing support to their teammates by being present and visible near the sideline.",
+                      "The player may be receiving instructions or guidance from their coaches, as they are standing near the bench."
+                    ],
+                    "final_conclusion": "The player in the box is not directly participating in the game, but is likely providing support to their teammates and receiving guidance from their coaches."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 2,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.125,
+                  "y": 0.403,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\2_Clemson_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red uniform with the number 3 on it.",
+                      "The player is dribbling the ball and appears to be in control of it."
+                    ],
+                    "potential_issues": [
+                      "The player is not looking up at the court, which could make them vulnerable to a steal or a defensive player getting into position to block their shot.",
+                      "The player is not being closely guarded, but there are several defenders nearby who could potentially intercept the ball or contest a shot."
+                    ],
+                    "positives": [
+                      "The player is moving quickly and appears to be in control of the ball, suggesting good ball-handling skills.",
+                      "The player is driving towards the basket, which could result in a scoring opportunity or a drawing of a foul."
+                    ],
+                    "final_conclusion": "The player in the box is doing a good job of controlling the ball and driving towards the basket, but they need to be aware of their surroundings and look up to make a smart decision."
+                  }
+                },
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.213,
+                  "y": 0.515,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\2_Clemson_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red uniform and is standing near the baseline.",
+                      "The player is positioned with their back to the basket and is facing the court."
+                    ],
+                    "potential_issues": [
+                      "The player is not in a defensive stance, which could make them vulnerable to being beaten by an opponent."
+                    ],
+                    "positives": [
+                      "The player is in a good position to receive a pass or make a play."
+                    ],
+                    "final_conclusion": "The player is in a relatively good position on the court, but their lack of defensive stance could be a potential issue."
+                  }
+                },
+                {
+                  "start_frame": 3,
+                  "end_frame": 4,
+                  "x": 0.748,
+                  "y": 0.523,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\2_Clemson_start_3_end_4.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red jersey and is standing near the sideline, indicating they are likely a substitute or a player who is not currently in the game.",
+                      "The player appears to be watching the game intently, suggesting they are focused on the action on the court and may be preparing to enter the game."
+                    ],
+                    "potential_issues": [
+                      "The player is standing with their back to the court, which could indicate they are not fully engaged or aware of the situation on the court."
+                    ],
+                    "positives": [
+                      "The player is wearing the same uniform as the other players on their team, indicating they are part of the team and are prepared to play.",
+                      "The player is standing near the sideline, which suggests they are ready to enter the game at a moment's notice."
+                    ],
+                    "final_conclusion": "The player is likely a substitute who is ready to enter the game and is focused on the action on the court."
+                  }
+                },
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.55,
+                  "y": 0.45,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\2_Clemson_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player within the yellow box is wearing a red uniform and is currently dribbling the ball.",
+                      "The player is moving towards the right side of the court, and there is a teammate in a red uniform positioned nearby, potentially ready to receive a pass or create a scoring opportunity."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be closely guarded by an opponent in a white uniform, who is attempting to steal the ball or disrupt their movement.",
+                      "The player's body language suggests they are under pressure and may be struggling to maintain possession of the ball."
+                    ],
+                    "positives": [
+                      "The player is successfully dribbling the ball and moving it up the court, indicating good ball control and decision-making.",
+                      "The presence of a teammate nearby suggests that the player is part of a coordinated team effort, potentially creating a scoring opportunity or exploiting a defensive weakness."
+                    ],
+                    "final_conclusion": "The player within the yellow box is performing reasonably well, demonstrating good ball control and awareness of their surroundings. However, they are facing pressure from the opposing team and must continue to make effective decisions to create a scoring opportunity."
+                  }
+                },
+                {
+                  "start_frame": 7,
+                  "end_frame": 8,
+                  "x": 0.412,
+                  "y": 0.528,
+                  "player_team_score": 2,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\2_Clemson_start_7_end_8.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is in possession of the ball, indicating they are actively involved in the game.",
+                      "The player is dribbling the ball towards the opponent's basket, suggesting they are attempting to score or create a scoring opportunity."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an opponent, which could limit their ability to score or pass the ball effectively.",
+                      "The player's movement is being tracked by multiple opponents, indicating they are a key target for the opposing team."
+                    ],
+                    "positives": [
+                      "The player is moving quickly and decisively down the court, suggesting they have good ball control and court awareness.",
+                      "The player is being supported by teammates who are positioned to receive a pass or create a scoring opportunity."
+                    ],
+                    "final_conclusion": "The player is doing a good job of controlling the ball and creating a scoring opportunity, but they need to be aware of the defensive pressure and adjust their strategy accordingly to avoid losing possession or being forced into a difficult shot."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 1,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.79,
+                  "y": 0.628,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Clemson_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red uniform with the number 3 on it.",
+                      "The player is dribbling the ball with their right hand and appears to be moving towards the right side of the court."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an opponent in a white uniform, who is attempting to steal the ball or disrupt their dribble."
+                    ],
+                    "positives": [
+                      "The player is able to maintain control of the ball while being closely guarded, indicating good ball-handling skills."
+                    ],
+                    "final_conclusion": "The player is doing a good job of maintaining control of the ball while being closely guarded, but may need to be aware of the opponent's defensive pressure and adjust their strategy accordingly."
+                  }
+                },
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.716,
+                  "y": 0.458,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Clemson_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing on the sideline and appears to be coaching or giving instructions to a teammate.",
+                      "The player is wearing an orange jersey, indicating that they are a member of the Clemson team."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively participating in the game, which could be a limitation if they are needed to enter the game.",
+                      "The player's body language and facial expression are not visible, so it is unclear if they are providing effective guidance or support to their teammate."
+                    ],
+                    "positives": [
+                      "The player is actively engaged with their teammate, suggesting that they are providing guidance or support.",
+                      "The player is likely a coach or experienced player, and their presence on the sideline may be helping to motivate and guide their teammates."
+                    ],
+                    "final_conclusion": "The player in the box is likely a coach or experienced player who is providing guidance and support to their teammate. While they are not actively participating in the game, their presence on the sideline may be having a positive impact on their team's performance."
+                  }
+                },
+                {
+                  "start_frame": 3,
+                  "end_frame": 4,
+                  "x": 0.713,
+                  "y": 0.461,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Clemson_start_3_end_4.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a red uniform and appears to be playing for Clemson.",
+                      "The player is standing near the sideline, and their body is turned to the right, suggesting they are watching the play unfold or preparing to receive a pass or get back into the play."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively engaged in the current play, as they are standing near the sideline.",
+                      "The player's position near the sideline may indicate they are not fully aware of the game's progression or are not in the optimal position to react to the play."
+                    ],
+                    "positives": [
+                      "The player is wearing a red uniform, indicating they are part of the Clemson team.",
+                      "The player is standing near the sideline, which could be a strategic position to receive a pass or get back into the play."
+                    ],
+                    "final_conclusion": "The player in the box is not actively engaged in the current play, but their position near the sideline could be a strategic move to receive a pass or get back into the play."
+                  }
+                },
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.637,
+                  "y": 0.521,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Clemson_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a red jersey and appears to be in a defensive stance, bending down and facing the opponent with the ball.",
+                      "The player is closely guarding an opponent who is dribbling the ball, indicating they are actively defending."
+                    ],
+                    "potential_issues": [
+                      "The player in the box is not directly in front of the opponent with the ball, which could be considered a bad defensive position as it may allow the opponent to drive or pass more easily."
+                    ],
+                    "positives": [
+                      "The player is in a defensive stance, indicating they are prepared to react to the opponent's next move.",
+                      "The player is close to the opponent, which is a good defensive position as it limits the opponent's ability to dribble or pass freely."
+                    ],
+                    "final_conclusion": "The player in the box is generally doing a good job defending, as they are in a defensive stance and close to the opponent. However, their positioning could be improved by being more directly in front of the opponent to limit their driving or passing options."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 12,
+              "frames": [
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.539,
+                  "y": 0.445,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\12_Clemson_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a white jersey, indicating they are on the Alabama team.",
+                      "The player is in a defensive stance, with their knees bent and arms outstretched, suggesting they are trying to block or contest a shot or pass."
+                    ],
+                    "potential_issues": [
+                      "The player is not directly marking an opponent, which could be a missed assignment or a lack of awareness of their surroundings.",
+                      "The player's positioning may be leaving an opponent open or creating a scoring opportunity for the opposing team."
+                    ],
+                    "positives": [
+                      "The player is actively engaged in the play, demonstrating a willingness to defend and make an impact on the game.",
+                      "The player's defensive stance suggests they are prepared to react quickly to the opponent's next move."
+                    ],
+                    "final_conclusion": "The player is doing some good things, such as being actively engaged in the play and demonstrating a willingness to defend. However, they may be doing some bad things, such as not directly marking an opponent, which could be a missed assignment or a lack of awareness of their surroundings."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 5,
+              "frames": [
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.79,
+                  "y": 0.609,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\5_Clemson_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red jersey and is positioned near the top-right corner of the court, indicating they are likely a member of the Clemson team.",
+                      "The player is standing with their back to the camera, and appears to be preparing to receive a pass or is in a defensive stance."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively engaging with the ball or their opponent, which could be a missed opportunity to make a play.",
+                      "The player's positioning and body language suggest they may be out of position or not fully aware of their surroundings on the court."
+                    ],
+                    "positives": [
+                      "The player is in a relatively open position on the court, which could allow them to receive a pass or create a scoring opportunity.",
+                      "The player's defensive stance suggests they are prepared to react to the opponent's next move."
+                    ],
+                    "final_conclusion": "The player in the box is likely a key player for the Clemson team, and their positioning and body language suggest they are prepared to make a play. However, they may be out of position or not fully aware of their surroundings, which could be a potential issue. Overall, the player's performance is neutral, with both positive and negative aspects."
+                  }
+                },
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.809,
+                  "y": 0.516,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\5_Clemson_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a red uniform and is standing near the sideline, possibly waiting for a substitution or taking a break.",
+                      "The player appears to be watching the game intently, suggesting they are still engaged and focused on the action on the court."
+                    ],
+                    "potential_issues": [
+                      "The player is not currently participating in the game, which could indicate they are not being utilized effectively by their team or are not in a position to make a significant impact."
+                    ],
+                    "positives": [
+                      "The player is likely being rested or given a break, which can help prevent fatigue and injury.",
+                      "The player's presence on the sideline may also indicate that they are part of the team's rotation and are being prepared to enter the game at some point."
+                    ],
+                    "final_conclusion": "The player in the box is not currently participating in the game, but is still engaged and focused on the action on the court. While this may indicate they are not being utilized effectively, it also suggests they are being rested or given a break, which can be beneficial for their overall performance."
+                  }
+                },
+                {
+                  "start_frame": 3,
+                  "end_frame": 4,
+                  "x": 0.166,
+                  "y": 0.403,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\5_Clemson_start_3_end_4.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a red uniform and is positioned near the top-left corner of the basketball court.",
+                      "The player appears to be in the process of shooting or has just shot the ball, as indicated by their stance and the position of their arm."
+                    ],
+                    "potential_issues": [
+                      "The player's shot is not visible, so it is unclear whether they made the shot or not.",
+                      "The player is not closely guarded by an opponent, which could be a good or bad thing depending on the context of the play."
+                    ],
+                    "positives": [
+                      "The player is in a good position on the court, near the top-left corner, which could indicate that they are a skilled shooter or have a good understanding of the game.",
+                      "The player is wearing a red uniform, which matches the color of the team they are playing for (Clemson)."
+                    ],
+                    "final_conclusion": "The player in the box is likely a skilled shooter or has a good understanding of the game, but the outcome of their shot is unknown. They appear to be in a good position on the court and are not closely guarded by an opponent."
+                  }
+                },
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.298,
+                  "y": 0.44,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\5_Clemson_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a blue uniform, which is not the uniform of either team playing in the game.",
+                      "The player in the box is standing on the sideline, not on the court, and appears to be a mascot or cheerleader."
+                    ],
+                    "potential_issues": [
+                      "The player in the box is not actively participating in the game.",
+                      "The player in the box is not wearing a uniform that matches either team, which may indicate they are not an official member of either team."
+                    ],
+                    "positives": [
+                      "The player in the box is likely engaging with the crowd and creating a lively atmosphere.",
+                      "The player in the box may be providing entertainment or support to the team they are associated with."
+                    ],
+                    "final_conclusion": "The player in the box is likely a mascot or cheerleader for one of the teams, and is not directly participating in the game. While they are not directly contributing to the gameplay, they are likely playing a role in creating a positive and engaging atmosphere for the spectators."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 3,
+              "frames": [
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.23,
+                  "y": 0.48,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Clemson_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red uniform, indicating they are on the team 'Alabama'.",
+                      "The player is jumping and appears to be in the process of shooting or passing the ball, but the ball is not visible in the image, so the exact action is unclear. However, based on the context, it is likely the player is shooting the ball or has just released it for a shot. The player's body is positioned in a way that suggests they are attempting a shot, with their arm extended upwards. The player's body language and the positioning of their teammates and opponents suggest that they are in a scoring position, possibly near the basket or in a good shooting spot. The player's teammates are positioned around them, indicating a coordinated team effort. The opponents are also nearby, suggesting a competitive and intense game environment."
+                    ],
+                    "potential_issues": [
+                      "The player's shooting form is not clearly visible, making it difficult to assess their technique. However, the fact that they are jumping and extending their arm suggests a potentially good shooting form. The player's decision to shoot or pass the ball may be influenced by the positioning of their teammates and opponents, which could be a good or bad thing depending on the context. If the player is shooting, they may be taking a high-percentage shot or a difficult one, depending on their position on the court and the defense's positioning. If the player is passing, they may be finding an open teammate or being forced to make a difficult pass due to defensive pressure."
+                    ],
+                    "positives": [
+                      "The player is actively engaged in the game, jumping and attempting to score or pass the ball. The player's teammates are positioned around them, indicating a coordinated team effort. The player's body language suggests confidence and a willingness to take on the challenge of scoring or making a play."
+                    ],
+                    "final_conclusion": "The player in the box is likely attempting to score or make a play, and their actions suggest a mix of positive and potentially questionable elements. While their exact action is unclear, their engagement and body language indicate a strong effort. The outcome of their action will depend on various factors, including their shooting form, the positioning of their teammates and opponents, and the overall game context."
+                  }
+                },
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.172,
+                  "y": 0.501,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Clemson_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey with a number 3 on the front, indicating that they are on the Clemson team.",
+                      "The player is positioned near the top of the key, facing the basket and appears to be preparing to receive a pass or drive to the basket."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an Alabama defender, who is positioned between them and the basket.",
+                      "The player's body language suggests that they are not open to receive a pass, as they are facing the basket and not looking for an open teammate."
+                    ],
+                    "positives": [
+                      "The player is in a good position on the court, near the top of the key, which could allow them to create a scoring opportunity or find an open teammate."
+                    ],
+                    "final_conclusion": "The player in the box is in a challenging situation, being closely guarded by an Alabama defender. However, they are in a good position on the court and have the potential to create a scoring opportunity or find an open teammate."
+                  }
+                },
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.034,
+                  "y": 0.52,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Clemson_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a white uniform.",
+                      "The player is standing on the court, likely near the sideline or a boundary."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be standing still, which could indicate a lack of movement or engagement in the game."
+                    ],
+                    "positives": [
+                      "The player is in a position to potentially receive a pass or be involved in a play."
+                    ],
+                    "final_conclusion": "The player is likely a substitute or a player who is not currently involved in the active play. They may be waiting for an opportunity to enter the game or be preparing for a potential play."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 35,
+              "frames": [
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.36,
+                  "y": 0.43,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\35_Clemson_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white jersey with the number '30' on the back.",
+                      "The player is positioned near the top of the key, facing away from the camera and towards the basket, with their arms outstretched and hands up, likely to receive a pass or create a passing lane."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an opponent, as indicated by the presence of a defender nearby, which may limit their ability to receive a pass or create scoring opportunities."
+                    ],
+                    "positives": [
+                      "The player's positioning near the top of the key suggests they are creating space and potentially setting up a scoring opportunity or creating a passing lane for a teammate."
+                    ],
+                    "final_conclusion": "The player in the yellow box is likely a key player in the game, as they are positioned in a strategic location on the court and are being closely guarded by an opponent. Their outstretched arms and hands up suggest they are actively involved in the play and are attempting to create a scoring opportunity or receive a pass. Overall, the player's actions appear to be positive, as they are creating space and potentially setting up a scoring opportunity."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 11,
+              "frames": [
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.417,
+                  "y": 0.468,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\11_Clemson_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing still and appears to be watching the ball as it is passed to a teammate.",
+                      "The player is not actively participating in the play and is not moving towards the ball or the opponent's basket."
+                    ],
+                    "potential_issues": [
+                      "The player is not making any effort to get open or create a scoring opportunity.",
+                      "The player is not putting pressure on the opponent's defense, allowing them to focus on other players."
+                    ],
+                    "positives": [
+                      "The player is in a good position to receive a pass from a teammate.",
+                      "The player is aware of the ball's movement and is watching it closely."
+                    ],
+                    "final_conclusion": "The player in the yellow box is not actively contributing to the play and is not making any effort to get open or create a scoring opportunity. They are simply standing still and watching the ball. This lack of movement and engagement may be a negative aspect of their performance."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 10,
+              "frames": [
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.276,
+                  "y": 0.618,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\10_Clemson_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing in the middle of the court, possibly waiting for a pass or observing the game's progression.",
+                      "The player is not actively engaged in the current play, as they are not moving towards the ball or interacting with other players."
+                    ],
+                    "potential_issues": [
+                      "The player may be too passive, as they are not making an effort to move towards the ball or create a scoring opportunity.",
+                      "The player may be out of position, as they are not near the ball or in a strategic location on the court."
+                    ],
+                    "positives": [
+                      "The player is wearing the number 12 jersey, which is visible on the court, indicating that they are a part of the team and are being tracked by the camera.",
+                      "The player is standing in a relatively safe position, away from the action, which may indicate that they are waiting for an opportunity to become involved in the game."
+                    ],
+                    "final_conclusion": "The player in the yellow box is not actively participating in the game and may be too passive, but they are wearing their team jersey and are in a relatively safe position on the court."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 23,
+              "frames": [
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.566,
+                  "y": 0.503,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\23_Clemson_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey and appears to be dribbling the ball.",
+                      "The player is surrounded by opponents in red jerseys, indicating they are under pressure."
+                    ],
+                    "potential_issues": [
+                      "The player is not closely guarded by an opponent, but there are multiple opponents nearby, suggesting they need to be cautious.",
+                      "The player's body language and positioning suggest they are preparing to make a move or pass the ball."
+                    ],
+                    "positives": [
+                      "The player is in control of the ball and appears to be making a deliberate move.",
+                      "The player is not being closely guarded, giving them an opportunity to create a scoring chance."
+                    ],
+                    "final_conclusion": "The player in the box is doing well by maintaining control of the ball and creating an opportunity to make a play. However, they need to be aware of the surrounding opponents and make a quick decision to avoid losing possession."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 13,
+              "frames": [
+                {
+                  "start_frame": 8,
+                  "end_frame": 9,
+                  "x": 0.183,
+                  "y": 0.552,
+                  "player_team_score": 2,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\13_Clemson_start_8_end_9.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is dribbling the ball down the court, indicating they are in possession of the ball and are attempting to advance it.",
+                      "The player is being closely guarded by an opponent, suggesting they are under pressure and must make a quick decision to maintain possession or create a scoring opportunity."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded, which may limit their ability to create a scoring opportunity or maintain possession of the ball.",
+                      "The player may be at risk of losing possession or committing a turnover if they are not able to effectively evade their defender."
+                    ],
+                    "positives": [
+                      "The player is dribbling the ball, indicating they have control and are able to move it effectively.",
+                      "The player is moving down the court, suggesting they are attempting to create a scoring opportunity and are actively engaged in the game."
+                    ],
+                    "final_conclusion": "The player is actively engaged in the game, dribbling the ball and attempting to create a scoring opportunity, but is facing pressure from their opponent and must make a quick decision to maintain possession or create a scoring chance."
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "team": "Alabama",
+          "obj": [
+            {
+              "jersey_number": 4,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.478,
+                  "y": 0.551,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\4_Alabama_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is dribbling the ball down the court, indicating they have possession and are attempting to advance it.",
+                      "The player is closely guarded by an opponent, suggesting they are being pressured and need to make a quick decision."
+                    ],
+                    "potential_issues": [
+                      "The player is not creating much space between themselves and the defender, which could make it difficult to make a successful pass or shot.",
+                      "The player's body language suggests they may be slightly off-balance or hesitant, which could make them more vulnerable to a steal or defensive play."
+                    ],
+                    "positives": [
+                      "The player is moving the ball up the court, indicating they are attempting to create a scoring opportunity.",
+                      "The player is being closely guarded, but they are still maintaining possession of the ball, showing some level of skill and control."
+                    ],
+                    "final_conclusion": "The player in the box is doing some good things, such as maintaining possession of the ball and attempting to create a scoring opportunity. However, they are also facing some challenges, including being closely guarded and potentially being off-balance. Overall, the player's performance is neutral, with both positive and negative aspects."
+                  }
+                },
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.36,
+                  "y": 0.445,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\4_Alabama_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white jersey, indicating they are on the Alabama team.",
+                      "The player is standing near the sideline, watching the game unfold, and appears to be in a position to potentially receive a pass or enter the game as a substitute."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively engaged in the current play, as they are standing near the sideline and not participating in the action on the court."
+                    ],
+                    "positives": [
+                      "The player is closely observing the game, suggesting they are alert and prepared to react if needed."
+                    ],
+                    "final_conclusion": "The player in the yellow box is not directly involved in the current play but is positioned to potentially enter the game or receive a pass, indicating they are attentive and ready to participate."
+                  }
+                },
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.359,
+                  "y": 0.5,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\4_Alabama_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white uniform, indicating they are on the team Alabama.",
+                      "The player is dribbling the ball with their right hand, as shown by the blue circle and red arrow in the image, and is moving towards the left side of the court. The player's left hand is not visible, but their body position suggests they are using their right hand to control the ball."
+                    ],
+                    "potential_issues": [
+                      "The player is relatively isolated on the court, with no clear passing options available to them. The closest teammate is several feet away, and the player is being closely guarded by a defender from the opposing team, Clemson.",
+                      "The player's body language suggests they are focused on dribbling the ball, but they may be at risk of being stripped or forced into a difficult shot if they are not careful."
+                    ],
+                    "positives": [
+                      "The player is demonstrating good ball control, as evidenced by their ability to dribble the ball with their right hand while moving at a moderate pace.",
+                      "The player's movement towards the left side of the court may be an attempt to create space or exploit a weakness in the opposing team's defense."
+                    ],
+                    "final_conclusion": "The player in the yellow box is doing a good job of controlling the ball and moving on the court, but may be at risk of being pressured by the opposing team's defense. To improve their chances of success, they may need to look for opportunities to pass the ball to teammates or create a scoring opportunity through a drive or shot."
+                  }
+                },
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.472,
+                  "y": 0.555,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\4_Alabama_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing still and not moving, which could be a bad thing as it makes them an easy target for the opposing team.",
+                      "The player is not closely guarded by an opponent, which is a good thing as it gives them the opportunity to move the ball or take a shot."
+                    ],
+                    "potential_issues": [
+                      "The player's lack of movement could be due to being closely watched by the opposing team, or they may be waiting for a teammate to make a move.",
+                      "The player is not taking advantage of the open space around them, which could be a missed opportunity to score or create a scoring chance."
+                    ],
+                    "positives": [
+                      "The player is in a relatively open position on the court, which could be an opportunity to receive a pass or create a scoring chance.",
+                      "The player is wearing a red uniform, which suggests they are part of a cohesive team unit and may have a clear role or strategy."
+                    ],
+                    "final_conclusion": "The player in the box is not doing much at the moment, standing still and not moving. This could be a bad thing as it makes them an easy target for the opposing team. However, they are not closely guarded, which is a good thing. Overall, the player's current situation is neutral, and their next move will determine whether it is good or bad."
+                  }
+                },
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.485,
+                  "y": 0.56,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\4_Alabama_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a red uniform and appears to be defending against an opponent in white.",
+                      "The player is positioned close to the opponent, suggesting they are trying to contest the shot or pass."
+                    ],
+                    "potential_issues": [
+                      "The player may be overcommitting to the opponent, potentially leaving their own basket or teammate unguarded."
+                    ],
+                    "positives": [
+                      "The player is actively engaging with the opponent, showing defensive effort."
+                    ],
+                    "final_conclusion": "The player in the box is making an effort to defend, but may be vulnerable to being beaten or leaving their own basket open."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 12,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.34,
+                  "y": 0.427,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\12_Alabama_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white Alabama uniform and is on the court, indicating they are an active player in the game.",
+                      "The player appears to be jumping up, likely to block a shot or pass, as indicated by their raised arms and bent knees, which is a good defensive play."
+                    ],
+                    "potential_issues": [
+                      "The player is not directly interacting with the ball or an opponent, so their specific actions are unclear.",
+                      "There is a possibility that the player's jump is not effective, or they are out of position, which could be considered a bad play."
+                    ],
+                    "positives": [
+                      "The player is actively participating in the game and is attempting to make a defensive play.",
+                      "Their positioning and jumping ability suggest they are a skilled player who is aware of the game's dynamics."
+                    ],
+                    "final_conclusion": "The player in the yellow box is likely making a good defensive play by jumping up to block a shot or pass, but the exact effectiveness of their action is unclear without more context."
+                  }
+                },
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.328,
+                  "y": 0.433,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\12_Alabama_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing on the sideline and is not currently in the game.",
+                      "The player is wearing a white jersey with the number 12 on it, indicating they are part of the Clemson team."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively participating in the game, so it is unclear what they are doing well or poorly."
+                    ],
+                    "positives": [
+                      "The player appears to be focused on the game, as they are watching the action on the court."
+                    ],
+                    "final_conclusion": "The player is not currently in the game, so it is not possible to assess their performance. However, they appear to be engaged and focused on the game."
+                  }
+                },
+                {
+                  "start_frame": 7,
+                  "end_frame": 8,
+                  "x": 0.462,
+                  "y": 0.361,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\12_Alabama_start_7_end_8.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white uniform and is in possession of the ball.",
+                      "The player is dribbling the ball and appears to be moving towards the right side of the court, suggesting they are trying to create a scoring opportunity or pass to a teammate."
+                    ],
+                    "potential_issues": [
+                      "The player is closely guarded by an opponent in red, who is reaching in to try and steal the ball.",
+                      "The player is in a somewhat vulnerable position, with their body not fully facing the direction they are moving, which could make it difficult to maintain control of the ball or make a quick pass."
+                    ],
+                    "positives": [
+                      "The player is able to maintain possession of the ball despite being closely guarded.",
+                      "The player appears to be aware of their surroundings and is using their body to shield the ball from the defender."
+                    ],
+                    "final_conclusion": "The player in the yellow box is doing a good job of maintaining possession of the ball and creating a scoring opportunity, but they need to be aware of the defender's presence and be prepared to make a quick pass or shot to avoid losing the ball."
+                  }
+                },
+                {
+                  "start_frame": 8,
+                  "end_frame": 9,
+                  "x": 0.508,
+                  "y": 0.395,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\12_Alabama_start_8_end_9.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey, indicating they are on the Alabama team.",
+                      "The player is in possession of the ball, as indicated by the ball graphic near their feet, and is dribbling it with their right hand, suggesting they are right-handed or preferring to use their right hand for dribbling in this situation."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be closely guarded by a Clemson player, as indicated by the red jersey and the proximity of the two players.",
+                      "The player is not in a clear position to shoot or pass the ball to a teammate, suggesting they may be under pressure or not having a clear path to the basket."
+                    ],
+                    "positives": [
+                      "The player is able to maintain possession of the ball while being closely guarded, indicating good ball control and dribbling skills."
+                    ],
+                    "final_conclusion": "The player in the box is doing a good job of maintaining possession of the ball under pressure, but is facing a challenging defensive situation. They will need to make a quick decision to either pass the ball to a teammate or drive to the basket to create a scoring opportunity."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 23,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.572,
+                  "y": 0.486,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\23_Alabama_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey and blue shorts, indicating that they are on the Alabama team.",
+                      "The player is dribbling the ball, suggesting that they are in possession of it and have control over the play."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an opponent in an orange jersey, who is attempting to steal the ball or disrupt their movement.",
+                      "The player's body language suggests that they may be under pressure or stress, as they are leaning forward and looking around the court."
+                    ],
+                    "positives": [
+                      "The player appears to be skilled at dribbling the ball, as they are able to maintain control while being closely guarded.",
+                      "The player is positioned near the top of the key, which could indicate that they are setting up for a shot or a pass to a teammate."
+                    ],
+                    "final_conclusion": "The player in the box is doing a good job of maintaining possession of the ball and navigating the court under pressure. However, they need to be aware of the defender's presence and be prepared to make a quick decision to either pass or shoot the ball."
+                  }
+                },
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.507,
+                  "y": 0.329,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\23_Alabama_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white jersey, indicating they are on the Alabama team.",
+                      "The player is standing on the sideline, not actively participating in the game at the moment the screenshot was taken."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be standing on the sideline, which may indicate they are not currently playing or are waiting for a substitution."
+                    ],
+                    "positives": [
+                      "The player is likely a member of the team and may be ready to enter the game as a substitute."
+                    ],
+                    "final_conclusion": "The player in the yellow box is likely a member of the Alabama team who is currently on the sideline, possibly waiting for a substitution opportunity. Their current inactivity does not necessarily indicate a negative performance, as they may be conserving energy or awaiting a strategic moment to re-enter the game."
+                  }
+                },
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.72,
+                  "y": 0.53,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\23_Alabama_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red uniform and is dribbling the ball.",
+                      "The player is being closely guarded by a defender in a white uniform, who is attempting to steal the ball or block the player's path to the basket. The defender is positioned between the player and the basket, and is reaching out to try and intercept the ball."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by a defender, which may limit their ability to drive to the basket or create a scoring opportunity."
+                    ],
+                    "positives": [
+                      "The player appears to be in control of the ball and is moving quickly down the court.",
+                      "The player is using a cross-over or between-the-legs dribble to create space and get around the defender."
+                    ],
+                    "final_conclusion": "The player is doing a good job of dribbling the ball and creating space to get around the defender. However, they are being closely guarded, which may limit their ability to create a scoring opportunity."
+                  }
+                },
+                {
+                  "start_frame": 8,
+                  "end_frame": 9,
+                  "x": 0.783,
+                  "y": 0.303,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\23_Alabama_start_8_end_9.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey and appears to be dribbling the ball.",
+                      "The player is closely guarded by an opponent in a red jersey, who is attempting to steal the ball or disrupt their movement."
+                    ],
+                    "potential_issues": [
+                      "The player in the box is being closely guarded, which may limit their ability to make a play or create scoring opportunities."
+                    ],
+                    "positives": [
+                      "The player in the box is able to maintain possession of the ball despite being closely guarded.",
+                      "The player is able to move quickly and effectively around the court, potentially creating space or opportunities for a pass or shot."
+                    ],
+                    "final_conclusion": "The player in the box is doing a good job of maintaining possession of the ball and moving effectively around the court, but is facing a challenging defensive situation. They will need to use their skills and decision-making to overcome the opponent's pressure and create a scoring opportunity."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 10,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.292,
+                  "y": 0.461,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\10_Alabama_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white Alabama jersey and appears to be dribbling the ball.",
+                      "The player is in a position to drive to the basket, with a defender closely marking them, as indicated by the red scribble."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded, which may limit their ability to create a scoring opportunity.",
+                      "The player is not yet past the defender, so they may need to make a quick move to get around them."
+                    ],
+                    "positives": [
+                      "The player is in control of the ball and appears to be making a move towards the basket.",
+                      "The player has a clear path to the basket if they can get past the defender."
+                    ],
+                    "final_conclusion": "The player in the yellow box is in a challenging situation, but they have the ball and are making an effort to drive to the basket. With a successful move or shot, they could create a scoring opportunity for their team."
+                  }
+                },
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.335,
+                  "y": 0.517,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\10_Alabama_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a white jersey and is dribbling the ball on the court.",
+                      "The player is standing with their back to the basket, indicating they are likely bringing the ball up the court or initiating an offense."
+                    ],
+                    "potential_issues": [
+                      "The player is not being closely guarded, which might indicate a lack of defensive pressure from the opposing team.",
+                      "The player's positioning and movement suggest they are in control of the ball and are not being pressured by the defense."
+                    ],
+                    "positives": [
+                      "The player is dribbling the ball effectively, showing good ball control.",
+                      "The player's position on the court suggests they are setting up an offense or creating a scoring opportunity."
+                    ],
+                    "final_conclusion": "The player in the box is performing well, showing good ball control and initiating an offense. However, the lack of defensive pressure could be a concern for the opposing team."
+                  }
+                },
+                {
+                  "start_frame": 3,
+                  "end_frame": 4,
+                  "x": 0.485,
+                  "y": 0.466,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\10_Alabama_start_3_end_4.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing white and is in possession of the ball.",
+                      "The player is dribbling the ball with their right hand and is moving towards the right side of the court."
+                    ],
+                    "potential_issues": [
+                      "The player is not using their off-hand to protect the ball, leaving it vulnerable to being stolen by the defender.",
+                      "The player is not using a strong, low dribble, making it easier for the defender to reach in and steal the ball."
+                    ],
+                    "positives": [
+                      "The player is moving quickly and decisively towards the basket, indicating good court awareness and decision-making.",
+                      "The player is using a crossover dribble to create space between themselves and the defender, which is a effective move to create separation."
+                    ],
+                    "final_conclusion": "The player is doing some good things, such as moving quickly and using a crossover dribble, but could improve by using their off-hand to protect the ball and using a stronger dribble."
+                  }
+                },
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.11,
+                  "y": 0.48,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\10_Alabama_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red jersey and is standing at the three-point line.",
+                      "The player is not actively engaged in the current play, as they are standing still and not moving towards the ball or their teammates."
+                    ],
+                    "potential_issues": [
+                      "The player is not participating in the current play, which could be a missed opportunity to contribute to their team's offense or defense."
+                    ],
+                    "positives": [
+                      "The player is in a good position to shoot a three-pointer if they receive the ball.",
+                      "The player is likely providing a passing option for their teammate, as they are standing in a visible location on the court."
+                    ],
+                    "final_conclusion": "The player is not actively engaged in the current play, but they are in a good position to potentially receive a pass and shoot a three-pointer. Their inactivity may be a missed opportunity to contribute to their team's offense or defense."
+                  }
+                },
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.024,
+                  "y": 0.469,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\10_Alabama_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing on the sidelines, not actively participating in the game.",
+                      "The player is wearing a red jersey and white shorts, indicating they are part of the Alabama team."
+                    ],
+                    "potential_issues": [
+                      "The player is not actively participating in the game, which could be due to various reasons such as being benched, injured, or not being part of the current play."
+                    ],
+                    "positives": [
+                      "The player is likely a part of the team and is supporting their teammates from the sidelines."
+                    ],
+                    "final_conclusion": "The player is not actively participating in the game, but is likely supporting their teammates from the sidelines."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 3,
+              "frames": [
+                {
+                  "start_frame": 0,
+                  "end_frame": 1,
+                  "x": 0.523,
+                  "y": 0.425,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Alabama_start_0_end_1.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey with the number 10 on it, indicating that they are a member of the Alabama team.",
+                      "The player is in possession of the ball and appears to be dribbling it towards the basket."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an opponent in a red jersey, who is attempting to steal the ball or block their path to the basket.",
+                      "The player's body language suggests that they may be under pressure or stress, as they are leaning forward and their arms are tense."
+                    ],
+                    "positives": [
+                      "The player is showing good ball control and agility as they navigate through the defense.",
+                      "They appear to be making a decisive move towards the basket, which could potentially result in a scoring opportunity."
+                    ],
+                    "final_conclusion": "The player in the box is doing well in terms of ball control and decision-making, but they need to be aware of the defensive pressure and adjust their strategy accordingly to avoid losing possession of the ball or getting blocked."
+                  }
+                },
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.506,
+                  "y": 0.256,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Alabama_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The image is a screenshot from a live broadcast of a basketball game between Clemson and Alabama.",
+                      "The player in the yellow box is a spectator, not a player on the court."
+                    ],
+                    "potential_issues": [
+                      "The player in the yellow box is not actively participating in the game.",
+                      "The player is standing and appears to be watching the game."
+                    ],
+                    "positives": [
+                      "The player is likely enjoying the game and is engaged with the action on the court."
+                    ],
+                    "final_conclusion": "The player in the yellow box is a spectator who is watching the game and is not directly participating in it. Therefore, it is not possible to identify any good or bad things they are doing in the game as they are not a player."
+                  }
+                },
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.501,
+                  "y": 0.493,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Alabama_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white uniform and appears to be dribbling the ball.",
+                      "The player is surrounded by two opposing players in red uniforms, who are attempting to steal the ball or block their path."
+                    ],
+                    "potential_issues": [
+                      "The player in the yellow box is being closely guarded by the opposing players, which may limit their ability to move freely or create scoring opportunities.",
+                      "The player's body language suggests they may be under pressure or stressed, as they are leaning forward and appear to be concentrating intensely on the ball."
+                    ],
+                    "positives": [
+                      "The player in the yellow box is able to maintain control of the ball despite being surrounded by opponents, indicating good ball-handling skills.",
+                      "The player's position on the court suggests they may be attempting to drive to the basket or create a scoring opportunity, which could be a positive outcome for their team."
+                    ],
+                    "final_conclusion": "The player in the yellow box is showing good ball-handling skills and is attempting to create a scoring opportunity, but is facing challenges from the opposing team's defense."
+                  }
+                },
+                {
+                  "start_frame": 3,
+                  "end_frame": 4,
+                  "x": 0.303,
+                  "y": 0.471,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Alabama_start_3_end_4.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white jersey with the number 13 on it, indicating they are part of the Alabama team.",
+                      "The player is in a defensive stance, with their body positioned to potentially block or intercept the ball being passed by the opposing team (Clemson)."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be slightly out of position, as the red arrow indicates the ball is being passed to a teammate or another player on their team, and they are not directly in line with the pass.",
+                      "The player's defensive stance may not be optimal, as they seem to be leaning slightly forward and not fully prepared to react to the pass or potential drive by the opposing team."
+                    ],
+                    "positives": [
+                      "The player is actively engaged in the play, demonstrating awareness of the game situation and attempting to make a defensive play.",
+                      "Their positioning suggests an effort to anticipate the opponent's next move and be prepared to react accordingly."
+                    ],
+                    "final_conclusion": "The player in the yellow box is making an effort to defend against the opposing team, but their positioning and stance could be improved for better effectiveness."
+                  }
+                },
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.51,
+                  "y": 0.44,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Alabama_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white Alabama uniform.",
+                      "The player is standing near the free throw lane, with their back to the camera and is facing the player with the ball, who is wearing a red Clemson uniform and is dribbling the ball with their right hand. The player in the box is raising their left arm and has their right hand on their hip, which is a defensive stance."
+                    ],
+                    "potential_issues": [
+                      "The player in the box is not directly in front of the player with the ball and is slightly off to the side, which could make it harder to defend against a drive or a pass."
+                    ],
+                    "positives": [
+                      "The player is in a defensive stance, which suggests they are prepared to react to the opponent's next move."
+                    ],
+                    "final_conclusion": "The player in the box is playing defense and is in a good position to react to the opponent's next move. However, they may need to adjust their positioning to be more directly in front of the player with the ball."
+                  }
+                },
+                {
+                  "start_frame": 8,
+                  "end_frame": 9,
+                  "x": 0.628,
+                  "y": 0.629,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\3_Alabama_start_8_end_9.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is dribbling the ball.",
+                      "The player is being closely guarded by an opponent, as indicated by the red and blue circles on the image."
+                    ],
+                    "potential_issues": [
+                      "The player is not looking up to see the court, which could make it difficult to make a good pass or shot.",
+                      "The player is being closely guarded, which could limit their ability to make a play."
+                    ],
+                    "positives": [
+                      "The player is maintaining possession of the ball, which is a positive aspect of their play."
+                    ],
+                    "final_conclusion": "The player in the box is doing a good job of maintaining possession of the ball, but may be at risk of losing it due to the close defense. They need to be aware of their surroundings and look up to make a good play."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 2,
+              "frames": [
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.390625,
+                  "y": 0.445,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\2_Alabama_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is driving to the basket with the ball.",
+                      "The player is being closely guarded by a defender from behind and the side."
+                    ],
+                    "potential_issues": [
+                      "The player is losing their balance and appears to be off-balance.",
+                      "The player is being closely guarded, which may limit their scoring opportunities."
+                    ],
+                    "positives": [
+                      "The player is showing good ball control and is able to maintain possession while driving to the basket.",
+                      "The player is showing aggression and is attempting to score despite being closely guarded."
+                    ],
+                    "final_conclusion": "The player is performing well, showing good ball control and aggression, but may need to improve their balance and footwork to avoid being off-balance and to create more scoring opportunities."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 1,
+              "frames": [
+                {
+                  "start_frame": 1,
+                  "end_frame": 2,
+                  "x": 0.674,
+                  "y": 0.445,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Alabama_start_1_end_2.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is an Alabama player wearing a white jersey with the number 10 on it.",
+                      "The player is dribbling the ball, indicating they are in possession of it and have control over it, which is a positive aspect of their performance."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be closely guarded by an opposing player, suggesting that they are under pressure and may be at risk of losing possession of the ball.",
+                      "The player is not making a clear move towards the basket or creating a scoring opportunity, which could be considered a negative aspect of their performance."
+                    ],
+                    "positives": [
+                      "The player is maintaining possession of the ball and is not being forced into a difficult position by the defender.",
+                      "The player is in a relatively open area of the court, which gives them the opportunity to make a play or create a scoring opportunity."
+                    ],
+                    "final_conclusion": "The player in the box is doing some good things, such as maintaining possession of the ball and being in a relatively open area of the court. However, they are also under pressure from the defender and are not making a clear move towards the basket or creating a scoring opportunity, which could be considered a negative aspect of their performance."
+                  }
+                },
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.678,
+                  "y": 0.595,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Alabama_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white jersey with the number 1 on it.",
+                      "The player is standing on the court, facing towards the right side of the image, and appears to be in a defensive stance, with their back to the basket and their body positioned to potentially block or contest a shot or pass."
+                    ],
+                    "potential_issues": [
+                      "The player is not directly guarding an opponent, which could indicate a lack of defensive awareness or positioning.",
+                      "The player's body language suggests they may be reacting to a play rather than anticipating it, which could be a missed opportunity to make a defensive play."
+                    ],
+                    "positives": [
+                      "The player is in a relatively good defensive position, with their body facing the opponent and their feet shoulder-width apart.",
+                      "The player appears to be alert and focused on the play, as evidenced by their positioning and body language."
+                    ],
+                    "final_conclusion": "The player in the box is doing a decent job of being in a defensive position, but may be lacking in defensive awareness or anticipation. They are not directly guarding an opponent, but are still in a relatively good position to react to the play."
+                  }
+                },
+                {
+                  "start_frame": 7,
+                  "end_frame": 8,
+                  "x": 0.715,
+                  "y": 0.574,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Alabama_start_7_end_8.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white uniform and is on the court.",
+                      "The player is dribbling the ball while moving towards the left side of the court."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be in a relatively open space on the court, which could be a good opportunity to drive to the basket or create a scoring chance.",
+                      "However, there is a defender (marked in blue) closing in on the player from behind, which could potentially disrupt their movement or force them to make a difficult decision."
+                    ],
+                    "positives": [
+                      "The player is maintaining good control of the ball while dribbling, indicating a high level of skill and confidence."
+                    ],
+                    "final_conclusion": "The player in the box is performing well, as they are successfully dribbling the ball and moving up the court. However, they need to be aware of the defender closing in on them and be prepared to make a quick decision to either pass the ball or continue driving to the basket."
+                  }
+                },
+                {
+                  "start_frame": 8,
+                  "end_frame": 9,
+                  "x": 0.452,
+                  "y": 0.437,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\1_Alabama_start_8_end_9.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white uniform and is in possession of the ball.",
+                      "The player is dribbling the ball with their right hand and is moving towards the left side of the court."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded by an opponent in a red uniform, who is trying to steal the ball or block their path."
+                    ],
+                    "positives": [
+                      "The player appears to be in control of the ball and is moving with a sense of purpose, suggesting they are confident and skilled."
+                    ],
+                    "final_conclusion": "The player in the box is doing a good job of maintaining possession of the ball and moving it up the court, but they need to be aware of the defender's presence and be prepared to make a quick decision to avoid losing the ball."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 0,
+              "frames": [
+                {
+                  "start_frame": 2,
+                  "end_frame": 3,
+                  "x": 0.575,
+                  "y": 0.432,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Alabama_start_2_end_3.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the box is wearing a white uniform and is dribbling the ball, indicating they are on offense.",
+                      "The player is being closely guarded by an opponent in a red uniform, suggesting a defensive effort to disrupt their playmaking."
+                    ],
+                    "potential_issues": [
+                      "The player in the box appears to be losing control of the ball, as it is being poked at by the defender and is at risk of being stolen.",
+                      "The player's body positioning and the defender's proximity suggest a potential foul or turnover if the player is not careful."
+                    ],
+                    "positives": [
+                      "The player is attempting to drive to the basket, showing aggression and a willingness to score.",
+                      "The player's movement and the presence of teammates around them indicate a coordinated offensive play."
+                    ],
+                    "final_conclusion": "The player in the box is showing both positive and negative aspects of their game. While they are being aggressive and attempting to score, they are also at risk of losing the ball due to the defender's pressure. The outcome will depend on the player's ability to maintain control and make a successful play."
+                  }
+                },
+                {
+                  "start_frame": 4,
+                  "end_frame": 5,
+                  "x": 0.68,
+                  "y": 0.61,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Alabama_start_4_end_5.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a red uniform and appears to be dribbling the ball.",
+                      "The player is being closely guarded by an opponent in a white uniform."
+                    ],
+                    "potential_issues": [
+                      "The player is being closely guarded, which may limit their ability to drive or shoot the ball effectively."
+                    ],
+                    "positives": [
+                      "The player is dribbling the ball, which suggests they have good ball control.",
+                      "The player is moving towards the basket, which could indicate an opportunity to score."
+                    ],
+                    "final_conclusion": "The player in the box is doing some good things, such as dribbling the ball and moving towards the basket. However, they are also being closely guarded, which could be a challenge."
+                  }
+                },
+                {
+                  "start_frame": 5,
+                  "end_frame": 6,
+                  "x": 0.664,
+                  "y": 0.463,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\0_Alabama_start_5_end_6.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a red uniform and appears to be standing near the baseline, possibly in a position to rebound or defend.",
+                      "The player is not actively engaged with the ball, which is being passed by a teammate to another player on the court."
+                    ],
+                    "potential_issues": [
+                      "The player in the yellow box is not moving or reacting to the play, which could indicate a lack of awareness or engagement with the game.",
+                      "The player's position near the baseline may make it difficult for them to be effective in rebounding or defending, as they are not in a prime position to contest the ball."
+                    ],
+                    "positives": [
+                      "The player is in a relatively safe position near the baseline, which could allow them to recover and react to the play if needed.",
+                      "The player's red uniform suggests that they are part of a cohesive team unit, which can be beneficial for communication and coordination on the court."
+                    ],
+                    "final_conclusion": "The player in the yellow box is not actively engaged with the play and may be at risk of being out of position or unaware of the game's progression. However, their position near the baseline could also be a strategic decision, and their red uniform indicates that they are part of a cohesive team unit."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 24,
+              "frames": [
+                {
+                  "start_frame": 3,
+                  "end_frame": 4,
+                  "x": 0.311,
+                  "y": 0.389,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\24_Alabama_start_3_end_4.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is standing on the sideline, not actively participating in the game.",
+                      "The player is wearing a white jersey, indicating they are part of the Alabama team."
+                    ],
+                    "potential_issues": [
+                      "The player is not directly involved in the game, which could be due to various reasons such as being a substitute, injured, or not being part of the current play."
+                    ],
+                    "positives": [
+                      "The player is closely observing the game, possibly taking note of the opponent's strategy or waiting for their turn to enter the game."
+                    ],
+                    "final_conclusion": "The player is not directly contributing to the game at the moment, but is likely being prepared to enter the game or is observing the game to gain insights."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 13,
+              "frames": [
+                {
+                  "start_frame": 6,
+                  "end_frame": 7,
+                  "x": 0.479,
+                  "y": 0.423,
+                  "player_team_score": 0,
+                  "opponent_team_score": 0,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\13_Alabama_start_6_end_7.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player in the yellow box is wearing a white uniform with the number 23 on the back.",
+                      "The player is standing in a defensive position, facing the opponent with the ball, and appears to be closely guarding them, as evidenced by their proximity and body positioning."
+                    ],
+                    "potential_issues": [
+                      "The player is not directly in front of the opponent, which may indicate a lack of proper defensive positioning.",
+                      "The player's body is not fully facing the opponent, which could be a sign of being out of position or not being fully engaged in the defensive play."
+                    ],
+                    "positives": [
+                      "The player is relatively close to the opponent, suggesting they are attempting to apply defensive pressure.",
+                      "The player's stance and positioning indicate they are actively trying to defend against the opponent's movement."
+                    ],
+                    "final_conclusion": "The player in the yellow box is performing a defensive role, and while they are generally in a good defensive position, there are some potential issues with their exact positioning and body orientation. Overall, they appear to be making an effort to defend against the opponent."
+                  }
+                }
+              ]
+            },
+            {
+              "jersey_number": 15,
+              "frames": [
+                {
+                  "start_frame": 7,
+                  "end_frame": 8,
+                  "x": 0.484,
+                  "y": 0.337,
+                  "player_team_score": 0,
+                  "opponent_team_score": 2,
+                  "marked_up_image_path": "C:\\Users\\Scott Williams\\Desktop\\nycHackathon\\aaa-nyc-llama-hackathon\\trajectory_images\\15_Alabama_start_7_end_8.png",
+                  "feedback": {
+                    "key_observations": [
+                      "The player is wearing a white jersey, indicating they are on the Alabama team.",
+                      "The player is in a defensive stance, with their knees bent and arms outstretched, suggesting they are trying to block or intercept the ball or an opponent's movement."
+                    ],
+                    "potential_issues": [
+                      "The player appears to be closely guarding an opponent, but their positioning might be slightly off, as they seem to be leaning forward and not directly in front of the opponent.",
+                      "The player's eyes are not clearly visible, making it difficult to determine their focus or awareness of the surroundings."
+                    ],
+                    "positives": [
+                      "The player is actively engaged in the game, demonstrating a high level of physical activity and intensity.",
+                      "Their defensive stance suggests they are prepared to react quickly to the opponent's next move."
+                    ],
+                    "final_conclusion": "The player is actively participating in the game and is in a defensive position, but their exact actions and effectiveness are unclear due to the limited view and lack of clear visibility of their eyes or the ball."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
