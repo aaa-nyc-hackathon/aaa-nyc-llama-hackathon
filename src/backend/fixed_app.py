@@ -36,6 +36,39 @@ async def load(body: LoadBody):
         "message": "File successfully loaded"
     }
 
+@app.post("/api/analyze/")
+async def analyze(body: LoadBody):
+    """
+    Analyze the uploaded video file and return actions with timestamps.
+    
+    Args:
+        file: The video file to analyze.
+        
+    Returns:
+        A dictionary containing analysis results.
+    """
+    # load in "final_output.json" from the current directory
+    final_output_path = os.path.join(os.getcwd(), "final_output.json")
+    if not os.path.exists(final_output_path):
+        raise HTTPException(status_code=404, detail="Analysis results not found")
+    with open(final_output_path, 'r') as f:
+        analysis_results = json.loads(f)
+    
+    output_arr = []
+    for video_segment in analysis_results["video_segments"]:
+        video_path = video_segment["video_segment_path"]
+        for info in video_segment["list_of_info"]:
+            for team in info["team"]:
+                for player in team["obj"]:
+                    for frame in player["frames"]:
+                        if frame["feedback"] is not None:
+                            output_arr.append({
+                                "video_path": video_path,
+                                "feedback": frame["feedback"],
+                            })
+    return {"data": output_arr}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
