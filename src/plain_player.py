@@ -30,7 +30,7 @@ argparser = ArgumentParser(
            description='This program processes a video from local fs and pipes stuff to a .jsonl',
            epilog='')
 
-argparser.add_argument("--inputvideo", type=str, default="alabama_clemson_30s_clip.mp4", help='filename locally')
+argparser.add_argument("--inputvideo", type=str, default="images/alabama_clemson_30s_clip.mp4", help='filename locally')
 argparser.add_argument("--plot", action='store_true', help='make a plot')
 
 def image_to_base64(image_path):
