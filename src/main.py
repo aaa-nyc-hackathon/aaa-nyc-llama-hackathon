@@ -2,6 +2,8 @@ from backend.scene_detect import *
 from plain_player import *
 import subprocess
 import os   
+import json
+from collections import defaultdict
 from create_trajectory_imgs import track_and_draw_on_first_frame
 # Parse command line arguments
 if __name__ == "__main__":
@@ -20,6 +22,53 @@ if __name__ == "__main__":
         args.video, 
         output_dir=os.path.join(os.getcwd(), "video_segments")
     )
+
+
+    def extract_team_data(frame_list):
+        team_data = defaultdict(lambda: defaultdict(list))
+   #],
+   #     "scores": {
+   #       "team1": "Clemson",
+   #       "team1_score": 0,
+   #       "team2": "Alabama",
+   #       "team2_score": 0
+        for frame in frame_list:
+            start = frame["start"]
+            end = frame["end"]
+            team_1_name = frame["image_data"]["scores"]["team1"]
+            team_2_name = frame["image_data"]["scores"]["team2"]
+            team_1_score = frame["image_data"]["scores"]["team1_score"]
+            team_2_score = frame["image_data"]["scores"]["team2_score"]
+            players = frame["image_data"]["players"]
+
+            for player in players:
+                team = player["team"]
+                jersey_number = player["jerseyNumber"]
+                x = player["coordinates"]["x_coordinate"]
+                y = player["coordinates"]["y_coordinate"]
+
+                # Append the player's data to the respective team
+                team_data[team][jersey_number].append({
+                    "start_frame": start,
+                    "end_frame": end,
+                    "x": x,
+                    "y": y, 
+                    "player_team_score": team_1_score if team == team_1_name else team_2_score,
+                    "opponent_team_score": team_2_score if team == team_1_name else team_1_score
+                })
+
+        # Transform the defaultdict into the desired format
+        result = []
+        for team, players in team_data.items():
+            player_objects = []
+            for jersey_number, data in players.items():
+                player_objects.append({
+                    "jersey_number": jersey_number,
+                    "frames": data
+                })
+            result.append({"team": team, "obj": player_objects})
+
+        return result
 
     def unique_jersey_number(positions):
         """
@@ -77,6 +126,7 @@ if __name__ == "__main__":
 
     # run the plain player.py file using subprocess
     new_json = []
+    clip_number = 0
     for segment in segments:
         position_json = get_player_positions(segment)
         player_numbers = unique_jersey_number(position_json) #unique jersey numbers
@@ -84,31 +134,86 @@ if __name__ == "__main__":
             "video_segment_path": segment,
             "frame_list": position_json,   #frame list stores a list of player positions for frame range
         }
-#{
-#            "jerseyNumber": 10,
-#            "coordinates": { "x_coordinate": 0.139, "y_coordinate": 0.526 },
-#            "team": "Clemson"
-#          },
-        for frame_range in temp_json["frame_list"]:
-            s = convert_frame_to_seconds(frame_range["start"])
-            e = convert_frame_to_seconds(frame_range["end"])
-            for img in frame_range["image_data"]["players"]:
-                x, y = convert_percent_to_coordinates(
-                    img["coordinates"]["x_coordinate"],
-                    img["coordinates"]["y_coordinate"],
-                    segment
-                )
-                print("Processing player:", img["jerseyNumber"], "at coordinates:", x, y)
-                track_and_draw_on_first_frame(
-                    video_path=segment,
-                    start_time=s, 
-                    end_time=e + 2 if e+2 < get_video_seconds(segment) else get_video_seconds(segment),
-                    cx=x, 
-                    cy=y,
-                    output_filename=os.path.join(os.getcwd(), "trajectory_images", f"{img['jerseyNumber']}_{img['team']}.png")
+
+        json_team_player_timeframe = extract_team_data(temp_json["frame_list"])
+
+        ### this is the sample json
+    #    [
+    #{
+    #  "team": "Clemson",
+    #  "obj": [
+    #    {
+    #      "jersey_number": 0,
+    #      "frames": [
+    #        { "start_frame": 0, "end_frame": 1, "x": 0.245, "y": 0.453 },
+    #        { "start_frame": 10, "end_frame": 11, "x": 0.49, "y": 0.47 },
+    #        { "start_frame": 1, "end_frame": 2, "x": 0.266, "y": 0.447 },
+    #        { "start_frame": 1, "end_frame": 2, "x": 0.266, "y": 0.447 },
+    #        { "start_frame": 4, "end_frame": 5, "x": 0.716, "y": 0.548 },
+    #        { "start_frame": 7, "end_frame": 8, "x": 0.336, "y": 0.437 }
+    #      ]
+    #    },
+    #    {
+    #      "jersey_number": 12,
+    #      "frames": [
+    #        { "start_frame"
+
+        for team in json_team_player_timeframe:
+            team_name = team["team"]
+            for player in team["obj"]:
+                jersey_number = player["jersey_number"]
+                frames = player["frames"]
+                for frame in frames:
+                    s = frame["start_frame"]
+                    e = frame["end_frame"]
+                    x, y = convert_percent_to_coordinates(frame["x"], frame["y"], segment)
+                    print("Processing player:", jersey_number, "at coordinates:", x, y)
+                    marked_up_img_path = track_and_draw_on_first_frame(
+                        video_path=segment,
+                        start_time=s, 
+                        end_time=e + 2 if e+2 < get_video_seconds(segment) else get_video_seconds(segment),
+                        cx=x, 
+                        cy=y,
+                        output_filename=os.path.join(os.getcwd(), "trajectory_images", f"{jersey_number}_{team_name}_start_{s}_end_{e}.png")
                     )
+                    # add the marked up image path to the json
+                    frame["marked_up_image_path"] = marked_up_img_path
+
+        print("###")
+        print("###")
+        print("###")
+
+
+        #prints with double quotes
+        output = {
+            "list_of_info": json_team_player_timeframe
+        }
+        print(json.dumps(output, indent=2))
                 
-            
+
+
+                    
+        
+        #for frame_range in temp_json["frame_list"]:
+        #    s = convert_frame_to_seconds(frame_range["start"])
+        #    e = convert_frame_to_seconds(frame_range["end"])
+        #    for img in frame_range["image_data"]["players"]:
+        #        x, y = convert_percent_to_coordinates(
+        #            img["coordinates"]["x_coordinate"],
+        #            img["coordinates"]["y_coordinate"],
+        #            segment
+        #        )
+        #        print("Processing player:", img["jerseyNumber"], "at coordinates:", x, y)
+        #        marked_up_img_path = track_and_draw_on_first_frame(
+        #            video_path=segment,
+        #            start_time=s, 
+        #            end_time=e + 2 if e+2 < get_video_seconds(segment) else get_video_seconds(segment),
+        #            cx=x, 
+        #            cy=y,
+        #            output_filename=os.path.join(os.getcwd(), "trajectory_images", f"{img['jerseyNumber']}_{img['team']}.png")
+        #            )
+                
+        clip_number += 1
         break
         
 
