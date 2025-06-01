@@ -17,8 +17,8 @@ if not os.environ.get("LLAMA_API_KEY"):
 HERD = {"mav": "Llama-4-Maverick-17B-128E-Instruct-FP8",
         "scout": "Llama-4-Scout-17B-16E-Instruct-FP8"}
 
-file = "frame6-boxed.jpg"
-
+# file = "frame6-boxed.jpg"
+file = "bounding_box.jpg"
 ## text i/o example
 client = LlamaAPIClient(
     api_key=os.environ.get("LLAMA_API_KEY"), # This is the default and can be omitted
