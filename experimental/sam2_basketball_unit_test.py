@@ -63,7 +63,7 @@ sam2_checkpoint = os.path.join(os.getcwd(), "experimental/sam2/checkpoints/sam2.
 model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
 
 # `video_dir` a directory of JPEG frames with filenames like `<frame_index>.jpg`
-video_dir = os.path.join(os.getcwd(), "experimental/sam2/tmp")
+video_dir = os.path.join(os.getcwd(), "experimental/tmp")
 
 # scan all the JPEG frame names in this directory
 frame_names = [
