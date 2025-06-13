@@ -122,9 +122,6 @@ for out_frame_idx, out_obj_ids, out_mask_logits in predictor.propagate_in_video(
     ret, frame = cap.read()
     if not ret:
         break
-        
-    
-    
     
     video_segments[out_frame_idx] = {
         out_obj_id: (out_mask_logits[i] > 0.0).cpu().numpy()
