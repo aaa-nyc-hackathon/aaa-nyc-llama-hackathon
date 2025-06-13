@@ -110,10 +110,14 @@ color_lookup = { idx:(random.randrange(0, 255), random.randrange(0, 255), random
     
 # run propagation throughout the video and collect the results in a dict
 video_segments = {}  # video_segments contains the per-frame segmentation results
+
 for out_frame_idx, out_obj_ids, out_mask_logits in predictor.propagate_in_video(inference_state):
     ret, frame = cap.read()
     if not ret:
         break
+        
+    
+    
     
     video_segments[out_frame_idx] = {
         out_obj_id: (out_mask_logits[i] > 0.0).cpu().numpy()
