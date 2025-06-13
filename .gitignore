@@ -341,3 +341,10 @@ dist
 
 # ignore mac indexing files
 *.DS_Store*
+
+
+# ignore mac indexing files
+*.DS_Store*
+
+# LSP (Pyright)
+pyrightconfig.json
