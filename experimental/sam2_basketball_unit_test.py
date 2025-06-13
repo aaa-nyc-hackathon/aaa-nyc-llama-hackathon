@@ -32,7 +32,7 @@ elif device.type == "mps":
     )
 
 from sam2.build_sam import build_sam2
-from sam2.sam2_image_predictor import SAM2ImagePredictor
+from sam2.sam2_video_predictor import SAM2VideoPredictor
 
 
 def show_mask(mask, ax, obj_id=None, random_color=False):
@@ -59,8 +59,12 @@ def show_box(box, ax):
     w, h = box[2] - box[0], box[3] - box[1]
     ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='green', facecolor=(0, 0, 0, 0), lw=2))
 
-sam2_checkpoint = os.path.join(os.getcwd(), "experimental/sam2/checkpoints/sam2.1_hiera_large.pt")
+sam2_checkpoint = os.path.join(os.getcwd(), "expeental/sam2/checkpoints/sam2.1_hiera_large.pt")
 model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
+
+
+    
+
 
 # `video_dir` a directory of JPEG frames with filenames like `<frame_index>.jpg`
 video_dir = os.path.join(os.getcwd(), "experimental/tmp")
@@ -72,7 +76,10 @@ frame_names = [
 ]
 frame_names.sort(key=lambda p: int(os.path.splitext(p)[0]))
 
-predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint, device=device)
+if os.path.exists(sam2_checkpoint):
+    predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint, device=device)
+else:
+    predictor = SAM2VideoPredictor.from_pretrained("facebook/sam2-hiera-large", device=device)
 
 
 cap = cv2.VideoCapture(os.path.join(os.getcwd(), "videos/alabama_clemson.mp4"))

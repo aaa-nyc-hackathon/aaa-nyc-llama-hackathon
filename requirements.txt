@@ -32,3 +32,4 @@ fastapi>=0.109.0
 torch>=2.7.1
 ultralytics>=8.3.150
 sam2>=1.1.0
+huggingface_hub>=0.33.0
