@@ -29,3 +29,5 @@ uvicorn==0.27.1
 jsonlines>=4.0.0
 python-multipart>=0.0.20
 fastapi>=0.115.12
+torch>=2.7.1
+ultralytics>=8.3.150
