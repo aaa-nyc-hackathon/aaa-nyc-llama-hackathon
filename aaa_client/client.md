@@ -12,6 +12,7 @@ aaa_client/
 │   └── ...              # Other component categories
 ├── hooks/                # Custom React hooks
 ├── lib/                  # Utility functions and shared logic
+│   └── utils.ts         # Utility functions for class name merging
 ├── public/              # Static assets
 ├── styles/              # Global styles and Tailwind configuration
 ├── .next/               # Next.js build output (generated)
@@ -55,7 +56,26 @@ Before you begin, ensure you have the following installed:
    pnpm install
    ```
 
-3. **Start the development server**
+3. **Ensure required utility files exist**
+
+   Make sure you have the following file in place:
+
+   ```bash
+   lib/utils.ts
+   ```
+
+   This file should contain:
+
+   ```typescript
+   import { type ClassValue, clsx } from "clsx";
+   import { twMerge } from "tailwind-merge";
+
+   export function cn(...inputs: ClassValue[]) {
+     return twMerge(clsx(inputs));
+   }
+   ```
+
+4. **Start the development server**
    ```bash
    pnpm dev
    ```
