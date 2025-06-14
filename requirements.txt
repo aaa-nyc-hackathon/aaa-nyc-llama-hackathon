@@ -27,5 +27,5 @@ typing-inspection==0.4.1
 urllib3==2.4.0
 uvicorn==0.27.1
 jsonlines>=4.0.0
-python-multipart>=0.0.20
-fastapi>=0.115.12
+python-multipart>=0.0.7
+fastapi>=0.109.0
