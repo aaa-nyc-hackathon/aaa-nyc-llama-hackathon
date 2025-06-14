@@ -341,3 +341,9 @@ dist
 
 # ignore mac indexing files
 *.DS_Store*
+
+# LSP (Pyright)
+pyrightconfig.json
+
+# Full length videos
+videos/louisville.mp4
