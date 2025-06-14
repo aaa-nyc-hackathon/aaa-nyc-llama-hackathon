@@ -337,3 +337,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+# ignore mac indexing files
+*.DS_Store*
+
+# LSP (Pyright)
+pyrightconfig.json
