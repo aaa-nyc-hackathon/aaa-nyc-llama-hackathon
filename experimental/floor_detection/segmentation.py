@@ -69,7 +69,7 @@ predictor.reset_state(inference_state)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps = cap.get(cv2.CAP_PROP_FPS)
-out = cv2.VideoWriter("louisville_60s_clip_sam2_floor_output.mp4", cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+out = cv2.VideoWriter(os.path.join(os.getcwd(), "experimental/floor_detection/outputs/louisville_60s_clip_segmentation.mp4"), cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
 _, out_obj_ids, out_mask_logits = predictor.add_new_points_or_box(
     inference_state=inference_state,
@@ -79,26 +79,19 @@ _, out_obj_ids, out_mask_logits = predictor.add_new_points_or_box(
     labels=np.array([1 for _ in range(len(points))])
 )
 
-print(out_obj_ids, out_mask_logits)
-
-
-
-frame_count = 0
+show_overlay = False # If writing to output, keep this false
 video_segments = {}  # video_segments contains the per-frame segmentation results
 for out_frame_idx, out_obj_ids, out_mask_logits in predictor.propagate_in_video(inference_state):
     ret, frame = cap.read()
     if not ret:
         break
-
-    if out_frame_idx % 100 == 0 and out_frame_idx > 0:
-        print(inference_state)
         
     video_segments[out_frame_idx] = {
         out_obj_id: (out_mask_logits[i] > 0.0).cpu().numpy()
         for i, out_obj_id in enumerate(out_obj_ids)
     }
     
-    overlay = frame.copy()
+    overlay = np.zeros_like(frame, dtype=np.uint8)
     for id in out_obj_ids:
         mask_bool = video_segments[out_frame_idx][id].squeeze(0)
         mask_color = (0, 255, 0)
@@ -106,16 +99,19 @@ for out_frame_idx, out_obj_ids, out_mask_logits in predictor.propagate_in_video(
         colored_mask[:] = mask_color
         alpha = 0.5
         try:
-            overlay[mask_bool] = cv2.addWeighted(frame[mask_bool], 1 - alpha, colored_mask[mask_bool], alpha, 0)
+            if show_overlay:
+                overlay[mask_bool] = cv2.addWeighted(frame[mask_bool], 1 - alpha, colored_mask[mask_bool], alpha, 0)
+            else:
+                overlay[mask_bool] = colored_mask[mask_bool]
         except:
             continue
     
     cv2.imshow('frame', overlay)
-    
-    
+    out.write(overlay)
     
     k = cv2.waitKey(30) & 0xff
     if k == 27:
         break
         
 cap.release()
+out.release()
