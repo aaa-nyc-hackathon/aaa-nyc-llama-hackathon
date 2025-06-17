@@ -351,3 +351,5 @@ pyrightconfig.json
 
 # Full length videos
 videos/louisville.mp4
+tests/tmp
+experimental/tmp
