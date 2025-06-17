@@ -28,8 +28,8 @@ from config import HF_MODEL
 if __name__ == "__main__":
     video_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip.mp4")
     out_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip_output.mp4")
-    for frame, overlay in sam_utils.segment_player_frames(video_path, None, HF_MODEL):
+    for frame, overlay in sam_utils.segment_player_frames(video_path, out_path, HF_MODEL):
         output = cv2.add(frame, overlay)
         cv2.imshow('frame', output)
         if not utils.out: continue
-        utils.out.write(output)
+        utils.out.write(overlay)
