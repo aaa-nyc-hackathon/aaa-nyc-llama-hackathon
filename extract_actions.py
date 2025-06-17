@@ -6,13 +6,12 @@ import json
 import time
 import numpy as np
 import io
-from typing import List, Dict, Optional
-from pathlib import Path
+from typing import List, Dict
 from PIL import Image
 from llama_api_client import LlamaAPIClient
 from dotenv import load_dotenv
 from scipy.signal import find_peaks
-from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+from argparse import ArgumentParser
 
 parser = ArgumentParser(
                     prog='Video processing',
@@ -78,7 +77,7 @@ class VideoActionClassifier:
         
             prev_gray = gray
             if len(motion_scores) >= 1000:  # Limit processing for long videos
-                print(f"Reached 1000 frames limit. Stopping first pass.")
+                print("Reached 1000 frames limit. Stopping first pass.")
                 break
         cap.release()
         print(f"First pass complete. Processed {frame_count} frames.")
@@ -86,7 +85,7 @@ class VideoActionClassifier:
         peaks, _ = find_peaks(motion_scores, distance=10, prominence=np.std(motion_scores))
         print(f"Found {len(peaks)} potential high-motion segments.")
         # Second pass: Capture keyframes from high-motion segments
-        print(f"Starting second pass: Capturing keyframes from high-motion segments")
+        print("Starting second pass: Capturing keyframes from high-motion segments")
         cap = cv2.VideoCapture(video_path)
         selected_frames = []
         frame_idx = 0

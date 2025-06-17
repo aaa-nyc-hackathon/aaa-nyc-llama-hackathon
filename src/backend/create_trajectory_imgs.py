@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import argparse
 import cv2 as cv
 import numpy as np
 

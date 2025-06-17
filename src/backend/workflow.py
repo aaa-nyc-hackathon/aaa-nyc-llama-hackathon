@@ -1,6 +1,5 @@
 from scene_detect import *
 from plain_player import *
-import subprocess
 import os   
 import time
 import json
