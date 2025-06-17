@@ -22,22 +22,14 @@ Run the script directly to visualize player segmentation from a video.
 
 import cv2
 import numpy as np
-import os
 from sam2.build_sam import build_sam2_hf
-from sam2.build_sam import build_sam2_video_predictor
 from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
 from sam2.sam2_video_predictor import SAM2VideoPredictor
-import torch
 from typing import Generator
 import random
 from ultralytics import YOLO
-
-
-from pathlib import Path
-import sys
-
 from config import TMP_DIRNAME
-from experimental.utils import prepare_video
+from experimental.utils import cache_frames
 from experimental import utils
 
 device = utils.initialize_sam2()
@@ -116,7 +108,7 @@ def segment_frames(predictor_iter, video_path: str, out_path: str | None = None)
                 
         yield frame, overlay
 
-@prepare_video
+@cache_frames
 def segment_court_frames(video_path: str, out_path: str | None, sam2_checkpoint: str) -> Generator[tuple[np.ndarray, np.ndarray], None, None]:
     """
     Segments and tracks the basketball court across a video using SAM2.
@@ -151,7 +143,7 @@ def segment_court_frames(video_path: str, out_path: str | None, sam2_checkpoint:
     return segment_frames(predictor.propagate_in_video(inference_state), video_path, out_path)
         
     
-@prepare_video
+@cache_frames
 def segment_player_frames(video_path: str, out_path: str | None, sam2_checkpoint: str) -> Generator[tuple[np.ndarray, np.ndarray], None, None]:
     """
     Detects and tracks players across frames using YOLO and SAM2.
