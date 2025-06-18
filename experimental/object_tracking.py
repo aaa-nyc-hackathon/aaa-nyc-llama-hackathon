@@ -14,9 +14,6 @@ from utils import cache_video, load_frames, reduce_player_occlusion, save_frames
 from tqdm import tqdm
 
 
-
-
-
 def court_convex_hull(frames: Generator[np.ndarray, None, None], threshold: float = 100) -> Generator[np.ndarray, None, None]:
     for frame in frames:
         # Detect edges using Canny
