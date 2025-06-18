@@ -52,7 +52,7 @@ from pathlib import Path
 from typing_extensions import Concatenate, ParamSpec
 import sys
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-from config import TMP_DIRNAME, MAX_FRAMES
+from config import TMP_DIRNAME_IMAGES, MAX_FRAMES, TMP_DIRNAME_VIDEOS
 
 
 out = None
