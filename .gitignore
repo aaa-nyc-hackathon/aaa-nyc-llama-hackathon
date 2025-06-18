@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+build/lib/
 lib64/
 parts/
 sdist/
@@ -337,10 +337,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-
-# ignore mac indexing files
-*.DS_Store*
 
 
 # ignore mac indexing files
