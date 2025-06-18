@@ -451,11 +451,13 @@ def frame_transformation_template(frames: Generator[np.ndarray, None, None]) -> 
     
 def frame_transformation_pipeline_template(*args, **kwargs):
     # By currying different generators into each other, each function is interchangeable with one another
+    in_path = os.path.join(os.getcwd(), "videos/alabama_clemson_30s_clip.mp4")
     frames_0 = load_frames(in_path)
     frames_1 = reduce_player_occlusion(frames_0)
     frames_2 = find_court_edges(frames_1)
     for frame in frames_2:
         cv2.imshow('frame', frame)
+        
     
 if __name__ == "__main__":
     frame_transformation_pipeline_template()
