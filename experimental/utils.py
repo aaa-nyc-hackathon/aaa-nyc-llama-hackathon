@@ -377,21 +377,19 @@ def prepare_video(
             extracted video frames as JPEG images.
         - Deletes the temporary directory upon completion.
     """
-    def wrapper(in_path: str, out_path: str | None, *args, **kwargs) -> Generator[Any, None, None]:
-        if not os.path.exists(TMP_DIRNAME):
-            nested_directory_path = Path(TMP_DIRNAME)
+    def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
+        if not os.path.exists(TMP_DIRNAME_IMAGES):
+            nested_directory_path = Path(TMP_DIRNAME_IMAGES)
             nested_directory_path.mkdir(parents=True, exist_ok=True)
             for frame_idx, frame in enumerate(load_frames(in_path)):
                 if frame_idx > MAX_FRAMES: continue
-                cv2.imwrite(f"{TMP_DIRNAME}/{frame_idx:05d}.jpg", frame)
+                cv2.imwrite(f"{TMP_DIRNAME_IMAGES}/{frame_idx:05d}.jpg", frame)
             
         for x in func(in_path, out_path, *args, **kwargs):
             yield x
             
-        try:
-            shutil.rmtree(TMP_DIRNAME)
-        except FileNotFoundError:
-            print(f"Error: Directory '{TMP_DIRNAME}' not found.")
+        if os.path.exists(TMP_DIRNAME_IMAGES):
+            shutil.rmtree(TMP_DIRNAME_IMAGES)
         
     return wrapper
             
