@@ -88,7 +88,7 @@ def initialize_sam2() -> DeviceLikeType:
         
     return device
 
-def load_frames(in_path: str, out_path: str | None = None) -> Generator[Any, None, None]:
+def load_frames(in_path: str) -> Generator[Any, None, None]:
     """Utility generator function to load video (mp4) files
     
         Args:
@@ -99,13 +99,9 @@ def load_frames(in_path: str, out_path: str | None = None) -> Generator[Any, Non
             typing.Generator[np.ndarray, None, None]: A generator that incrementally yields frames from the mp4 file as a 3-dimensional numpy array [Width, Height, Color Channel].
     """
     # Video reader
-    cap = cv2.VideoCapture(in_path)
-    global out
-    if out_path:
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        out = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+    global cap
+    if not cap:
+        cap = cv2.VideoCapture(in_path)
     ret, prev_frame = cap.read()
     
     
@@ -121,10 +117,28 @@ def load_frames(in_path: str, out_path: str | None = None) -> Generator[Any, Non
             break
     
     cap.release()
-    
-    if out:
-        out.release()
-    
+
+
+def save_frames(out_path: str):
+    def decorator(func: Callable[Concatenate[str, P], Generator[Any, None, None]]) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
+        def wrapper(in_path: str, *args, **kwargs) -> Generator[None, None, None]:
+            global cap
+            if not isinstance(cap, cv2.VideoCapture):
+                cap = cv2.VideoCapture(in_path)
+                
+            assert isinstance(cap, cv2.VideoCapture)
+            width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            out = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+            for frame in func(in_path, *args, **kwargs):
+                out.write(frame)
+                yield frame
+                
+            out.release()
+        return wrapper
+    return decorator
+        
     
 def trace_movement(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
     """Utility generator function to perform optical flow analysis on video frames.

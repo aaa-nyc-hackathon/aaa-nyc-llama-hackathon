@@ -70,7 +70,7 @@ def segment_initial_court_frame(sam2_checkpoint: str, img_path) -> list[int]:
 
 
 
-def segment_frames(predictor_iter, video_path: str, out_path: str | None = None) -> Generator[tuple[np.ndarray, np.ndarray], None, None]:
+def segment_frames(predictor_iter, video_path: str) -> Generator[np.ndarray, None, None]:
     """
     Iteratively generates video frames with segmentation overlays from a SAM2 predictor.
 
@@ -88,7 +88,7 @@ def segment_frames(predictor_iter, video_path: str, out_path: str | None = None)
     """
     video_segments = {}  # video_segments contains the per-frame segmentation results
     color_lookup = {}
-    for (out_frame_idx, out_obj_ids, out_mask_logits), frame in zip(predictor_iter, utils.load_frames(video_path, out_path)):
+    for (out_frame_idx, out_obj_ids, out_mask_logits), frame in zip(predictor_iter, utils.load_frames(video_path)):
         video_segments[out_frame_idx] = {
             out_obj_id: (out_mask_logits[i] > 0.0).cpu().numpy()
             for i, out_obj_id in enumerate(out_obj_ids)
@@ -112,7 +112,7 @@ def segment_frames(predictor_iter, video_path: str, out_path: str | None = None)
         yield frame, overlay
 
 @cache_frames
-def segment_court_frames(video_path: str, out_path: str | None, sam2_checkpoint: str) -> Generator[tuple[np.ndarray, np.ndarray], None, None]:
+def segment_court_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.ndarray, None, None]:
     """
     Segments and tracks the basketball court across a video using SAM2.
 
@@ -143,11 +143,12 @@ def segment_court_frames(video_path: str, out_path: str | None, sam2_checkpoint:
     )
     
     
-    return segment_frames(predictor.propagate_in_video(inference_state), video_path, out_path)
-        
-    
+    return segment_frames(predictor.propagate_in_video(inference_state), video_path)
+   
+@cache_video     
+@cleanup_frames    
 @cache_frames
-def segment_player_frames(video_path: str, out_path: str | None, sam2_checkpoint: str) -> Generator[tuple[np.ndarray, np.ndarray], None, None]:
+def segment_player_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.ndarray, None, None]:
     """
     Detects and tracks players across frames using YOLO and SAM2.
 
@@ -179,5 +180,5 @@ def segment_player_frames(video_path: str, out_path: str | None, sam2_checkpoint
             box=np_box,
         )
     
-    return segment_frames(predictor.propagate_in_video(inference_state), video_path, out_path)
+    return segment_frames(predictor.propagate_in_video(inference_state), video_path)
         
