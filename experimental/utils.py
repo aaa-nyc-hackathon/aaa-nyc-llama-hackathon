@@ -54,8 +54,8 @@ import sys
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from config import TMP_DIRNAME_IMAGES, MAX_FRAMES, TMP_DIRNAME_VIDEOS
 
-
-out = None
+cap = None
+P = ParamSpec("P")
 
 def initialize_sam2() -> DeviceLikeType:
     """Utility boilerplate code for loading SAM2 code
