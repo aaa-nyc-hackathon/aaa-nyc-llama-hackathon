@@ -109,7 +109,7 @@ def segment_frames(predictor_iter, video_path: str) -> Generator[np.ndarray, Non
             except:
                 continue
                 
-        yield frame, overlay
+        yield overlay
 
 @cache_frames
 def segment_court_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.ndarray, None, None]:
