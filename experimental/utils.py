@@ -193,8 +193,6 @@ def trace_movement(frames: Generator[np.ndarray, None, None]) -> Generator[np.nd
         
         yield img
 
-in_path = os.path.join(os.getcwd(), "experimental/floor_detection/outputs/louisville_60s_clip_segmentation.mp4")
-
 
 def find_court_edges_old(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
     """Utility generator function to locate court edges on a video feed.
@@ -345,13 +343,73 @@ def find_court_edges(frames: Generator[np.ndarray, None, None]) -> Generator[np.
             
             yield img_color
       
-TMP_DIRNAME = os.path.join(os.path.dirname(__file__), "tmp")
-MAX_FRAMES = 500
-P = ParamSpec("P")
+def cache_video(
+    func: Callable[Concatenate[str, P], Generator[Any, None, None]]
+) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
+    """
+    Decorator that loads cached video when possible and provides a frame generator
 
-def prepare_video(
-    func: Callable[Concatenate[str, str | None, P], Generator[Any, None, None]]
-) -> Callable[Concatenate[str, str | None, P], Generator[Any, None, None]]:
+    This is useful for functions that are called often but are also dependent on other expensive frame operations,
+    like SAM segmentation
+
+    Args:
+        func (Callable): A generator function that takes an input video path (`in_path`)
+        and any additional arguments or keyword arguments, and yields processed frames.
+
+    Returns:
+        Callable: A wrapped generator function that extracts frames from a cached video output or another frame generator.
+    """
+    def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
+        out_path = os.path.join(TMP_DIRNAME_VIDEOS, os.path.basename(in_path))
+        if os.path.exists(out_path):
+            return load_frames(out_path)
+        
+        if os.path.exists(TMP_DIRNAME_VIDEOS):
+            nested_directory_path = Path(TMP_DIRNAME_VIDEOS)
+            nested_directory_path.mkdir(parents=True, exist_ok=True)
+            
+        return save_frames(out_path)(func)(in_path, *args, **kwargs)
+    return wrapper
+
+def cache_frames(
+    func: Callable[Concatenate[str, P], Generator[Any, None, None]]
+) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
+    """
+    Decorator that preprocesses video input by saving frames as temporary image files,
+    then applies the wrapped generator function to the video input.
+
+    This is useful for functions that operate on video frames and might benefit
+    from having those frames saved for debugging, visualization, or intermediate
+    processing.
+
+    Args:
+        func (Callable): A generator function that takes an input video path (`in_path`),
+            an optional output path (`out_path`), and any additional arguments or keyword
+            arguments, and yields processed frames.
+
+    Returns:
+        Callable: A wrapped generator function that extracts and saves frames
+            to a temporary directory (if they don’t already exist), calls the original
+            generator function
+
+    Side Effects:
+        - Creates a nested temporary directory (if it doesn't exist) to store
+            extracted video frames as JPEG images.
+    """
+    def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
+        if not os.path.exists(TMP_DIRNAME_IMAGES):
+            nested_directory_path = Path(TMP_DIRNAME_IMAGES)
+            nested_directory_path.mkdir(parents=True, exist_ok=True)
+            for frame_idx, frame in enumerate(load_frames(in_path)):
+                if frame_idx > MAX_FRAMES: continue
+                cv2.imwrite(f"{TMP_DIRNAME_IMAGES}/{frame_idx:05d}.jpg", frame)
+            
+        return func(in_path, *args, **kwargs)
+    return wrapper
+    
+def cleanup_frames(
+    func: Callable[Concatenate[str, P], Generator[Any, None, None]]
+) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
     """
     Decorator that preprocesses video input by saving frames as temporary image files,
     then applies the wrapped generator function to the video input, and finally
@@ -367,25 +425,14 @@ def prepare_video(
             arguments, and yields processed frames.
 
     Returns:
-        Callable: A wrapped generator function that first extracts and saves frames
-            to a temporary directory (if they don’t already exist), calls the original
-            generator function, and finally deletes the temporary directory after
-            the generator is exhausted.
+        Callable: A wrapped generator function that deletes the temporary directory after
+            the generator is exhausted. Must be used with cache_frames() decorator.
 
     Side Effects:
-        - Creates a nested temporary directory (if it doesn't exist) to store
-            extracted video frames as JPEG images.
         - Deletes the temporary directory upon completion.
     """
     def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
-        if not os.path.exists(TMP_DIRNAME_IMAGES):
-            nested_directory_path = Path(TMP_DIRNAME_IMAGES)
-            nested_directory_path.mkdir(parents=True, exist_ok=True)
-            for frame_idx, frame in enumerate(load_frames(in_path)):
-                if frame_idx > MAX_FRAMES: continue
-                cv2.imwrite(f"{TMP_DIRNAME_IMAGES}/{frame_idx:05d}.jpg", frame)
-            
-        for x in func(in_path, out_path, *args, **kwargs):
+        for x in func(in_path, *args, **kwargs):
             yield x
             
         if os.path.exists(TMP_DIRNAME_IMAGES):

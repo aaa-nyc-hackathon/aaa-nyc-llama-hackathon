@@ -22,14 +22,14 @@ import cv2
 import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-from experimental import utils, sam_utils
+from experimental.segmentation import segment_court_frames
 from config import HF_MODEL
+
+
 
 if __name__ == "__main__":
     video_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip.mp4")
-    out_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip_output.mp4")
-    for frame, overlay in sam_utils.segment_court_frames(video_path, out_path, HF_MODEL):
-        output = cv2.add(frame, overlay)
-        cv2.imshow('frame', overlay)
-        if not utils.out: continue
-        utils.out.write(overlay)
+    for overlay in segment_court_frames(video_path, HF_MODEL):
+        cv2.imshow(__file__, overlay)
+        
+    

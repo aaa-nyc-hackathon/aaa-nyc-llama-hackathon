@@ -111,6 +111,8 @@ def segment_frames(predictor_iter, video_path: str) -> Generator[np.ndarray, Non
                 
         yield overlay
 
+@cache_video
+@cleanup_frames
 @cache_frames
 def segment_court_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.ndarray, None, None]:
     """
@@ -127,6 +129,7 @@ def segment_court_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.
     Returns:
         Generator[tuple[np.ndarray, np.ndarray], None, None]: Yields original frames and overlay masks.
     """
+    
     predictor = SAM2VideoPredictor.from_pretrained(sam2_checkpoint, device=device)
     # Initialize inference state of SAM2 video model
     inference_state = predictor.init_state(video_path=TMP_DIRNAME_IMAGES)
