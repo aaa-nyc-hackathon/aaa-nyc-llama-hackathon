@@ -20,6 +20,9 @@ Dependencies:
 Run the script directly to visualize player segmentation from a video.
 """
 
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 import cv2
 import numpy as np
 from sam2.build_sam import build_sam2_hf
@@ -28,8 +31,8 @@ from sam2.sam2_video_predictor import SAM2VideoPredictor
 from typing import Generator
 import random
 from ultralytics import YOLO
-from config import TMP_DIRNAME
-from experimental.utils import cache_frames
+from config import TMP_DIRNAME_IMAGES
+from experimental.utils import cache_frames, cache_video, cleanup_frames
 from experimental import utils
 
 device = utils.initialize_sam2()
