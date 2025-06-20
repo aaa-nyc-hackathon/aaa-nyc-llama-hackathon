@@ -1,7 +1,6 @@
 import base64
 import os
 import json
-import jsonlines
 from dotenv import load_dotenv
 load_dotenv()
 

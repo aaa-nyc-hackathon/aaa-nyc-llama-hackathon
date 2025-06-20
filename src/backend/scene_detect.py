@@ -92,7 +92,7 @@ def trim_clips_except_first(input_dir, output_dir=None, trim_percent=0.05):
             if os.path.exists(output_path) and os.path.getsize(output_path) > 1000:
                 print(f"  Successfully trimmed and saved to: {output_path}")
             else:
-                print(f"  Warning: Output file may be corrupted (small size or doesn't exist).")
+                print("  Warning: Output file may be corrupted (small size or doesn't exist).")
                 # Try again with different parameters
                 ffmpeg_cmd_retry = [
                     'ffmpeg', '-i', input_path,

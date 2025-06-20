@@ -1,7 +1,7 @@
 import os
 import cv2
 import numpy as np
-from typing import List, Tuple, Optional
+from typing import List, Tuple
 
 def track_player_points(video_path: str, points: List[Tuple[float, float]], 
                        roi_size: int = 30, 
