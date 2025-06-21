@@ -14,23 +14,34 @@ from scipy.signal import find_peaks
 from argparse import ArgumentParser
 
 parser = ArgumentParser(
-                    prog='Video processing',
-                    description='This program processes the video from local fs and pipes stuff to stdout',
-                    epilog='')
-parser.add_argument('--filename', type=str, default="alabama_clemson_30s_clip.mp4", help='filename locally')
+    prog="Video processing",
+    description="This program processes the video from local fs and pipes stuff to stdout",
+    epilog="",
+)
+parser.add_argument(
+    "--filename",
+    type=str,
+    default="alabama_clemson_30s_clip.mp4",
+    help="filename locally",
+)
 
 load_dotenv()
+
 
 class VideoActionClassifier:
     """
     A complete solution for sports video analysis using Llama 4's multimodal capabilities
     with advanced frame sampling techniques.
     """
-    
-    def __init__(self, model: str = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8", max_frames: int = 8):
+
+    def __init__(
+        self,
+        model: str = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+        max_frames: int = 8,
+    ):
         """
         Initialize the classifier with Llama API client.
-        
+
         Args:
             model (str): Llama model to use for analysis
             max_frames (int): Maximum number of frames to analyze
@@ -39,42 +50,45 @@ class VideoActionClassifier:
         self.model = model
         self.max_frames = max_frames
 
-    def adaptive_frame_sampling(self, video_path: str, target_frames: int = 5) -> List[np.ndarray]:
+    def adaptive_frame_sampling(
+        self, video_path: str, target_frames: int = 5
+    ) -> List[np.ndarray]:
         """
         Intelligent frame sampling combining motion detection and keyframe analysis.
-        
+
         Args:
             video_path (str): Path to video file
             target_frames (int): Number of frames to extract
-            
+
         Returns:
             List[np.ndarray]: Selected frames in RGB format
         """
         cap = cv2.VideoCapture(video_path)
-        frames = []
         motion_scores = []
         prev_gray = None
         frame_count = 0
-        
+
         print(f"Starting first pass: Motion score calculation from {video_path}")
         # First pass: Calculate motion scores
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
                 break
-            
+
             frame_count += 1
             if frame_count % 100 == 0:
                 print(f"Processing frame {frame_count} for motion detection...")
-                
+
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if prev_gray is not None:
-                flow = cv2.calcOpticalFlowFarneback(prev_gray, gray, None, 0.5, 3, 15, 3, 5, 1.2, 0)
-                motion = np.sqrt(flow[...,0]**2 + flow[...,1]**2).mean()
+                flow = cv2.calcOpticalFlowFarneback(
+                    prev_gray, gray, None, 0.5, 3, 15, 3, 5, 1.2, 0
+                )
+                motion = np.sqrt(flow[..., 0] ** 2 + flow[..., 1] ** 2).mean()
                 motion_scores.append(motion)
             else:
                 motion_scores.append(0)
-        
+
             prev_gray = gray
             if len(motion_scores) >= 1000:  # Limit processing for long videos
                 print("Reached 1000 frames limit. Stopping first pass.")
@@ -82,7 +96,9 @@ class VideoActionClassifier:
         cap.release()
         print(f"First pass complete. Processed {frame_count} frames.")
         # Identify high-motion segments
-        peaks, _ = find_peaks(motion_scores, distance=10, prominence=np.std(motion_scores))
+        peaks, _ = find_peaks(
+            motion_scores, distance=10, prominence=np.std(motion_scores)
+        )
         print(f"Found {len(peaks)} potential high-motion segments.")
         # Second pass: Capture keyframes from high-motion segments
         print("Starting second pass: Capturing keyframes from high-motion segments")
@@ -95,30 +111,47 @@ class VideoActionClassifier:
                 break
             if frame_idx % 100 == 0:
                 print(f"Second pass: Processing frame {frame_idx}...")
-            if frame_idx in peaks[:target_frames*2]:
+            if frame_idx in peaks[: target_frames * 2]:
                 selected_frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-                print(f"Selected frame {frame_idx} as a keyframe. Total selected: {len(selected_frames)}")
-                
+                print(
+                    f"Selected frame {frame_idx} as a keyframe. Total selected: {len(selected_frames)}"
+                )
+
             frame_idx += 1
-            if len(selected_frames) >= target_frames*2:
-                print(f"Reached target of {target_frames*2} selected frames. Stopping second pass.")
+            if len(selected_frames) >= target_frames * 2:
+                print(
+                    f"Reached target of {target_frames * 2} selected frames. Stopping second pass."
+                )
                 break
-                
+
         cap.release()
         print(f"Second pass complete. Processed {frame_idx} frames.")
-        
+
         # Select most diverse frames using histogram analysis
         print("Analyzing frame diversity using histograms...")
-        histograms = [cv2.calcHist([f], [0,1,2], None, [8,8,8], [0,256,0,256,0,256]).flatten() 
-                     for f in selected_frames]
-        similarities = np.array([[cv2.compareHist(h1, h2, cv2.HISTCMP_BHATTACHARYYA) 
-                                for h2 in histograms] for h1 in histograms])
+        histograms = [
+            cv2.calcHist(
+                [f], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256]
+            ).flatten()
+            for f in selected_frames
+        ]
+        similarities = np.array(
+            [
+                [
+                    cv2.compareHist(h1, h2, cv2.HISTCMP_BHATTACHARYYA)
+                    for h2 in histograms
+                ]
+                for h1 in histograms
+            ]
+        )
         np.fill_diagonal(similarities, 0)
         diversity_scores = np.sum(similarities, axis=1)
-        
-        final_frames = [selected_frames[i] for i in diversity_scores.argsort()[-target_frames:]]
+
+        final_frames = [
+            selected_frames[i] for i in diversity_scores.argsort()[-target_frames:]
+        ]
         print(f"Final selection: {len(final_frames)} most diverse frames extracted.")
-        
+
         return final_frames
 
     def frame_to_b64(self, frame: np.ndarray) -> str:
@@ -132,7 +165,7 @@ class VideoActionClassifier:
     def create_analysis_prompt(self, actions: List[str], sport: str = "soccer") -> str:
         """Generate dynamic prompt based on target actions"""
         return f"""Analyze these video frames from a {sport} match. Identify and describe:
-- Specific actions: {', '.join(actions)}
+- Specific actions: {", ".join(actions)}
 - Player positions and movements
 - Ball trajectory and key events
 - Temporal sequence of actions
@@ -154,12 +187,12 @@ Format response as JSON with:
     def analyze_video(self, video_path: str, actions: List[str], sport: str) -> Dict:
         """
         Full video analysis pipeline.
-        
+
         Args:
             video_path (str): Path to video file
             actions (List[str]): Actions to detect
             sport (str): Sport type for context
-            
+
         Returns:
             Dict: Analysis results from Llama 4
         """
@@ -171,20 +204,28 @@ Format response as JSON with:
         start_time = time.time()
         frames = self.adaptive_frame_sampling(video_path, self.max_frames)
         extraction_time = time.time() - start_time
-        print(f"Frame extraction complete. Extracted {len(frames)} frames in {extraction_time:.2f} seconds.")
+        print(
+            f"Frame extraction complete. Extracted {len(frames)} frames in {extraction_time:.2f} seconds."
+        )
         # Prepare multimodal payload
         print("Preparing multimodal payload...")
-        print(f"Creating analysis prompt for {sport} with {len(actions)} target actions")
-        content = [{"type": "text", "text": self.create_analysis_prompt(actions, sport)}]
+        print(
+            f"Creating analysis prompt for {sport} with {len(actions)} target actions"
+        )
+        content = [
+            {"type": "text", "text": self.create_analysis_prompt(actions, sport)}
+        ]
         print("Converting frames to base64 format...")
         start_time = time.time()
         for i, frame in enumerate(frames):
             b64_image = self.frame_to_b64(frame)
-            content.append({
-                "type": "image_url",
-                "image_url": {"url": f"data:image/jpeg;base64,{b64_image}"}
-            })
-            print(f"  Processed frame {i+1}/{len(frames)}")
+            content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {"url": f"data:image/jpeg;base64,{b64_image}"},
+                }
+            )
+            print(f"  Processed frame {i + 1}/{len(frames)}")
         conversion_time = time.time() - start_time
         print(f"Frame conversion complete in {conversion_time:.2f} seconds.")
         # API request using Llama API client
@@ -196,23 +237,25 @@ Format response as JSON with:
                 messages=[{"role": "user", "content": content}],
                 model=self.model,
                 max_completion_tokens=2000,
-                temperature=0.2
+                temperature=0.2,
             )
             api_time = time.time() - start_time
-            print(f"API request successful. Response received in {api_time:.2f} seconds.")
+            print(
+                f"API request successful. Response received in {api_time:.2f} seconds."
+            )
             return response.completion_message.content.text
         except Exception as e:
             api_time = time.time() - start_time
             print(f"Error after {api_time:.2f} seconds: {str(e)}")
             return {"error": str(e)}
 
+
 # Example usage
 if __name__ == "__main__":
     # Initialize with Llama API client
     args = parser.parse_args()
     classifier = VideoActionClassifier(
-        model="Llama-4-Maverick-17B-128E-Instruct-FP8",
-        max_frames=8
+        model="Llama-4-Maverick-17B-128E-Instruct-FP8", max_frames=8
     )
     print(args)
     # Analyze soccer video
@@ -220,7 +263,7 @@ if __name__ == "__main__":
     result = classifier.analyze_video(
         video_path=input_video_path,
         actions=["score", "pass", "shot", "rebound"],
-        sport="basketball"
+        sport="basketball",
     )
 
     print("Analysis Results:")
