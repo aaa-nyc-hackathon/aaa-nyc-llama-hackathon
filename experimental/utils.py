@@ -88,7 +88,7 @@ def initialize_sam2() -> DeviceLikeType:
         
     return device
 
-def load_frames(in_path: str) -> Generator[Any, None, None]:
+def load_frames(in_path: str, release=True) -> Generator[Any, None, None]:
     """Utility generator function to load video (mp4) files
     
         Args:
@@ -99,11 +99,14 @@ def load_frames(in_path: str) -> Generator[Any, None, None]:
             typing.Generator[np.ndarray, None, None]: A generator that incrementally yields frames from the mp4 file as a 3-dimensional numpy array [Width, Height, Color Channel].
     """
     # Video reader
-    global cap
-    if not cap:
-        cap = cv2.VideoCapture(in_path)
-    ret, prev_frame = cap.read()
     
+    global cap
+    if cap is None:
+        cap = cv2.VideoCapture(in_path)
+    
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    print(cap.get(cv2.CAP_PROP_POS_FRAMES), cap.isOpened())
+    ret, prev_frame = cap.read()
     
     while cap.isOpened():
         ret, frame = cap.read()
@@ -116,12 +119,13 @@ def load_frames(in_path: str) -> Generator[Any, None, None]:
         if k == 27:
             break
     
-    cap.release()
+    if release:
+        cap.release()
 
 
 def save_frames(out_path: str):
     def decorator(func: Callable[Concatenate[str, P], Generator[Any, None, None]]) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
-        def wrapper(in_path: str, *args, **kwargs) -> Generator[None, None, None]:
+        def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
             global cap
             if not isinstance(cap, cv2.VideoCapture):
                 cap = cv2.VideoCapture(in_path)
@@ -136,6 +140,7 @@ def save_frames(out_path: str):
                 yield frame
                 
             out.release()
+            cap.release()
         return wrapper
     return decorator
         
@@ -194,68 +199,7 @@ def trace_movement(frames: Generator[np.ndarray, None, None]) -> Generator[np.nd
         yield img
 
 
-def find_court_edges_old(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
-    """Utility generator function to locate court edges on a video feed.
-    Applies a visual overlay to the input video feed.
-    
-        Args:
-            frames (typing.Generator[np.ndarray, None, None]): The input video feed as a frame generator. Can be produced with load_frames()
-    
-        Returns:
-            typing.Generator[np.ndarray, None, None]: A new generator of the original video feed with court edge lines as a visual overlay [Width, Height, Color Channel].
-    """
-    lines = []
-    pts = None
-    
-    for frame in frames:
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
-        # Canny edge detection on the cleaned image
-        edges = cv2.Canny(gray, 50, 150)
-        
-        # Detect straight lines
-        new_lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=100, maxLineGap=100)
-    
-        # Draw lines on original frame
-        output = frame.copy()
-        
-        if new_lines is not None:
-            for line in new_lines:
-                x1, y1, x2, y2 = line[0]
-                lines.append([x1, y1])
-                lines.append([x2, y2])
-                while len(lines) > 140:
-                    lines.pop(0)
-                    
-                    
-        if lines is not None:
-            rect_a = max(lines, key=lambda x: x[0])
-            rect_b = min(lines, key=lambda x: x[0])
-            rect_c = max(lines, key=lambda x: x[1])
-            rect_d = min(lines, key=lambda x: x[1])
-            new_pts = np.array([rect_a, rect_c, rect_b, rect_d])
-            
-            # Compute pairwise distances: result shape will be (4, 4)
-            min_d = 1000
-            if pts is not None:
-                diff = new_pts[:, np.newaxis, :] - new_pts[np.newaxis, :, :]  # shape (4, 4, 2)
-                distances = np.linalg.norm(diff, axis=2)  # Euclidean distances
-                min_d = np.min(distances + np.eye(4) * 1000, axis=0) > 200
-                
-                min_d = min_d.repeat([2]).reshape([4, 2])
-                new_pts = np.where(min_d, new_pts, pts)
-            
-            
-            
-            pts = new_pts.copy()
-            new_pts = new_pts.reshape((-1, 1, 2))
-            cv2.polylines(output, [new_pts], True, (255, 0, 255), 2)
-            """cv2.circle(output, (rect_a[0], rect_a[1]), 5, (0, 0, 255), -1)
-            cv2.circle(output, (rect_c[0], rect_c[1]), 5, (255, 0, 0), -1)
-            for line in lines:
-                cv2.circle(output, (line[0], line[1]), 5, (0, 0, 100), -1)"""
-                
-        yield output
+
                 
         
 
@@ -368,6 +312,7 @@ def cache_video(
             nested_directory_path = Path(TMP_DIRNAME_VIDEOS)
             nested_directory_path.mkdir(parents=True, exist_ok=True)
             
+        
         return save_frames(out_path)(func)(in_path, *args, **kwargs)
     return wrapper
 
@@ -400,10 +345,11 @@ def cache_frames(
         if not os.path.exists(TMP_DIRNAME_IMAGES):
             nested_directory_path = Path(TMP_DIRNAME_IMAGES)
             nested_directory_path.mkdir(parents=True, exist_ok=True)
-            for frame_idx, frame in enumerate(load_frames(in_path)):
+            for frame_idx, frame in enumerate(load_frames(in_path, release=False)):
                 if frame_idx > MAX_FRAMES: continue
                 cv2.imwrite(f"{TMP_DIRNAME_IMAGES}/{frame_idx:05d}.jpg", frame)
             
+        
         return func(in_path, *args, **kwargs)
     return wrapper
     

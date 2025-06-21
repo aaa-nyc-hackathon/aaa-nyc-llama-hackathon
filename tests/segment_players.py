@@ -23,12 +23,17 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from experimental.segmentation import segment_player_frames
-from config import HF_MODEL
+from config import HF_MODEL, TMP_DIRNAME_VIDEOS
 
-def test_segment_players():
+def segment_players():
     video_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip.mp4")
     for overlay in segment_player_frames(video_path, HF_MODEL):
         cv2.imshow(__file__, overlay)
+
+def test_segment_players():
+    assert not os.path.exists(os.path.join(TMP_DIRNAME_VIDEOS, "louisville_60s_clip.mp4"))
+    segment_players()
+    assert not os.path.exists(os.path.join(TMP_DIRNAME_VIDEOS, "louisville_60s_clip.mp4"))
     
 if __name__ == "__main__":
-    test_segment_players()
+    segment_players()

@@ -25,15 +25,17 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from experimental.segmentation import segment_court_frames
 from config import HF_MODEL, TMP_DIRNAME_VIDEOS
 
+def segment_court(model: str = HF_MODEL):
+    video_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip.mp4")
+    for overlay in segment_court_frames(video_path, model):
+        cv2.imshow(__file__, overlay)
+
 def test_segment_court():
     assert not os.path.exists(os.path.join(TMP_DIRNAME_VIDEOS, "louisville_60s_clip.mp4"))
-    video_path = os.path.join(os.getcwd(), "videos/louisville_60s_clip.mp4")
-    for overlay in segment_court_frames(video_path, HF_MODEL):
-        cv2.imshow(__file__, overlay)
-        
+    segment_court("facebook/sam2-hiera-tiny")
     assert os.path.exists(os.path.join(TMP_DIRNAME_VIDEOS, "louisville_60s_clip.mp4"))
 
 if __name__ == "__main__":
-    test_segment_court()
+    segment_court()
         
     

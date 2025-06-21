@@ -348,4 +348,5 @@ pyrightconfig.json
 # Full length videos
 tests/tmp
 experimental/tmp
-videos/*
+videos/*.mp4
+videos/*.mov

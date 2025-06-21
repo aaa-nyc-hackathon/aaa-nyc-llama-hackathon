@@ -66,6 +66,7 @@ def segment_initial_court_frame(sam2_checkpoint: str, img_path) -> list[int]:
     masks = mask_generator.generate(initial_frame)
     masks.sort(key=lambda x: x['area'])
     points = masks[-2]['point_coords']
+    
     return points
 
 
@@ -135,7 +136,7 @@ def segment_court_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.
     inference_state = predictor.init_state(video_path=TMP_DIRNAME_IMAGES)
     predictor.reset_state(inference_state)
     # Use SAM2 mask segmentation to determine the initial location of the court
-    points = segment_initial_court_frame(sam2_checkpoint, f"{TMP_DIRNAME_IMAGES}/00000.jpg")
+    points = segment_initial_court_frame(sam2_checkpoint, f"{TMP_DIRNAME_IMAGES}/00001.jpg")
     
     _, out_obj_ids, out_mask_logits = predictor.add_new_points_or_box(
         inference_state=inference_state,
@@ -172,7 +173,7 @@ def segment_player_frames(video_path: str, sam2_checkpoint: str) -> Generator[np
     predictor.reset_state(inference_state)
     
     model = YOLO('yolov8n.pt')
-    results = model(f"{TMP_DIRNAME_IMAGES}/00000.jpg")
+    results = model(f"{TMP_DIRNAME_IMAGES}/00001.jpg")
     
     for obj_id, box in enumerate(results[0].boxes.xyxy.unbind()):
         np_box = box.numpy()
