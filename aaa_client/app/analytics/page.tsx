@@ -41,47 +41,68 @@ const CollapsibleFeedbackItem: React.FC<{
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`mb-4 border rounded-lg overflow-hidden bg-gray-800 ${isActiveSegment ? 'border-red-500 shadow-lg' : 'border-gray-700'}`}>
+    <div
+      className={`mb-4 border rounded-lg overflow-hidden bg-gray-800 ${
+        isActiveSegment ? "border-red-500 shadow-lg" : "border-gray-700"
+      }`}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center p-3 sm:p-4 bg-gray-700 hover:bg-gray-600 focus:outline-none text-left"
       >
         <span className="font-semibold text-base sm:text-lg">
-          {item.player !== undefined ? `Player #${item.player} - ${item.start_frame}s-${item.end_frame}s` : `Feedback #${index + 1}`}
+          {item.player !== undefined
+            ? `Player #${item.player} - ${item.start_frame}s-${item.end_frame}s`
+            : `Feedback #${index + 1}`}
         </span>
-        {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+        {isOpen ? (
+          <ChevronUp className="w-5 h-5" />
+        ) : (
+          <ChevronDown className="w-5 h-5" />
+        )}
       </button>
       {isOpen && (
         <div className="p-3 sm:p-4 bg-gray-800 text-xs sm:text-sm">
           <div className="flex justify-between items-center mb-2">
-            <h4 className="font-semibold text-sm sm:text-base">Video Segment:</h4>
+            <h4 className="font-semibold text-sm sm:text-base">
+              Video Segment:
+            </h4>
             {!isActiveSegment && (
-                <button 
-                    onClick={() => onSelectSegment(item.video_path)}
-                    className="flex items-center text-red-400 hover:text-red-300 text-xs sm:text-sm py-1 px-2 rounded bg-gray-700 hover:bg-gray-600 transition-colors"
-                >
-                    <PlayCircle className="w-4 h-4 mr-1" /> View this Segment
-                </button>
+              <button
+                onClick={() => onSelectSegment(item.video_path)}
+                className="flex items-center text-red-400 hover:text-red-300 text-xs sm:text-sm py-1 px-2 rounded bg-gray-700 hover:bg-gray-600 transition-colors"
+              >
+                <PlayCircle className="w-4 h-4 mr-1" /> View this Segment
+              </button>
             )}
           </div>
-          <p className="mb-2 sm:mb-3 text-xs break-all italic text-gray-400">{item.video_path}</p>
-          
+          <p className="mb-2 sm:mb-3 text-xs break-all italic text-gray-400">
+            {item.video_path}
+          </p>
+
           {item.player !== undefined && (
             <>
-              <h4 className="font-semibold mb-1 text-sm sm:text-base">Player:</h4>
+              <h4 className="font-semibold mb-1 text-sm sm:text-base">
+                Player:
+              </h4>
               <p className="mb-2 sm:mb-3">Jersey Number #{item.player}</p>
             </>
           )}
-          
+
           {item.start_frame !== undefined && item.end_frame !== undefined && (
             <>
-              <h4 className="font-semibold mb-1 text-sm sm:text-base">Time Range:</h4>
+              <h4 className="font-semibold mb-1 text-sm sm:text-base">
+                Time Range:
+              </h4>
               <button
                 onClick={() => {
                   if (!isActiveSegment) {
                     onSelectSegment(item.video_path);
                   }
-                  setTimeout(() => onSeekToTimestamp(item.start_frame, item.end_frame), 100);
+                  setTimeout(
+                    () => onSeekToTimestamp(item.start_frame, item.end_frame),
+                    100
+                  );
                 }}
                 className="mb-2 sm:mb-3 text-blue-400 hover:text-blue-300 underline cursor-pointer text-left transition-colors flex items-center gap-1"
               >
@@ -90,23 +111,37 @@ const CollapsibleFeedbackItem: React.FC<{
               </button>
             </>
           )}
-          
-          <h4 className="font-semibold mb-1 text-sm sm:text-base">Conclusion:</h4>
+
+          <h4 className="font-semibold mb-1 text-sm sm:text-base">
+            Conclusion:
+          </h4>
           <p className="mb-2 sm:mb-3">{item.feedback.final_conclusion}</p>
-          
-          <h4 className="font-semibold mb-1 text-sm sm:text-base">Key Observations:</h4>
+
+          <h4 className="font-semibold mb-1 text-sm sm:text-base">
+            Key Observations:
+          </h4>
           <ul className="list-disc list-inside mb-2 sm:mb-3 space-y-1">
-            {item.feedback.key_observations.map((obs, i) => <li key={`obs-${index}-${i}`}>{obs}</li>)}
+            {item.feedback.key_observations.map((obs, i) => (
+              <li key={`obs-${index}-${i}`}>{obs}</li>
+            ))}
           </ul>
-          
-          <h4 className="font-semibold mb-1 text-sm sm:text-base">Positives:</h4>
+
+          <h4 className="font-semibold mb-1 text-sm sm:text-base">
+            Positives:
+          </h4>
           <ul className="list-disc list-inside mb-2 sm:mb-3 space-y-1">
-            {item.feedback.positives.map((pos, i) => <li key={`pos-${index}-${i}`}>{pos}</li>)}
+            {item.feedback.positives.map((pos, i) => (
+              <li key={`pos-${index}-${i}`}>{pos}</li>
+            ))}
           </ul>
-          
-          <h4 className="font-semibold mb-1 text-sm sm:text-base">Potential Issues:</h4>
+
+          <h4 className="font-semibold mb-1 text-sm sm:text-base">
+            Potential Issues:
+          </h4>
           <ul className="list-disc list-inside space-y-1">
-            {item.feedback.potential_issues.map((iss, i) => <li key={`iss-${index}-${i}`}>{iss}</li>)}
+            {item.feedback.potential_issues.map((iss, i) => (
+              <li key={`iss-${index}-${i}`}>{iss}</li>
+            ))}
           </ul>
         </div>
       )}
@@ -115,61 +150,78 @@ const CollapsibleFeedbackItem: React.FC<{
 };
 
 const getFilename = (fullPath: string): string => {
-  if (!fullPath) return '';
-  const normalizedPath = fullPath.replace(/\\/g, '/'); // Normalize path separators
-  const parts = normalizedPath.split('/');
+  if (!fullPath) return "";
+  const normalizedPath = fullPath.replace(/\\/g, "/"); // Normalize path separators
+  const parts = normalizedPath.split("/");
   return parts[parts.length - 1];
 };
 
 export default function GameAnalysisPage() {
   const router = useRouter();
   const [slideOut, setSlideOut] = useState(false);
-  const [analysisReport, setAnalysisReport] = useState<AnalysisResult | null>(null);
+  const [analysisReport, setAnalysisReport] = useState<AnalysisResult | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
   const [activeVideoSrc, setActiveVideoSrc] = useState<string>("");
   const [activeVideoPath, setActiveVideoPath] = useState<string>(""); // To track original path for isActiveSegment
   const [videoRef, setVideoRef] = useState<HTMLVideoElement | null>(null);
-  const [activeSegment, setActiveSegment] = useState<{start: number, end: number} | null>(null);
+  const [activeSegment, setActiveSegment] = useState<{
+    start: number;
+    end: number;
+  } | null>(null);
   const [playbackRate, setPlaybackRate] = useState<number>(0.5); // Default to 0.5x speed
   const [isLooping, setIsLooping] = useState<boolean>(true);
   const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null); // Selected player filter
   const [availablePlayers, setAvailablePlayers] = useState<number[]>([]); // All unique player numbers
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem('analysisResultData');
+    const storedData = sessionStorage.getItem("analysisResultData");
     if (storedData) {
       try {
         const parsedData: AnalysisResult = JSON.parse(storedData);
-        if (parsedData && parsedData.data && Array.isArray(parsedData.data) && parsedData.data.length > 0) {
+        if (
+          parsedData &&
+          parsedData.data &&
+          Array.isArray(parsedData.data) &&
+          parsedData.data.length > 0
+        ) {
           // Sort data by player jersey number
           const sortedData = [...parsedData.data].sort((a, b) => {
             const playerA = a.player ?? Infinity;
             const playerB = b.player ?? Infinity;
             return playerA - playerB;
           });
-          
+
           // Extract unique player numbers
-          const uniquePlayers = [...new Set(
-            sortedData
-              .filter(item => item.player !== undefined)
-              .map(item => item.player!)
-          )].sort((a, b) => a - b);
-          
+          const uniquePlayers = [
+            ...new Set(
+              sortedData
+                .filter((item) => item.player !== undefined)
+                .map((item) => item.player!)
+            ),
+          ].sort((a, b) => a - b);
+
           setAvailablePlayers(uniquePlayers);
           setAnalysisReport({ ...parsedData, data: sortedData });
-          console.log("Analytics: Analysis data loaded and sorted by player", sortedData);
+          console.log(
+            "Analytics: Analysis data loaded and sorted by player",
+            sortedData
+          );
           console.log("Available players:", uniquePlayers);
-          
+
           // Log player data to verify it's being received
           console.log("Analytics: Checking player data in received items:");
           sortedData.forEach((item, index) => {
             if (item.player !== undefined) {
-              console.log(`Item ${index}: Player #${item.player}, Time: ${item.start_frame}s-${item.end_frame}s`);
+              console.log(
+                `Item ${index}: Player #${item.player}, Time: ${item.start_frame}s-${item.end_frame}s`
+              );
             } else {
               console.log(`Item ${index}: No player data`);
             }
           });
-          
+
           // Initialize with the first segment
           const firstSegmentPath = sortedData[0].video_path;
           setActiveVideoPath(firstSegmentPath);
@@ -178,12 +230,21 @@ export default function GameAnalysisPage() {
             setActiveVideoSrc(`/processed_videos/${firstSegmentFilename}`);
           }
         } else {
-          const errMsg = parsedData?.data?.length === 0 ? "No feedback data found in the analysis results." : "Failed to load analysis details: Invalid or empty format.";
-          console.error("Analytics: Parsed data is not in expected format or empty", parsedData);
+          const errMsg =
+            parsedData?.data?.length === 0
+              ? "No feedback data found in the analysis results."
+              : "Failed to load analysis details: Invalid or empty format.";
+          console.error(
+            "Analytics: Parsed data is not in expected format or empty",
+            parsedData
+          );
           setError(errMsg);
         }
       } catch (e) {
-        console.error("Analytics: Error parsing analysis data from sessionStorage", e);
+        console.error(
+          "Analytics: Error parsing analysis data from sessionStorage",
+          e
+        );
         setError("Failed to load analysis details: Could not parse.");
       }
     } else {
@@ -198,21 +259,27 @@ export default function GameAnalysisPage() {
       setActiveVideoPath(videoPath); // Store the original path
       setActiveVideoSrc(`/processed_videos/${filename}`);
     } else {
-      console.warn("Could not select segment: filename is empty for path", videoPath);
+      console.warn(
+        "Could not select segment: filename is empty for path",
+        videoPath
+      );
       setActiveVideoSrc(""); // Clear or set to a placeholder/error state
       setActiveVideoPath("");
     }
   };
-  
-  const pageTitle = activeVideoSrc ? `Analysis: ${getFilename(activeVideoPath)}` : "Game Analysis";
+
+  const pageTitle = activeVideoSrc
+    ? `Analysis: ${getFilename(activeVideoPath)}`
+    : "Game Analysis";
   const feedbackCount = analysisReport?.data?.length || 0;
-  
+
   // Filter data based on selected player
-  const filteredData = analysisReport?.data?.filter(item => {
-    if (selectedPlayer === null) return true;
-    return item.player === selectedPlayer;
-  }) || [];
-  
+  const filteredData =
+    analysisReport?.data?.filter((item) => {
+      if (selectedPlayer === null) return true;
+      return item.player === selectedPlayer;
+    }) || [];
+
   const displayedFeedbackCount = filteredData.length;
 
   // Function to seek video to specific timestamp
@@ -220,14 +287,14 @@ export default function GameAnalysisPage() {
     if (videoRef) {
       videoRef.currentTime = startTime;
       videoRef.playbackRate = playbackRate;
-      
+
       if (endTime !== undefined) {
         setActiveSegment({ start: startTime, end: endTime });
       } else {
         setActiveSegment(null);
       }
-      
-      videoRef.play().catch(e => console.log("Video play failed:", e));
+
+      videoRef.play().catch((e) => console.log("Video play failed:", e));
     }
   };
 
@@ -241,8 +308,8 @@ export default function GameAnalysisPage() {
       }
     };
 
-    videoRef.addEventListener('timeupdate', handleTimeUpdate);
-    return () => videoRef.removeEventListener('timeupdate', handleTimeUpdate);
+    videoRef.addEventListener("timeupdate", handleTimeUpdate);
+    return () => videoRef.removeEventListener("timeupdate", handleTimeUpdate);
   }, [videoRef, activeSegment, isLooping]);
 
   // Update playback rate when it changes
@@ -255,7 +322,7 @@ export default function GameAnalysisPage() {
   return (
     <>
       <header className="flex items-center justify-between mb-8 bg-black text-white z-10 relative mx-auto px-6 sm:px-8 lg:px-12 py-4">
-        <Link href="/landing" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <img
             src="/logomark.png"
             alt="AthletIQ Logo"
@@ -286,7 +353,7 @@ export default function GameAnalysisPage() {
               className="hidden"
               onChange={(e) => {
                 if (e.target.files?.length) {
-                  window.location.href = "/landing";
+                  window.location.href = "/";
                 }
               }}
             />
@@ -310,7 +377,10 @@ export default function GameAnalysisPage() {
           {error && (
             <div className="text-center py-10">
               <p className="text-red-500 text-xl">{error}</p>
-              <Link href="/landing" className="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <Link
+                href="/"
+                className="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
                 Start New Analysis
               </Link>
             </div>
@@ -318,11 +388,16 @@ export default function GameAnalysisPage() {
           {!error && analysisReport && (
             <>
               <div className="flex justify-between items-center mb-6 flex-wrap">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold truncate mr-4" title={pageTitle}>{pageTitle}</h1>
+                <h1
+                  className="text-2xl sm:text-3xl lg:text-4xl font-bold truncate mr-4"
+                  title={pageTitle}
+                >
+                  {pageTitle}
+                </h1>
                 {displayedFeedbackCount > 0 && (
-                    <span className="text-lg sm:text-xl lg:text-2xl font-semibold whitespace-nowrap">
-                        {displayedFeedbackCount} Feedback points
-                    </span>
+                  <span className="text-lg sm:text-xl lg:text-2xl font-semibold whitespace-nowrap">
+                    {displayedFeedbackCount} Feedback points
+                  </span>
                 )}
               </div>
 
@@ -340,12 +415,14 @@ export default function GameAnalysisPage() {
                         />
                         <span className="text-sm">Loop Segment</span>
                       </label>
-                      
+
                       <div className="flex items-center gap-2">
                         <span className="text-sm">Speed:</span>
                         <select
                           value={playbackRate}
-                          onChange={(e) => setPlaybackRate(parseFloat(e.target.value))}
+                          onChange={(e) =>
+                            setPlaybackRate(parseFloat(e.target.value))
+                          }
                           className="bg-gray-700 text-white px-2 py-1 rounded text-sm"
                         >
                           <option value="0.25">0.25x</option>
@@ -355,7 +432,7 @@ export default function GameAnalysisPage() {
                         </select>
                       </div>
                     </div>
-                    
+
                     {activeSegment && (
                       <button
                         onClick={() => {
@@ -377,9 +454,22 @@ export default function GameAnalysisPage() {
                       </div>
                     )}
                     {activeVideoSrc ? (
-                      <video key={activeVideoSrc} className="w-full h-full object-contain" controls autoPlay src={activeVideoSrc} ref={setVideoRef}>
-                        <source src={activeVideoSrc} type={`video/${getFilename(activeVideoPath).split('.').pop()}`} />
-                         Your browser does not support the video tag. (Path: {activeVideoSrc})
+                      <video
+                        key={activeVideoSrc}
+                        className="w-full h-full object-contain"
+                        controls
+                        autoPlay
+                        src={activeVideoSrc}
+                        ref={setVideoRef}
+                      >
+                        <source
+                          src={activeVideoSrc}
+                          type={`video/${getFilename(activeVideoPath)
+                            .split(".")
+                            .pop()}`}
+                        />
+                        Your browser does not support the video tag. (Path:{" "}
+                        {activeVideoSrc})
                       </video>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-700">
@@ -388,47 +478,72 @@ export default function GameAnalysisPage() {
                     )}
                   </div>
 
-                  {analysisReport.data.find(item => item.video_path === activeVideoPath)?.feedback.final_conclusion && (
-                     <div className="mt-4 p-4 bg-gray-800 rounded-md">
-                        <h2 className="text-xl sm:text-2xl font-bold mb-2">Summary for Current Segment:</h2>
-                        <p className="text-sm sm:text-base opacity-90">
-                        {analysisReport.data.find(item => item.video_path === activeVideoPath)?.feedback.final_conclusion}
-                        </p>
+                  {analysisReport.data.find(
+                    (item) => item.video_path === activeVideoPath
+                  )?.feedback.final_conclusion && (
+                    <div className="mt-4 p-4 bg-gray-800 rounded-md">
+                      <h2 className="text-xl sm:text-2xl font-bold mb-2">
+                        Summary for Current Segment:
+                      </h2>
+                      <p className="text-sm sm:text-base opacity-90">
+                        {
+                          analysisReport.data.find(
+                            (item) => item.video_path === activeVideoPath
+                          )?.feedback.final_conclusion
+                        }
+                      </p>
                     </div>
                   )}
                 </div>
 
-                <div className="xl:col-span-1 rounded-lg p-0 sm:p-4" style={{ backgroundColor: "#191919" }}>
-                  <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center sm:text-left">Detailed Feedback Segments</h2>
-                  
+                <div
+                  className="xl:col-span-1 rounded-lg p-0 sm:p-4"
+                  style={{ backgroundColor: "#191919" }}
+                >
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center sm:text-left">
+                    Detailed Feedback Segments
+                  </h2>
+
                   {/* Player Filter Dropdown */}
                   {availablePlayers.length > 0 && (
                     <div className="mb-4 p-3 bg-gray-800 rounded-lg">
-                      <label className="block text-sm font-semibold mb-2">Filter by Player:</label>
+                      <label className="block text-sm font-semibold mb-2">
+                        Filter by Player:
+                      </label>
                       <select
-                        value={selectedPlayer ?? ''}
-                        onChange={(e) => setSelectedPlayer(e.target.value ? parseInt(e.target.value) : null)}
+                        value={selectedPlayer ?? ""}
+                        onChange={(e) =>
+                          setSelectedPlayer(
+                            e.target.value ? parseInt(e.target.value) : null
+                          )
+                        }
                         className="w-full bg-gray-700 text-white px-3 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
                       >
-                        <option value="">All Players ({feedbackCount} total)</option>
-                        {availablePlayers.map(playerNum => {
-                          const playerCount = analysisReport?.data?.filter(item => item.player === playerNum).length || 0;
+                        <option value="">
+                          All Players ({feedbackCount} total)
+                        </option>
+                        {availablePlayers.map((playerNum) => {
+                          const playerCount =
+                            analysisReport?.data?.filter(
+                              (item) => item.player === playerNum
+                            ).length || 0;
                           return (
                             <option key={playerNum} value={playerNum}>
-                              Player #{playerNum} ({playerCount} feedback{playerCount !== 1 ? 's' : ''})
+                              Player #{playerNum} ({playerCount} feedback
+                              {playerCount !== 1 ? "s" : ""})
                             </option>
                           );
                         })}
                       </select>
                     </div>
                   )}
-                  
+
                   <div className="max-h-[calc(100vh-200px)] overflow-y-auto pr-1 space-y-3">
                     {filteredData.map((item, index) => (
-                      <CollapsibleFeedbackItem 
-                        key={`${index}-${item.video_path}`} 
-                        item={item} 
-                        index={index} 
+                      <CollapsibleFeedbackItem
+                        key={`${index}-${item.video_path}`}
+                        item={item}
+                        index={index}
                         onSelectSegment={handleSelectSegment}
                         isActiveSegment={item.video_path === activeVideoPath}
                         onSeekToTimestamp={seekToTimestamp}
