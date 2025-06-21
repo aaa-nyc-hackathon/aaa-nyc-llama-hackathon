@@ -12,28 +12,35 @@ from dotenv import load_dotenv
 import shutil
 load_dotenv()
 
+from pydantic import BaseModel, validator
+from typing import List, Optional, Union
+
+class Coordinates(BaseModel):
+    x_coordinate: float
+    y_coordinate: float
+
+class Player(BaseModel):
+    coordinates: Coordinates
+    team: str
+    jerseyNumber: int
+
+class Team(BaseModel):
+    teamName: str
+    players: List[Player]
+    score: int
 
 def image_to_base64(image_path):
     with open(image_path, "rb") as img:
         return base64.b64encode(img.read()).decode('utf-8')
 
 def get_player_positions(inputvideo, plot=False):
-    try:
-      client = LlamaAPIClient(
-          api_key=os.environ.get("LLAMA_API_KEY"), # This is the default and can be omitted
-      )
-    except:
-      client = LlamaAPIClient()
-
-    
-
+    client = LlamaAPIClient()
     #check if images directory exists, if not create it
     if os.path.exists("images"):
         shutil.rmtree("images")
         os.makedirs("images")
+
     ffmpeg_cmd_retry = ['ffmpeg', '-i', inputvideo, '-vf', 'fps=fps=1', str(os.path.join(os.getcwd(), "images", "frame%d.jpg"))]
-
-
     subprocess.run(ffmpeg_cmd_retry, check=True)
     # Execute a command and wait for it to finish
     return_code = subprocess.call(ffmpeg_cmd_retry)
@@ -52,8 +59,6 @@ def get_player_positions(inputvideo, plot=False):
 
     # sample each third file we have a list of
     SAMPLE_INTERVAL = 3
-    
-
     results_output = []
 
     for frame_id, file in enumerate(files):
@@ -70,85 +75,29 @@ def get_player_positions(inputvideo, plot=False):
             contents.append(image_data)
         else:
             contents[1] = image_data
+
+        # print(f"frame_id: {frame_id!r} and contents: {contents!r}\n\n")
         response = client.chat.completions.create(
-            model="Llama-4-Maverick-17B-128E-Instruct-FP8",
+            model="Llama-4-Scout-17B-16E-Instruct-FP8",
             messages=[
                 {
                     "role": "user",
                     "content": contents,
                 },
             ],
-            response_format = {
-                "type": "json_schema",
-                "json_schema": {
-                    "schema": {
-                    "title": "Llama4 Game Data",
-                    "type": "object",
-                        "properties": {
-              "players": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "jerseyNumber": {
-                      "type": "integer",
-                      "description": "An integer representing the Jersey number on the player's jersey"
-                    },
-                    "coordinates": {
-                      "type": "object",
-                      "description": "The current X/Y coordinates of the player.",
-                      "properties": {
-                        "x_coordinate": {
-                          "type": "number",
-                          "description": "The percentage inside the image in the X coordinate to the player"
-                        },
-                        "y_coordinate": {
-                          "type": "number",
-                          "description": "The percentage inside the image in the Y coordinate to the player"
-                        }
-                      },
-                      "required": ["x_coordinate", "y_coordinate"]
-                    },
-                    "team": {
-                      "type": "string",
-                      "description": "One of the teams names as a string",
-                      "enum": ["Clemson", "Alabama"]
-                    }
-                  },
-                  "required": ["jerseyNumber", "coordinates", "team"]
+            response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "Team",
+                "schema": Team.model_json_schema(),
                 }
-              },
-              "scores": {
-                "type": "object",
-                "properties": {
-                  "team1": {
-                    "type": "string",
-                    "description": "Name of the first team",
-                    "enum": ["Clemson"], 
-                  },
-                  "team1_score": {
-                    "type": "integer",
-                    "description": "Score of the first team"
-                  },
-                  "team2": {
-                    "type": "string",
-                    "description": "Name of the second team",
-                    "enum": ["Alabama"],
-                  },
-                  "team2_score": {
-                    "type": "integer",
-                    "description": "Score of the second team"
-                  }
-                },
-                "required": ["team1", "team1_score", "team2", "team2_score"]
-              }
-            },
-         "required": ["players", "scores"]
-        }
-    }
-})
-        image_llama_data = json.loads(response.completion_message.content.text)
-        
+            }
+        )
+        try:
+            image_llama_data = json.loads(response.completion_message.content.text)
+        except Exception as e:
+            print(frame_id, e)
+            continue
         # Create a result dictionary that includes timestamps and the player data
         result = {
             'start': frame_end-1,
@@ -158,4 +107,5 @@ def get_player_positions(inputvideo, plot=False):
 
         results_output.append(result)
 
+    print(results_output[0]['image_data'].keys())
     return results_output
