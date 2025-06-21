@@ -24,7 +24,8 @@ interface LoadingData {
 
 export default function Component() {
   const [progress, setProgress] = useState(0);
-  const [currentStageMessage, setCurrentStageMessage] = useState("Initializing...");
+  const [currentStageMessage, setCurrentStageMessage] =
+    useState("Initializing...");
   const [error, setError] = useState<string | null>(null);
   const [analysisComplete, setAnalysisComplete] = useState(false); // New state for API call completion
   const router = useRouter();
@@ -37,30 +38,41 @@ export default function Component() {
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null); // Ref to store interval ID
 
   useEffect(() => {
-    const data = sessionStorage.getItem('loadingData');
+    const data = sessionStorage.getItem("loadingData");
     if (data) {
       try {
         const parsedData: LoadingData = JSON.parse(data);
-        if (!parsedData.filepath || !parsedData.progress_steps || parsedData.progress_steps.length === 0 || typeof parsedData.total_estimated_time_seconds === 'undefined') {
-          setError("Essential loading data is missing or invalid. Redirecting to landing.");
+        if (
+          !parsedData.filepath ||
+          !parsedData.progress_steps ||
+          parsedData.progress_steps.length === 0 ||
+          typeof parsedData.total_estimated_time_seconds === "undefined"
+        ) {
+          setError(
+            "Essential loading data is missing or invalid. Redirecting to landing."
+          );
           console.error("Invalid loading data:", parsedData);
-          setTimeout(() => router.push("/landing"), 3000);
+          setTimeout(() => router.push("/"), 3000);
           return;
         }
         loadingDataRef.current = parsedData;
         console.log("Loading data retrieved:", parsedData);
-        setCurrentStageMessage(parsedData.progress_steps[0]?.description || "Preparing analysis...");
+        setCurrentStageMessage(
+          parsedData.progress_steps[0]?.description || "Preparing analysis..."
+        );
         stageStartTimeRef.current = Date.now(); // Mark the start of the overall process simulation
       } catch (e) {
         console.error("Failed to parse loading data from sessionStorage:", e);
-        setError("Failed to retrieve loading information. Redirecting to landing.");
-        setTimeout(() => router.push("/landing"), 3000);
+        setError(
+          "Failed to retrieve loading information. Redirecting to landing."
+        );
+        setTimeout(() => router.push("/"), 3000);
         return;
       }
     } else {
       setError("No loading data found. Redirecting to landing page.");
       console.warn("sessionStorage did not contain 'loadingData'.");
-      setTimeout(() => router.push("/landing"), 3000); // Redirect if no data
+      setTimeout(() => router.push("/"), 3000); // Redirect if no data
       return;
     }
 
@@ -77,58 +89,65 @@ export default function Component() {
       callAnalyzeApi(loadingDataRef.current.filepath);
     }
 
-    const { progress_steps, total_estimated_time_seconds } = loadingDataRef.current;
-    
+    const { progress_steps, total_estimated_time_seconds } =
+      loadingDataRef.current;
+
     // If there are no steps, or total time is zero, something is wrong.
     if (progress_steps.length === 0 || total_estimated_time_seconds <= 0) {
-        console.warn("No progress steps or zero total time, halting progress updates.");
-        // Optionally set error or redirect
-        return;
+      console.warn(
+        "No progress steps or zero total time, halting progress updates."
+      );
+      // Optionally set error or redirect
+      return;
     }
 
     const overallStartTime = stageStartTimeRef.current; // Start time of the whole process
 
     const interval = setInterval(() => {
-        if (!loadingDataRef.current || analysisComplete) { // Stop if analysis is already complete
-            clearInterval(interval);
-            return;
+      if (!loadingDataRef.current || analysisComplete) {
+        // Stop if analysis is already complete
+        clearInterval(interval);
+        return;
+      }
+      const elapsedTimeMs = Date.now() - overallStartTime;
+      const elapsedTimeSec = elapsedTimeMs / 1000;
+
+      let currentGlobalPercentage =
+        (elapsedTimeSec / total_estimated_time_seconds) * 100;
+      currentGlobalPercentage = Math.min(currentGlobalPercentage, 100); // Cap at 100%
+
+      setProgress(currentGlobalPercentage);
+
+      // Find the current stage based on real-time progress
+      let activeStageDescription = "Processing...";
+      if (currentGlobalPercentage < 100) {
+        let currentStep = progress_steps[progress_steps.length - 1]; // Default to last step description
+        for (const step of progress_steps) {
+          if (currentGlobalPercentage < step.percentage_end) {
+            currentStep = step;
+            break;
+          }
         }
-        const elapsedTimeMs = Date.now() - overallStartTime;
-        const elapsedTimeSec = elapsedTimeMs / 1000;
+        activeStageDescription = currentStep.description;
+      } else {
+        // Animation is complete
+        activeStageDescription = analysisComplete
+          ? "Analysis Complete! Preparing results..."
+          : "Finalizing analysis, awaiting server response...";
+      }
+      setCurrentStageMessage(activeStageDescription);
 
-        let currentGlobalPercentage = (elapsedTimeSec / total_estimated_time_seconds) * 100;
-        currentGlobalPercentage = Math.min(currentGlobalPercentage, 100); // Cap at 100%
-
-        setProgress(currentGlobalPercentage);
-
-        // Find the current stage based on real-time progress
-        let activeStageDescription = "Processing...";
-        if (currentGlobalPercentage < 100) {
-            let currentStep = progress_steps[progress_steps.length - 1]; // Default to last step description
-            for (const step of progress_steps) {
-                if (currentGlobalPercentage < step.percentage_end) {
-                    currentStep = step;
-                    break;
-                }
-            }
-            activeStageDescription = currentStep.description;
-        } else {
-            // Animation is complete
-            activeStageDescription = analysisComplete ? "Analysis Complete! Preparing results..." : "Finalizing analysis, awaiting server response...";
-        }
-        setCurrentStageMessage(activeStageDescription);
-
-        if (currentGlobalPercentage >= 100) {
-          setProgress(100);
-          clearInterval(interval); 
-          // Animation finished, actual API call might still be in progress or already done.
-        }
+      if (currentGlobalPercentage >= 100) {
+        setProgress(100);
+        clearInterval(interval);
+        // Animation finished, actual API call might still be in progress or already done.
+      }
     }, 200);
 
     intervalIdRef.current = interval; // Store interval ID
 
     return () => {
-        if (intervalIdRef.current) clearInterval(intervalIdRef.current);
+      if (intervalIdRef.current) clearInterval(intervalIdRef.current);
     };
   }, [analysisComplete]); // Rerun if analysisComplete changes to update message, also runs on initial mount with loadingDataRef.current
 
@@ -139,33 +158,39 @@ export default function Component() {
       const analysisRes = await fetch("http://localhost:8000/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ file_path: filepath })
+        body: JSON.stringify({ file_path: filepath }),
       });
 
       if (!analysisRes.ok) {
-        const errorData = await analysisRes.json().catch(() => ({ detail: "Failed to parse error from analysis API." }));
-        console.error('Analysis API Error:', errorData);
-        setError(`Analysis Failed: ${errorData.detail || analysisRes.statusText}`);
+        const errorData = await analysisRes.json().catch(() => ({
+          detail: "Failed to parse error from analysis API.",
+        }));
+        console.error("Analysis API Error:", errorData);
+        setError(
+          `Analysis Failed: ${errorData.detail || analysisRes.statusText}`
+        );
         setAnalysisComplete(false); // Explicitly set to false on error
         return;
       }
 
       const data = await analysisRes.json();
-      console.log('API Analyze Endpoint Response:', data);
-      
+      console.log("API Analyze Endpoint Response:", data);
+
       // Log specific player data to verify it's coming from the API
       if (data.data && Array.isArray(data.data)) {
-        console.log('Total feedback items:', data.data.length);
+        console.log("Total feedback items:", data.data.length);
         data.data.forEach((item: any, index: number) => {
           if (item.player) {
-            console.log(`Feedback item ${index}: Player #${item.player.jersey_number}, Time: ${item.start_frame}s-${item.end_frame}s`);
+            console.log(
+              `Feedback item ${index}: Player #${item.player.jersey_number}, Time: ${item.start_frame}s-${item.end_frame}s`
+            );
           } else {
             console.log(`Feedback item ${index}: No player data found`);
           }
         });
       }
-      
-      sessionStorage.setItem('analysisResultData', JSON.stringify(data)); 
+
+      sessionStorage.setItem("analysisResultData", JSON.stringify(data));
       setAnalysisComplete(true); // Signal API success
       // Message will be updated by progress interval or the redirect effect
 
@@ -176,10 +201,11 @@ export default function Component() {
       }
       setProgress(100);
       setCurrentStageMessage("Analysis processing complete! Finalizing...");
-
     } catch (err: any) {
-      console.error('Error calling analyze endpoint:', err);
-      setError(`Failed to get analysis results: ${err.message || 'Unknown error'}`);
+      console.error("Error calling analyze endpoint:", err);
+      setError(
+        `Failed to get analysis results: ${err.message || "Unknown error"}`
+      );
       setAnalysisComplete(false); // Explicitly set to false on error
     }
   }
@@ -190,7 +216,7 @@ export default function Component() {
       setCurrentStageMessage("Analysis Complete! Redirecting...");
       setTimeout(() => {
         router.push("/analytics");
-      }, 1500); 
+      }, 1500);
     }
   }, [progress, analysisComplete, router]);
 
@@ -199,7 +225,7 @@ export default function Component() {
       {/* Header Navigation */}
       <header className="flex items-center justify-between p-6">
         {/* Logo */}
-        <Link href="/landing" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <img
             src="/logomark.png"
             alt="AthletIQ Logo"
@@ -225,8 +251,8 @@ export default function Component() {
           <div className="text-center">
             <h2 className="text-2xl font-medium text-red-500 mb-4">Error</h2>
             <p className="text-gray-300 mb-6">{error}</p>
-            <button 
-              onClick={() => router.push('/landing')}
+            <button
+              onClick={() => router.push("/")}
               className="bg-blue-600 hover:bg-blue-700 transition-colors px-8 py-3 rounded-lg text-white font-medium"
             >
               Try Again
@@ -251,7 +277,11 @@ export default function Component() {
                   {Math.round(progress)}%
                 </span>
                 <span className="text-[#757575] text-sm">
-                  {progress < 100 ? "Processing..." : (analysisComplete ? "Complete" : "Finalizing...")}
+                  {progress < 100
+                    ? "Processing..."
+                    : analysisComplete
+                    ? "Complete"
+                    : "Finalizing..."}
                 </span>
               </div>
             </div>
@@ -281,4 +311,3 @@ export default function Component() {
     </div>
   );
 }
-

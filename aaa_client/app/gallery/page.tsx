@@ -2,7 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, Search, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -29,7 +35,10 @@ interface AnalysisResult {
 }
 
 // Sub-component for individual collapsible feedback item
-const CollapsibleFeedbackItem: React.FC<{ item: FeedbackItem; index: number }> = ({ item, index }) => {
+const CollapsibleFeedbackItem: React.FC<{
+  item: FeedbackItem;
+  index: number;
+}> = ({ item, index }) => {
   const [isOpen, setIsOpen] = useState(false);
   console.log("CollapsibleFeedbackItem received item:", item);
 
@@ -39,30 +48,42 @@ const CollapsibleFeedbackItem: React.FC<{ item: FeedbackItem; index: number }> =
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center p-4 bg-gray-800 hover:bg-gray-700 focus:outline-none"
       >
-        <span className="font-semibold text-lg">Feedback Item #{index + 1}</span>
-        {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+        <span className="font-semibold text-lg">
+          Feedback Item #{index + 1}
+        </span>
+        {isOpen ? (
+          <ChevronUp className="w-5 h-5" />
+        ) : (
+          <ChevronDown className="w-5 h-5" />
+        )}
       </button>
       {isOpen && (
         <div className="p-4 bg-gray-900 text-sm">
           <h4 className="font-semibold mb-1 text-base">Video Segment File:</h4>
           <p className="mb-3 text-xs break-all">{item.video_path}</p>
-          
+
           <h4 className="font-semibold mb-1 text-base">Conclusion:</h4>
           <p className="mb-3">{item.feedback.final_conclusion}</p>
-          
+
           <h4 className="font-semibold mb-1 text-base">Key Observations:</h4>
           <ul className="list-disc list-inside mb-3 space-y-1">
-            {item.feedback.key_observations.map((obs, i) => <li key={i}>{obs}</li>)}
+            {item.feedback.key_observations.map((obs, i) => (
+              <li key={i}>{obs}</li>
+            ))}
           </ul>
-          
+
           <h4 className="font-semibold mb-1 text-base">Positives:</h4>
           <ul className="list-disc list-inside mb-3 space-y-1">
-            {item.feedback.positives.map((pos, i) => <li key={i}>{pos}</li>)}
+            {item.feedback.positives.map((pos, i) => (
+              <li key={i}>{pos}</li>
+            ))}
           </ul>
-          
+
           <h4 className="font-semibold mb-1 text-base">Potential Issues:</h4>
           <ul className="list-disc list-inside space-y-1">
-            {item.feedback.potential_issues.map((iss, i) => <li key={i}>{iss}</li>)}
+            {item.feedback.potential_issues.map((iss, i) => (
+              <li key={i}>{iss}</li>
+            ))}
           </ul>
         </div>
       )}
@@ -76,26 +97,45 @@ export default function Component() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem('analysisResultData');
+    const storedData = sessionStorage.getItem("analysisResultData");
     if (storedData) {
       try {
         const parsedData: AnalysisResult = JSON.parse(storedData);
         if (parsedData && parsedData.data && Array.isArray(parsedData.data)) {
           setAnalysisData(parsedData);
-          console.log("Gallery: Analysis data loaded from session storage", parsedData);
+          console.log(
+            "Gallery: Analysis data loaded from session storage",
+            parsedData
+          );
           // Debug: Check the structure of the first item if it exists
           if (parsedData.data.length > 0) {
             console.log("First feedback item structure:", parsedData.data[0]);
-            console.log("start_frame in first item:", parsedData.data[0].start_frame);
-            console.log("end_frame in first item:", parsedData.data[0].end_frame);
+            console.log(
+              "start_frame in first item:",
+              parsedData.data[0].start_frame
+            );
+            console.log(
+              "end_frame in first item:",
+              parsedData.data[0].end_frame
+            );
           }
         } else {
-          console.error("Gallery: Parsed data from session is not in expected format", parsedData);
-          setError("Failed to load analysis data: Invalid format from session storage.");
+          console.error(
+            "Gallery: Parsed data from session is not in expected format",
+            parsedData
+          );
+          setError(
+            "Failed to load analysis data: Invalid format from session storage."
+          );
         }
       } catch (e) {
-        console.error("Gallery: Error parsing analysis data from sessionStorage", e);
-        setError("Failed to load analysis data: Could not parse session storage.");
+        console.error(
+          "Gallery: Error parsing analysis data from sessionStorage",
+          e
+        );
+        setError(
+          "Failed to load analysis data: Could not parse session storage."
+        );
       }
     } else {
       console.log("Gallery: No analysis data found in sessionStorage.");
@@ -105,17 +145,23 @@ export default function Component() {
 
   // Logs to check state during render pass
   console.log("Gallery page rendering. Error state:", error);
-  console.log("Gallery page rendering. AnalysisData state (raw):", analysisData);
+  console.log(
+    "Gallery page rendering. AnalysisData state (raw):",
+    analysisData
+  );
   if (analysisData) {
-    console.log("Gallery page rendering. AnalysisData.data.length:", analysisData.data?.length);
+    console.log(
+      "Gallery page rendering. AnalysisData.data.length:",
+      analysisData.data?.length
+    );
   }
 
   const displayVideoPath = analysisData?.data?.[0]?.video_path || "";
 
   const getFilename = (fullPath: string): string => {
-    if (!fullPath) return '';
-    const normalizedPath = fullPath.replace(/\\/g, '/'); // Normalize path separators
-    const parts = normalizedPath.split('/');
+    if (!fullPath) return "";
+    const normalizedPath = fullPath.replace(/\\/g, "/"); // Normalize path separators
+    const parts = normalizedPath.split("/");
     return parts[parts.length - 1];
   };
 
@@ -127,7 +173,7 @@ export default function Component() {
     <div className="min-h-screen bg-black text-white flex flex-col">
       {/* Header */}
       <header className="flex items-center justify-between bg-black text-white z-10 relative mx-auto px-6 sm:px-8 lg:px-12 py-4 w-full">
-        <Link href="/landing" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <img
             src="/logomark.png"
             alt="AthletIQ Logo"
@@ -167,7 +213,7 @@ export default function Component() {
               className="hidden"
               onChange={(e) => {
                 if (e.target.files?.length) {
-                  window.location.href = "/landing";
+                  window.location.href = "/";
                 }
               }}
             />
@@ -192,14 +238,20 @@ export default function Component() {
         {/* Left Column: Video Display Area */}
         <div className="md:w-2/3 w-full h-[50vh] md:h-full bg-gray-900 flex flex-col items-center justify-center p-4 relative">
           <div className="text-center mb-4">
-             <h2 className="text-xl font-semibold mb-2">Analyzed Video:</h2>
-             <p className="text-sm text-gray-400 break-all">{displayVideoPath || "No video processed or path missing"}</p>
+            <h2 className="text-xl font-semibold mb-2">Analyzed Video:</h2>
+            <p className="text-sm text-gray-400 break-all">
+              {displayVideoPath || "No video processed or path missing"}
+            </p>
           </div>
           <div className="relative w-full max-w-2xl aspect-video bg-black">
             {videoSrc ? (
-              <video controls src={videoSrc} className="w-full h-full object-contain">
-                Your browser does not support the video tag.
-                Attempting to load: {videoSrc}
+              <video
+                controls
+                src={videoSrc}
+                className="w-full h-full object-contain"
+              >
+                Your browser does not support the video tag. Attempting to load:{" "}
+                {videoSrc}
               </video>
             ) : (
               <Image
@@ -214,16 +266,28 @@ export default function Component() {
 
         {/* Right Column: Feedback/Suggestions Area */}
         <div className="md:w-1/3 w-full md:h-full overflow-y-auto bg-gray-800 p-6">
-          <h2 className="text-2xl font-bold mb-6 text-center">Analysis Feedback</h2>
-          {error && <p className="text-red-400 bg-red-900 p-3 rounded-md">DEBUG: Error is: {error}</p>}
-          
+          <h2 className="text-2xl font-bold mb-6 text-center">
+            Analysis Feedback
+          </h2>
+          {error && (
+            <p className="text-red-400 bg-red-900 p-3 rounded-md">
+              DEBUG: Error is: {error}
+            </p>
+          )}
+
           {analysisData && analysisData.data && analysisData.data.length > 0 ? (
             analysisData.data.map((item, index) => (
-              <CollapsibleFeedbackItem key={`${index}-${item.video_path}`} item={item} index={index} />
+              <CollapsibleFeedbackItem
+                key={`${index}-${item.video_path}`}
+                item={item}
+                index={index}
+              />
             ))
           ) : (
             <p className="text-gray-400">
-              {error ? `Not rendering items due to error: ${error}` : "No analysis feedback items to display (analysisData might be null, or its data array is empty, or error state is active)."}
+              {error
+                ? `Not rendering items due to error: ${error}`
+                : "No analysis feedback items to display (analysisData might be null, or its data array is empty, or error state is active)."}
             </p>
           )}
         </div>
