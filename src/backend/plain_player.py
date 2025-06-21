@@ -6,9 +6,7 @@ import json
 import os
 from llama_api_client import LlamaAPIClient
 
-import cv2
 import base64
-import jsonlines
 import subprocess
 from dotenv import load_dotenv
 import shutil

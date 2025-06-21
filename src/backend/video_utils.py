@@ -2,7 +2,7 @@
 Utility functions for video processing
 """
 import os
-from typing import Dict, List, Any
+from typing import Dict, Any
 
 def process_video_file(file_path: str) -> Dict[str, Any]:
     """
