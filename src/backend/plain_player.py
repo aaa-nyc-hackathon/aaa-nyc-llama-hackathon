@@ -44,7 +44,7 @@ def get_player_positions(inputvideo, plot=False):
     # check if images directory exists, if not create it
     if os.path.exists("images"):
         shutil.rmtree("images")
-        os.makedirs("images")
+    os.makedirs("images")
 
     ffmpeg_cmd_retry = [
         "ffmpeg",
