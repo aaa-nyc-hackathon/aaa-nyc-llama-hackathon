@@ -52,6 +52,7 @@ from pathlib import Path
 from typing_extensions import Concatenate, ParamSpec
 import sys
 import subprocess
+from segmentation import reduce_player_occlusion
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from config import TMP_DIRNAME_IMAGES, MAX_FRAMES, TMP_DIRNAME_VIDEOS
@@ -228,8 +229,7 @@ def frame_transformation_pipeline_template(*args, **kwargs):
     in_path = os.path.join(os.getcwd(), "videos/alabama_clemson_30s_clip.mp4")
     frames_0 = load_frames(in_path)
     frames_1 = reduce_player_occlusion(frames_0)
-    frames_2 = find_court_edges(frames_1)
-    for frame in frames_2:
+    for frame in frames_1:
         cv2.imshow('frame', frame)
     
 if __name__ == "__main__":
