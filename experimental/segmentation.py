@@ -443,7 +443,6 @@ def segment_court_frames(video_path: str, sam2_checkpoint: str, out_path: str | 
     return segment_frames(predictor.propagate_in_video(inference_state), video_path, out_path=out_path)
   
 
-   
 def segment_player_frames(video_path: str, sam2_checkpoint: str) -> Generator[np.ndarray, None, None]:
     """
     Detects and tracks players across frames using YOLO and SAM2.

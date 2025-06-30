@@ -52,6 +52,7 @@ from pathlib import Path
 from typing_extensions import Concatenate, ParamSpec
 import sys
 import subprocess
+
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from config import TMP_DIRNAME_IMAGES, MAX_FRAMES, TMP_DIRNAME_VIDEOS
 
@@ -112,7 +113,7 @@ def load_frames(in_path: str, out_path: str | None = None) -> Generator[Any, Non
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = cap.get(cv2.CAP_PROP_FPS)
         out = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
-    
+        
     print(cap.get(cv2.CAP_PROP_POS_FRAMES), cap.isOpened())
     ret, prev_frame = cap.read()
     
@@ -130,6 +131,7 @@ def load_frames(in_path: str, out_path: str | None = None) -> Generator[Any, Non
         if k == 27:
             break
     
+
     
     cap.release()
     if out is not None:
@@ -229,8 +231,6 @@ def frame_transformation_pipeline_template(*args, **kwargs):
     frames_2 = find_court_edges(frames_1)
     for frame in frames_2:
         cv2.imshow('frame', frame)
-     
-
     
 if __name__ == "__main__":
     frame_transformation_pipeline_template()
