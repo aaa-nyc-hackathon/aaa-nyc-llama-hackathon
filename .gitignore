@@ -346,7 +346,15 @@ dist
 pyrightconfig.json
 
 # Full length videos
+videos/louisville.mp4
 tests/tmp
 experimental/tmp
+videos/**/*.mp4
+videos/**/*.mov
+images/**/*.jpg
+video_segments/**/*.mp4
+uploads/*.mp4
+*.mp4
+tests/tmp
 videos/*.mp4
 videos/*.mov

@@ -51,6 +51,9 @@ import shutil
 from pathlib import Path
 from typing_extensions import Concatenate, ParamSpec
 import sys
+import subprocess
+from segmentation import reduce_player_occlusion
+
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 from config import TMP_DIRNAME_IMAGES, MAX_FRAMES, TMP_DIRNAME_VIDEOS
 
@@ -88,7 +91,7 @@ def initialize_sam2() -> DeviceLikeType:
         
     return device
 
-def load_frames(in_path: str, release=True) -> Generator[Any, None, None]:
+def load_frames(in_path: str, out_path: str | None = None) -> Generator[Any, None, None]:
     """Utility generator function to load video (mp4) files
     
         Args:
@@ -105,6 +108,13 @@ def load_frames(in_path: str, release=True) -> Generator[Any, None, None]:
         cap = cv2.VideoCapture(in_path)
     
     cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    out = None
+    if out_path is not None:
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        out = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+        
     print(cap.get(cv2.CAP_PROP_POS_FRAMES), cap.isOpened())
     ret, prev_frame = cap.read()
     
@@ -113,37 +123,44 @@ def load_frames(in_path: str, release=True) -> Generator[Any, None, None]:
         if not ret:
             break
         
-        yield frame
+        if out is not None:
+            yield frame, out.write
+        else:
+            yield frame
         
         k = cv2.waitKey(30) & 0xff
         if k == 27:
             break
     
-    if release:
-        cap.release()
 
-
-def save_frames(out_path: str):
-    def decorator(func: Callable[Concatenate[str, P], Generator[Any, None, None]]) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
-        def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
-            global cap
-            if not isinstance(cap, cv2.VideoCapture):
-                cap = cv2.VideoCapture(in_path)
-                
-            assert isinstance(cap, cv2.VideoCapture)
-            width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-            height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            fps = cap.get(cv2.CAP_PROP_FPS)
-            out = cv2.VideoWriter(out_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
-            for frame in func(in_path, *args, **kwargs):
-                out.write(frame)
-                yield frame
-                
-            out.release()
-            cap.release()
-        return wrapper
-    return decorator
+    
+    cap.release()
+    if out is not None:
+        out.release()
         
+def generate_frames(video_path: str, output_dir: str, max_frames: int = 500, overwrite=True):
+    if len(os.listdir(output_dir)) > 0 and not overwrite:
+        raise ValueError(f"Output directory {output_dir} is not empty")
+    elif len(os.listdir(output_dir)) > 0 and overwrite:
+        print("Warning: writing over cached images")
+        for file in os.listdir(output_dir):
+            os.remove(os.path.join(output_dir, file))
+        
+    # Construct the output file path template
+    output_pattern = os.path.join(output_dir, "%05d.jpg")
+    
+    # Build the ffmpeg command
+    cmd = [
+        "ffmpeg",
+        "-i", video_path,
+        "-q:v", "2",
+        "-start_number", "0",
+        "-frames:v", str(max_frames),
+        output_pattern
+    ]
+    
+    # Run the command
+    subprocess.run(cmd, check=True)
     
 def trace_movement(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
     """Utility generator function to perform optical flow analysis on video frames.
@@ -197,194 +214,6 @@ def trace_movement(frames: Generator[np.ndarray, None, None]) -> Generator[np.nd
         p0 = good_new.reshape(-1, 1, 2)
         
         yield img
-
-
-
-                
-        
-
-def reduce_player_occlusion(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
-    """Utility generator function to remove player and crowd occlusion of the court.
-    Applies a visual overlay to the input video feed.
-    
-        Args:
-            frames (typing.Generator[np.ndarray, None, None]): The input video feed as a frame generator. Can be produced with load_frames()
-    
-        Returns:
-            typing.Generator[np.ndarray, None, None]: A new generator of the original video feed with with court edges smoothed and interior holes of the court reduced [Width, Height, Color Channel].
-    """
-    # Structuring element for morphology
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (25, 50))  # Size adjusts gap-filling power
-    
-    for frame in frames:
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) 
-        
-        # Threshold to isolate main surfaces (e.g., bright court)
-        _, mask = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY)
-    
-        # Fill small holes: Morphological closing
-        filled = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
-                
-        out = cv2.cvtColor(filled, cv2.COLOR_GRAY2BGR)
-            
-        yield out
-        
-        
-def find_court_edges(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
-    """Utility generator function to locate court edges on a video feed.
-    Applies a visual overlay to the input video feed.
-    
-        Args:
-            frames (typing.Generator[np.ndarray, None, None]): The input video feed as a frame generator. Can be produced with load_frames()
-    
-        Returns:
-            typing.Generator[np.ndarray, None, None]: A new generator of the original video feed with court edge lines as a visual overlay [Width, Height, Color Channel].
-    """
-    pts = None
-    for frame in frames:
-        
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # Find coordinates of all white pixels (value == 255)
-        
-        ys, xs = np.where(gray == 255)
-        
-        if len(ys) > 0:
-            # Find index of the pixel with the maximum y-value
-            max_y_index = np.argmax(ys)
-            max_x_index = np.argmax(xs)
-            min_y_index = np.argmin(ys)
-            min_x_index = np.argmin(xs)
-            bottom_most_point = [xs[max_y_index], ys[max_y_index]]
-            right_most_point = [xs[max_x_index], ys[max_x_index]]
-            top_most_point = [xs[min_y_index], ys[min_y_index]]
-            left_most_point = [xs[min_x_index], ys[min_x_index]]
-            new_pts = np.array([bottom_most_point, right_most_point, top_most_point, left_most_point])
-            
-            # Compute pairwise distances: result shape will be (4, 4)
-            min_d = 1000
-            if pts is not None:
-                diff = new_pts[:, np.newaxis, :] - new_pts[np.newaxis, :, :]  # shape (4, 4, 2)
-                distances = np.linalg.norm(diff, axis=2)  # Euclidean distances
-                min_d = np.min(distances + np.eye(4) * 1000, axis=0) > 100
-                
-                min_d = min_d.repeat([2]).reshape([4, 2])
-                new_pts = np.where(min_d, new_pts, pts)
-            
-            
-            
-            pts = new_pts.copy()
-            new_pts = new_pts.reshape((-1, 1, 2))
-        
-            # Convert to BGR to draw in color
-            img_color = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-        
-            # Draw a red circle at the bottom-most white pixel
-            cv2.circle(img_color, bottom_most_point, radius=5, color=(0, 0, 255), thickness=-1)
-            cv2.circle(img_color, right_most_point, radius=5, color=(0, 255, 0), thickness=-1)
-            cv2.circle(img_color, top_most_point, radius=5, color=(255, 0, 0), thickness=-1)
-            cv2.circle(img_color, left_most_point, radius=5, color=(255, 255, 0), thickness=-1)
-            cv2.polylines(img_color, [new_pts], isClosed=True, color=(0, 0, 255), thickness=2)
-            
-            yield img_color
-      
-def cache_video(
-    func: Callable[Concatenate[str, P], Generator[Any, None, None]]
-) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
-    """
-    Decorator that loads cached video when possible and provides a frame generator
-
-    This is useful for functions that are called often but are also dependent on other expensive frame operations,
-    like SAM segmentation
-
-    Args:
-        func (Callable): A generator function that takes an input video path (`in_path`)
-        and any additional arguments or keyword arguments, and yields processed frames.
-
-    Returns:
-        Callable: A wrapped generator function that extracts frames from a cached video output or another frame generator.
-    """
-    def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
-        out_path = os.path.join(TMP_DIRNAME_VIDEOS, os.path.basename(in_path))
-        if os.path.exists(out_path):
-            return load_frames(out_path)
-        
-        if os.path.exists(TMP_DIRNAME_VIDEOS):
-            nested_directory_path = Path(TMP_DIRNAME_VIDEOS)
-            nested_directory_path.mkdir(parents=True, exist_ok=True)
-            
-        
-        return save_frames(out_path)(func)(in_path, *args, **kwargs)
-    return wrapper
-
-def cache_frames(
-    func: Callable[Concatenate[str, P], Generator[Any, None, None]]
-) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
-    """
-    Decorator that preprocesses video input by saving frames as temporary image files,
-    then applies the wrapped generator function to the video input.
-
-    This is useful for functions that operate on video frames and might benefit
-    from having those frames saved for debugging, visualization, or intermediate
-    processing.
-
-    Args:
-        func (Callable): A generator function that takes an input video path (`in_path`),
-            an optional output path (`out_path`), and any additional arguments or keyword
-            arguments, and yields processed frames.
-
-    Returns:
-        Callable: A wrapped generator function that extracts and saves frames
-            to a temporary directory (if they don’t already exist), calls the original
-            generator function
-
-    Side Effects:
-        - Creates a nested temporary directory (if it doesn't exist) to store
-            extracted video frames as JPEG images.
-    """
-    def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
-        if not os.path.exists(TMP_DIRNAME_IMAGES):
-            nested_directory_path = Path(TMP_DIRNAME_IMAGES)
-            nested_directory_path.mkdir(parents=True, exist_ok=True)
-            for frame_idx, frame in enumerate(load_frames(in_path, release=False)):
-                if frame_idx > MAX_FRAMES: continue
-                cv2.imwrite(f"{TMP_DIRNAME_IMAGES}/{frame_idx:05d}.jpg", frame)
-            
-        
-        return func(in_path, *args, **kwargs)
-    return wrapper
-    
-def cleanup_frames(
-    func: Callable[Concatenate[str, P], Generator[Any, None, None]]
-) -> Callable[Concatenate[str, P], Generator[Any, None, None]]:
-    """
-    Decorator that preprocesses video input by saving frames as temporary image files,
-    then applies the wrapped generator function to the video input, and finally
-    cleans up the temporary files.
-
-    This is useful for functions that operate on video frames and might benefit
-    from having those frames saved for debugging, visualization, or intermediate
-    processing.
-
-    Args:
-        func (Callable): A generator function that takes an input video path (`in_path`),
-            an optional output path (`out_path`), and any additional arguments or keyword
-            arguments, and yields processed frames.
-
-    Returns:
-        Callable: A wrapped generator function that deletes the temporary directory after
-            the generator is exhausted. Must be used with cache_frames() decorator.
-
-    Side Effects:
-        - Deletes the temporary directory upon completion.
-    """
-    def wrapper(in_path: str, *args, **kwargs) -> Generator[Any, None, None]:
-        for x in func(in_path, *args, **kwargs):
-            yield x
-            
-        if os.path.exists(TMP_DIRNAME_IMAGES):
-            shutil.rmtree(TMP_DIRNAME_IMAGES)
-        
-    return wrapper
             
 def frame_transformation_template(frames: Generator[np.ndarray, None, None]) -> Generator[np.ndarray, None, None]:
     # Initialized variables before first frame go here ...
@@ -400,10 +229,8 @@ def frame_transformation_pipeline_template(*args, **kwargs):
     in_path = os.path.join(os.getcwd(), "videos/alabama_clemson_30s_clip.mp4")
     frames_0 = load_frames(in_path)
     frames_1 = reduce_player_occlusion(frames_0)
-    frames_2 = find_court_edges(frames_1)
-    for frame in frames_2:
+    for frame in frames_1:
         cv2.imshow('frame', frame)
-        
     
 if __name__ == "__main__":
     frame_transformation_pipeline_template()
