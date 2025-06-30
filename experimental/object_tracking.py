@@ -7,14 +7,15 @@ from segmentation import (
     simplify_contour, 
     convex_hull, 
     match_points, 
-    player_court_mapping
+    player_court_mapping,
+    reduce_player_occlusion
 )
 from typing import Generator
 import numpy as np
 import os
 import torch
 from config import TMP_DIRNAME_VIDEOS, HF_MODEL
-from utils import load_frames, reduce_player_occlusion
+from utils import load_frames
 from ultralytics import YOLO
 
 

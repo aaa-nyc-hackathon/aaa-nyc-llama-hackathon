@@ -37,6 +37,7 @@ import os
 import torch
 from collections import defaultdict
 import networkx as nx
+from scipy.optimize import linear_sum_assignment
 
 device = utils.initialize_sam2()
 
@@ -237,7 +238,7 @@ def player_court_mapping(court_segmentation_frames: Generator[np.ndarray, None, 
             low_y = int(xyxy[1].item())
             cv2.circle(result_frame, (mid_x, low_y), radius=5, color=(0, 0, 255))'''
         hull_squeezed = hull.squeeze(1)
-        image_court_points = reduce_court_points(hull_squeezed)
+        image_court_points = reduce_court_points(hull_squeezed, frame)
         
         width = frame.shape[1]
         height = frame.shape[0]
@@ -254,7 +255,6 @@ def player_court_mapping(court_segmentation_frames: Generator[np.ndarray, None, 
         
         yield hull
       
-
 
 def reduce_court_points(hull: cv2.typing.MatLike, frame: cv2.typing.MatLike):
     zeros = np.zeros_like(frame)
